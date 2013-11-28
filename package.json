@@ -1,0 +1,11 @@
+{
+    "name": "constx",
+    "version": "0.0.1",
+    "dependencies": {
+        "express": "*",
+        "jade": "*",
+        "marked": "*",
+        "underscore": "*",
+        "underscore.string": "*"
+    }
+}
