@@ -15,32 +15,26 @@ A place for sharing articles easily
 
 ## A file based structure sample
 
-+ means this is a directory
-- menas this is a file
+'+' means this is a directory
+'-' menas this is a file
 
 ```
-+ guideline.proj
-    - $head.json: Define the metadata, such as description, created date, and so on.
++ guideline
+    - $metadata.json: Define the metadata, such as description, created date, and so on.
 
     'Articles'
-    + java-style.md
-        - head.json
-        - body.md
-        - screenshot1.jpg: For markdown reference
-        - screenshot2.jpg
+    - java-style.md: Source file
+    + java-style.md: History files, optional
+        - metadata.json: Metadata file
+        - 20130507123548.md
+        - 20130507123548.json: diff information
     
     'Codes'
-    + java-eclipse-formatter.xml
-        - head.json
-        - body.xml
+    - java-eclipse-formatter.xml
     
     'Images'
-    + ui-design-button.jpg
-        - head.json
-        - body.jpg
-    + ui-design-menu.jpg
-        - head.json
-        - body.jpg
+    - ui-design-button.jpg
+    - ui-design-menu.jpg
 ```
 
 ## REST pages definition
