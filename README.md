@@ -37,7 +37,11 @@ A place for sharing articles easily
     - ui-design-menu.jpg
 ```
 
-## REST pages definition
+# REST definiations
+
+ref: http://raml.org/docs.html
+
+## REST pages
 
 ```
 /index: Show all projects and its files
@@ -48,4 +52,23 @@ A place for sharing articles easily
 /[project]/[file]/edit
 /[project]/[file]/histories
 /help
+```
+
+## REST APIs
+
+```RAML
+baseUri: /api
+version: v1
+
+/projects:
+    /{project}:
+        /text:
+            /{document}
+                get:
+                    description:
+                    queryParameters:
+                    responses:
+                post:
+                put:
+                delete:
 ```
