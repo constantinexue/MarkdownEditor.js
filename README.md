@@ -5,25 +5,58 @@ A place for sharing articles easily
 
 ## Goals
 
-- Small group update documents continuously.
-  - Show the differents of each file and change histories.
-- Using text/markdown to write.
-  - I hate any non-plain format, includes database.
-- Multi editing environment, both online and offline.
-- Well organized, subjects, grouping, sorting and preview.
-- Maybe there is a client!
+- Using a simple website to share and edit documents.
+    - An article: written in markdown, majority is text, but contains some pictures.
+    - A gallery: An album for photos, or UI designs. No text paragraph, just images and its titles.
+    - Maybe other formats.
+- All the documents and its attachments should be well organized.
+    - Saved in a single directory, with metadata file.
+    - Could be downloaded as a zip package.
+- Online editing support, can be exported to PDF. Histories would be keep for some versions.
+- No user authorization, there are only logs for small team accountability.
+
+# REST definiations
+
+ref: http://raml.org/docs.html
+
+## REST APIs
+
+```RAML
+baseUri: /api
+version: v1
+
+/{projectname}:
+    /{subject}:
+        /{attachment}:
+```
+
+## REST pages
+
+```
+/:
+    description: Lists the projects.
+/view:
+    /{projectname}:
+        /{subject}:
+            /{attachment}:
+/edit:
+    /{projectname}:
+        /{subject}:
+/help:
+```
 
 ## A file based structure sample
 
 '+' means this is a directory
+
 '-' menas this is a file
 
 ```
-+ guideline
++ ProjectName
     - $metadata.json: Define the metadata, such as description, created date, and so on.
 
     'Articles'
-    - java-style.md: Source file
+    + mystories.md: Source file
     + java-style.md: History files, optional
         - metadata.json: Metadata file
         - 20130507123548.md
@@ -35,40 +68,4 @@ A place for sharing articles easily
     'Images'
     - ui-design-button.jpg
     - ui-design-menu.jpg
-```
-
-# REST definiations
-
-ref: http://raml.org/docs.html
-
-## REST pages
-
-```
-/index: Show all projects and its files
-/[project]: Reserved
-/[project]/[file]
-/[project]/[file]/raw
-/[project]/[file]/download
-/[project]/[file]/edit
-/[project]/[file]/histories
-/help
-```
-
-## REST APIs
-
-```RAML
-baseUri: /api
-version: v1
-
-/projects:
-    /{project}:
-        /text:
-            /{document}
-                get:
-                    description:
-                    queryParameters:
-                    responses:
-                post:
-                put:
-                delete:
 ```
