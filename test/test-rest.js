@@ -21,13 +21,10 @@ describe('REST API', function() {
                 },
                 // Creates an article
                 function(callback) {
-                    request({
-                        url: articleUrl,
-                        method: 'POST',
-                        headers: {
-                            "content-type": "text/markdown"
-                        },
-                        body: '# Heading1'
+                    request.post(articleUrl, {
+                        form: {
+                            content: '# Heading1'
+                        }
                     }, function(error, response, body) {
                         console.log(body);
                         console.log(_.isString(JSON.parse(body)))
