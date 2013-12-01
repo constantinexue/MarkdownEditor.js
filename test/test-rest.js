@@ -7,14 +7,14 @@ var assert = require('assert'),
 describe('REST API', function() {
     var BASE_URL = 'http://localhost:3000/api';
     it('Project', function(done) {
-        var projectName = 'NewProject1',
-            projectUrl = BASE_URL + '/' + projectName,
-            articleSubject = 'NewMarkdown.md',
-            articleUrl = projectUrl + '/' + articleSubject;
+        var collectionName = 'MyCollection',
+            collectionUrl = BASE_URL + '/' + collectionName,
+            articleSubject = 'ANewArticle',
+            articleUrl = collectionUrl + '/' + articleSubject;
         async.series([
                 // Creates a project
                 function(callback) {
-                    request.post(projectUrl, function(error, response, body) {
+                    request.post(collectionUrl, function(error, response, body) {
                         console.log(body);
                         callback();
                     });
@@ -39,7 +39,7 @@ describe('REST API', function() {
                 },
                 // Deletes project and article
                 function(callback) {
-                    request.del(projectUrl, function(error, response, body) {
+                    request.del(collectionUrl, function(error, response, body) {
                         callback();
                     });
                 }

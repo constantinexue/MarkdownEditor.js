@@ -1,5 +1,5 @@
 {
-	"name": "constx",
+	"name": "packled-pepper.js",
 	"version": "0.0.1",
 	"dependencies": {
 		"express": "*",
@@ -8,7 +8,10 @@
 		"underscore": "*",
 		"underscore.string": "*",
 		"async": "*",
-		"fs-extra": "*"
+		"fs-extra": "*",
+		"dustjs-linkedin": "*",
+		"dustjs-helpers": "*",
+		"consolidate": "*"
 	},
 	"devDependencies": {
 		"request": "*"

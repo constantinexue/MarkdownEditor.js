@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{title}</title>
+    <link rel='stylesheet' href='http://cdn.bootcss.com/twitter-bootstrap/3.0.2/css/bootstrap.min.css' />
+</head>
+<body>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Brand</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        {+content}
+            This is the base content.
+        {/content}
+    </div>
+    <script src="http://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.2/js/bootstrap.min.js"></script>
+</body>
+<!--
+{session}
+-->
+</html>
