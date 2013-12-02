@@ -11,7 +11,8 @@
 		"fs-extra": "*",
 		"dustjs-linkedin": "*",
 		"dustjs-helpers": "*",
-		"consolidate": "*"
+		"consolidate": "*",
+		"klass": "*"
 	},
 	"devDependencies": {
 		"request": "*"
