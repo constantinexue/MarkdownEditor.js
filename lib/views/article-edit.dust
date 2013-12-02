@@ -1,0 +1,28 @@
+{>layout/}
+{<content}
+    <div class="row">
+        <div class="col-lg-8">
+            <textarea id="content" class="hide">
+                {content|s}
+            </textarea>
+            <div id="epiceditor">
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div data-spy="affix" data-offset-top="70">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Attachments
+                    </div>
+                    <div class="panel-body">
+                        Attachments
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{/content}
+{<js-links}
+    <script src="/public/vendor/epic/js/epiceditor.js"></script>
+    <script src="/public/js/article-edit.js"></script>
+{/js-links}

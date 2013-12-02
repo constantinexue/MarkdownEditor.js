@@ -12,7 +12,8 @@
 		"dustjs-linkedin": "*",
 		"dustjs-helpers": "*",
 		"consolidate": "*",
-		"klass": "*"
+		"klass": "*",
+		"less-middleware": "*"
 	},
 	"devDependencies": {
 		"request": "*"
