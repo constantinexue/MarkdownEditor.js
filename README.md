@@ -15,7 +15,7 @@ A place for sharing articles easily
 - Online editing support, can be exported to PDF. Histories would be keep for some versions.
 - No user authorization, there are only logs for small team accountability.
 
-# REST definiations
+# REST definitions
 
 ref: http://raml.org/docs.html
 
