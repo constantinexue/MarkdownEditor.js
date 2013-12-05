@@ -1,14 +1,14 @@
 {>layout/}
 {<content}
     <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-10">
             <textarea id="content" class="hide">
-                {content|s}
             </textarea>
-            <div id="epiceditor">
-            </div>
+            <pre id="editor">
+                {content|s}
+            </pre>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-2">
             <div data-spy="affix" data-offset-top="70">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -23,6 +23,7 @@
     </div>
 {/content}
 {<js-links}
-    <script src="/public/vendor/epic/js/epiceditor.js"></script>
     <script src="/public/js/article-edit.js"></script>
+    <script src="http://cdn.bootcss.com/ace/1.1.01/ace.js"></script>
+    <script src="http://cdn.bootcss.com/ace/1.1.01/worker-javascript.js"></script>
 {/js-links}

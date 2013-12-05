@@ -13,7 +13,8 @@
 		"dustjs-helpers": "*",
 		"consolidate": "*",
 		"klass": "*",
-		"less-middleware": "*"
+		"less-middleware": "*",
+		"when": "*"
 	},
 	"devDependencies": {
 		"request": "*"
