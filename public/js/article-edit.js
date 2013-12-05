@@ -1,23 +1,23 @@
-// var editor = new EpicEditor({
-//     basePath: '/public/vendor/epic',
-//     textarea: 'content',
-//     autogrow: true,
-//     clientSideStorage: false,
-//     theme: {
-//         base: '/themes/base/epiceditor.css',
-//         preview: '/themes/preview/preview-dark.css',
-//         editor: '/themes/editor/epic-dark.css'
-//     }
-// }).load();
-// editor.enterFullscreen();
 $(function() {
     var editor = ace.edit("editor");
     editor.setFontSize(16);
+    editor.setShowPrintMargin(false);
     editor.setHighlightGutterLine(false);
     editor.setTheme("ace/theme/monokai");
     editor.getSession().setMode("ace/mode/markdown");
-    // editor.getSession().setMode("ace/mode/javascript");
-    var heightUpdateFunction = function() {
+    editor.getSession().setUseWrapMode(true);
+
+    $('#editor').css({
+        fontFamily: "consolas",
+        height: window.innerHeight - 85
+    });
+    console.log(window.innerHeight);
+    $(window).resize(function() {
+        $("#editor").height($(window).innerHeight() - 85);
+        console.log(window.innerHeight);
+    });
+
+    var expandEditorHeight = function() {
 
         // http://stackoverflow.com/questions/11584061/
         var newHeight =
@@ -32,9 +32,9 @@ $(function() {
     };
 
     // Set initial size to match initial content
-    heightUpdateFunction();
+    //expandEditorHeight();
 
     // Whenever a change happens inside the ACE editor, update
     // the size again
-    editor.getSession().on('change', heightUpdateFunction);
+    //editor.getSession().on('change', expandEditorHeight);
 });
