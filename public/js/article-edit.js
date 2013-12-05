@@ -1,4 +1,9 @@
 $(function() {
+    $("body").layout({
+        applyDefaultStyles: false
+    });
+    //$("body > .ui-layout-center").layout();
+
     var editor = ace.edit("editor");
     editor.setFontSize(16);
     editor.setShowPrintMargin(false);
@@ -9,12 +14,12 @@ $(function() {
 
     $('#editor').css({
         fontFamily: "consolas",
-        height: window.innerHeight - 85
+        height: $('.ui-layout-center').height()
     });
-    console.log(window.innerHeight);
+    // console.log(window.innerHeight);
     $(window).resize(function() {
-        $("#editor").height($(window).innerHeight() - 85);
-        console.log(window.innerHeight);
+        $("#editor").height($('.ui-layout-center').height());
+        $("body").resizeAll();
     });
 
     var expandEditorHeight = function() {

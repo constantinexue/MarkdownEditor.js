@@ -21,7 +21,7 @@
     </div>
 {/content}
 {<js-links}
-    <script src="/public/js/article-edit.js"></script>
+    <script src="./public/js/article-edit.js"></script>
     <script src="http://cdn.bootcss.com/ace/1.1.01/ace.js"></script>
     <script src="http://cdn.bootcss.com/ace/1.1.01/worker-javascript.js"></script>
 {/js-links}
