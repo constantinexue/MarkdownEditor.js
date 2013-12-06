@@ -1,3 +1,11 @@
+var express = require('express'),
+    http = require('http'),
+    path = require('path'),
+    fs = require('fs'),
+    marked = require('marked'),
+    _ = require('underscore'),
+    _s = require('underscore.string');
+_.mixin(_s.exports());
 $(function() {
     var mainLayout = null,
         editor = null;
@@ -29,7 +37,7 @@ $(function() {
         editor.setFontSize(16);
         editor.setShowPrintMargin(false);
         editor.setHighlightGutterLine(false);
-        editor.setTheme("ace/theme/monokai");
+        editor.setTheme("ace/theme/twilight");
         editor.getSession().setMode("ace/mode/markdown");
         editor.getSession().setUseWrapMode(true);
 
@@ -58,4 +66,16 @@ $(function() {
     initUILayout();
     initACE();
     adjustEditorSize();
+
+    $("#openButton").click(function() {
+        var chooser = $("#fileDialog");
+        chooser.change(function(evt) {
+            var selectedFile = $(this).val();
+            if (_.endsWith(selectedFile, '.md')) {
+                var contentMd = fs.readFileSync(this._bodyPath, 'utf8');
+            }
+        });
+
+        chooser.trigger('click');
+    });
 });
