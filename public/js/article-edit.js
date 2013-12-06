@@ -40,6 +40,8 @@ $(function() {
         editor.setTheme("ace/theme/twilight");
         editor.getSession().setMode("ace/mode/markdown");
         editor.getSession().setUseWrapMode(true);
+        // console.log(editor.renderer)
+        // editor.renderer.setScrollMargin(5, 100, 0, 10);
 
         var expandEditorHeight = function() {
 
@@ -76,6 +78,7 @@ $(function() {
                 console.log(contentMd);
                 editor.selectAll();
                 editor.insert(contentMd);
+                editor.gotoLine(0);
             }
         });
 
