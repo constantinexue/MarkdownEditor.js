@@ -14,6 +14,10 @@ pre {
     margin: 0;
 }
 
+#editor {
+    font-family: "consolas";
+}
+
 /*  
  三种必备样式为：  
  paneClass:    "ui-layout-pane" 窗格样式  
