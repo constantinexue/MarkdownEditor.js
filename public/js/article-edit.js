@@ -72,7 +72,10 @@ $(function() {
         chooser.change(function(evt) {
             var selectedFile = $(this).val();
             if (_.endsWith(selectedFile, '.md')) {
-                var contentMd = fs.readFileSync(this._bodyPath, 'utf8');
+                var contentMd = fs.readFileSync(selectedFile, 'utf8');
+                console.log(contentMd);
+                editor.selectAll();
+                editor.insert(contentMd);
             }
         });
 
