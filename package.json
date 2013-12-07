@@ -19,5 +19,13 @@
 	},
 	"devDependencies": {
 		"request": "*"
+	},
+	"window": {
+		"title": "Packled Pepper Markdown Editor",
+		"width": 1024,
+		"height": 768,
+		"position": "center",
+		"min_width": 1024,
+		"min_height": 768
 	}
 }
