@@ -78,3 +78,18 @@ version: v1
 - Saves and save as a file.
 - Provides a settings UI to change preference.
 - Builds for Windows, MAC and Ubuntu.
+
+### v0.1.1
+
+- Attachments(Images) support.
+- Publishes to PDF and its settings.
+- Editing with synchronized previewing.
+- Spelling check support.
+- Histories opened files.
+- Multi preview themes support.
+- Multi editing themes support.
+
+### v0.1.2
+
+- Supports both ACE and CodeMirror.
+- 

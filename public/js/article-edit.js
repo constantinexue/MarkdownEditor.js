@@ -8,13 +8,12 @@ var express = require('express'),
 _.mixin(_s.exports());
 $(function() {
     var mainLayout = null,
-        editor = null;
+        editor = null,
+        $editor = $('#editor');
     // Makes editor fulfill with layout-center
     var adjustEditorSize = function(height) {
-        $('#editor').css({
-            height: mainLayout.state.center.innerHeight - 20
-        });
-        editor.resize(true);
+        $editor.height(mainLayout.state.center.innerHeight);
+        editor.resize();
     };
     var initUILayout = function() {
         mainLayout = $("body").layout({
@@ -65,38 +64,41 @@ $(function() {
         //editor.getSession().on('change', expandEditorHeight);
     };
 
+    var initCommands = function() {
+        var $openFileDialog = $("#openFileDialog"),
+            $saveFileDialog = $("#saveFileDialog");
+        var onDialogChanged = function($dialog, callback) {
+            $dialog.change(function(evt) {
+                var selectedFile = $(this).val();
+                if (_.endsWith(selectedFile, '.md')) {
+                    callback(selectedFile);
+                }
+
+                // The DOM of file must be reset for next choosing.
+                $(this).val('');
+            });
+        };
+        onDialogChanged($openFileDialog, function(selectedFile) {
+            var content = fs.readFileSync(selectedFile, 'utf8');
+            var doc = editor.getSession().getDocument();
+            doc.setValue(content);
+            editor.gotoLine(0);
+        });
+        onDialogChanged($saveFileDialog, function(selectedFile) {
+            var doc = editor.getSession().getDocument();
+            var content = doc.getValue();
+            fs.writeFileSync(selectedFile, content);
+        });
+        $("#openButton").click(function() {
+            $openFileDialog.trigger('click');
+        });
+        $('#saveButton').click(function() {
+            $saveFileDialog.trigger('click');
+        });
+    };
+
     initUILayout();
     initACE();
+    initCommands();
     adjustEditorSize();
-
-    $("#openButton").click(function() {
-        var chooser = $("#openFileDialog");
-        chooser.change(function(evt) {
-            var selectedFile = $(this).val();
-            if (_.endsWith(selectedFile, '.md')) {
-                var content = fs.readFileSync(selectedFile, 'utf8');
-                // editor.selectAll();
-                // editor.insert(contentMd);
-                var doc = editor.getSession().getDocument();
-                doc.setValue(content);
-                editor.gotoLine(0);
-            }
-        });
-
-        chooser.trigger('click');
-    });
-
-    $('#saveButton').click(function() {
-        var chooser = $("#saveFileDialog");
-        chooser.change(function(evt) {
-            var selectedFile = $(this).val();
-            if (_.endsWith(selectedFile, '.md')) {
-                var doc = editor.getSession().getDocument();
-                var content = doc.getValue();
-                fs.writeFileSync(selectedFile, content);
-            }
-        });
-
-        chooser.trigger('click');
-    });
 });
