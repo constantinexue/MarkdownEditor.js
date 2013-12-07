@@ -15,7 +15,8 @@
 		"consolidate": "*",
 		"klass": "*",
 		"less-middleware": "*",
-		"when": "*"
+		"when": "*",
+		"js-beautify": "*"
 	},
 	"devDependencies": {
 		"request": "*"

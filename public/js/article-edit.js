@@ -14,6 +14,7 @@ $(function() {
     // Makes editor fulfill with layout-center
     var adjustEditorSize = function(height) {
         $editor.height(mainLayout.state.center.innerHeight);
+        $('iframe').attr('height', mainLayout.state.center.innerHeight + "px");
         editor.resize();
     };
     var initUILayout = function() {
@@ -64,6 +65,12 @@ $(function() {
         // the size again
         //editor.getSession().on('change', expandEditorHeight);
     };
+    var openFile = function(selectedFile) {
+        var content = fs.readFileSync(selectedFile, 'utf8');
+        var doc = editor.getSession().getDocument();
+        doc.setValue(content);
+        editor.gotoLine(0);
+    };
 
     var initCommands = function() {
         var $openFileDialog = $("#openFileDialog"),
@@ -79,12 +86,7 @@ $(function() {
                 $(this).val('');
             });
         };
-        onDialogChanged($openFileDialog, function(selectedFile) {
-            var content = fs.readFileSync(selectedFile, 'utf8');
-            var doc = editor.getSession().getDocument();
-            doc.setValue(content);
-            editor.gotoLine(0);
-        });
+        onDialogChanged($openFileDialog, openFile);
         onDialogChanged($saveFileDialog, function(selectedFile) {
             var doc = editor.getSession().getDocument();
             var content = doc.getValue();
@@ -136,8 +138,15 @@ $(function() {
             var doc = editor.getSession().getDocument();
             var content = doc.getValue();
             md2html(content).then(function(html) {
-                htmlContainer.text(html);
+                //var codeBlock = htmlContainer.find('iframe').contents().find('code'); //;
+                var t = window.frames["iframe-html"].document;
+                console.log(t);
+                t.showHtml(html);
+                //codeBlock.text(html);
                 activateContainer(htmlContainer);
+                // htmlContainer.find('code').each(function(i, e) {
+                //     hljs.highlightBlock(e);
+                // });
             });
         });
         markdownButton.click();
@@ -161,4 +170,5 @@ $(function() {
     initContainers();
     adjustEditorSize();
     editor.focus();
+    openFile("D:\\projects\\github\\packled-papper.js\\README.md");
 });
