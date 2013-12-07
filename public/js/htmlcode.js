@@ -8,5 +8,8 @@ $(function() {
         $('code').each(function(i, e) {
             hljs.highlightBlock(e);
         });
+        $('body').css({
+            backgroundColor: $('code').css('background-color')
+        });
     }
 });

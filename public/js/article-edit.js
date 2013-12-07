@@ -128,6 +128,7 @@ $(function() {
         markdownButton.click(function() {
             activateButton($(this));
             activateContainer(markdownContainer);
+            editor.focus();
         });
         previewButton.click(function() {
             activateButton($(this));
@@ -138,15 +139,9 @@ $(function() {
             var doc = editor.getSession().getDocument();
             var content = doc.getValue();
             md2html(content).then(function(html) {
-                //var codeBlock = htmlContainer.find('iframe').contents().find('code'); //;
-                var t = window.frames["iframe-html"].document;
-                console.log(t);
-                t.showHtml(html);
-                //codeBlock.text(html);
+                var htmlFrameDocument = window.frames["iframe-html"].document;
+                htmlFrameDocument.showHtml(html);
                 activateContainer(htmlContainer);
-                // htmlContainer.find('code').each(function(i, e) {
-                //     hljs.highlightBlock(e);
-                // });
             });
         });
         markdownButton.click();
