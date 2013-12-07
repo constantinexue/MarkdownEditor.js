@@ -5,24 +5,34 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title></title>
-    <!-- <link rel='stylesheet' href='http://cdn.bootcss.com/twitter-bootstrap/3.0.2/css/bootstrap.min.css' /> -->
-    <link href="public/css/bootswatch.css" rel="stylesheet" />
+    <link rel='stylesheet' href='http://cdn.bootcss.com/twitter-bootstrap/3.0.2/css/bootstrap.min.css' />
+    <!-- <link href="public/css/bootswatch.css" rel="stylesheet" /> -->
     <link rel='stylesheet' href='public/css/main.css' />
 </head>
 <body>
     <div class="ui-layout-north">
-        <nav class="navbar navbar-default navbar-static-top" role="navigation">
+        <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">Brand</a>
             </div>
-            <ul class="nav navbar-nav">
-                <li><a id="openButton" href="#">Open</a></li>
-                <li><a id="saveButton" href="#">Save</a></li>
-            </ul>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a id="openButton" href="#">Open</a></li>
+                    <li><a id="saveButton" href="#">Save</a></li>
+                    <li><a id="button-markdown" href="javascript:;">Markdown</a></li>
+                    <li><a id="button-preview" href="javascript:;">Preview</a></li>
+                    <li><a id="button-html" href="javascript:;">HTML</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a id="settingButton" href="#">Setting</a></li>
+                </ul>
+            </div>
         </nav>
     </div>
     <div class="ui-layout-center">
         <div id="editor"></div>
+        <div id="container-preview"></div>
+        <div id="container-html"></div>
     </div>
     <div class="ui-layout-east">
         <div class="panel panel-default">

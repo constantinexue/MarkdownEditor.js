@@ -4,7 +4,8 @@ var express = require('express'),
     fs = require('fs'),
     marked = require('marked'),
     _ = require('underscore'),
-    _s = require('underscore.string');
+    _s = require('underscore.string'),
+    when = require('when');
 _.mixin(_s.exports());
 $(function() {
     var mainLayout = null,
@@ -97,8 +98,67 @@ $(function() {
         });
     };
 
+    var initContainers = function() {
+        var previewContainer = $("#container-preview"),
+            htmlContainer = $("#container-html"),
+            markdownContainer = $('#editor'),
+            markdownButton = $('#button-markdown'),
+            previewButton = $('#button-preview'),
+            htmlButton = $('#button-html'),
+            activeContainer = null,
+            activeButton = null;
+        previewContainer.hide();
+        htmlContainer.hide();
+        var activateButton = function(button) {
+            if (activeButton) {
+                activeButton.parent().removeClass('active');
+            }
+            activeButton = button;
+            activeButton.parent().addClass('active');
+        };
+        var activateContainer = function(container) {
+            if (activeContainer) {
+                activeContainer.hide();
+            }
+            activeContainer = container;
+            activeContainer.show();
+        };
+        markdownButton.click(function() {
+            activateButton($(this));
+            activateContainer(markdownContainer);
+        });
+        previewButton.click(function() {
+            activateButton($(this));
+            activateContainer(previewContainer);
+        });
+        htmlButton.click(function() {
+            activateButton($(this));
+            var doc = editor.getSession().getDocument();
+            var content = doc.getValue();
+            md2html(content).then(function(html) {
+                htmlContainer.text(html);
+                activateContainer(htmlContainer);
+            });
+        });
+        markdownButton.click();
+    };
+
+    var md2html = function(md) {
+        var deferred = when.defer();
+        marked(md, function(err, html) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(html);
+            }
+        });
+        return deferred.promise;
+    };
+
     initUILayout();
     initACE();
     initCommands();
+    initContainers();
     adjustEditorSize();
+    editor.focus();
 });
