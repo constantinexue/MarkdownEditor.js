@@ -12,7 +12,7 @@ $(function() {
     // Makes editor fulfill with layout-center
     var adjustEditorSize = function(height) {
         $('#editor').css({
-            height: mainLayout.state.center.innerHeight
+            height: mainLayout.state.center.innerHeight - 20
         });
         editor.resize(true);
     };
@@ -70,15 +70,30 @@ $(function() {
     adjustEditorSize();
 
     $("#openButton").click(function() {
-        var chooser = $("#fileDialog");
+        var chooser = $("#openFileDialog");
         chooser.change(function(evt) {
             var selectedFile = $(this).val();
             if (_.endsWith(selectedFile, '.md')) {
-                var contentMd = fs.readFileSync(selectedFile, 'utf8');
-                console.log(contentMd);
-                editor.selectAll();
-                editor.insert(contentMd);
+                var content = fs.readFileSync(selectedFile, 'utf8');
+                // editor.selectAll();
+                // editor.insert(contentMd);
+                var doc = editor.getSession().getDocument();
+                doc.setValue(content);
                 editor.gotoLine(0);
+            }
+        });
+
+        chooser.trigger('click');
+    });
+
+    $('#saveButton').click(function() {
+        var chooser = $("#saveFileDialog");
+        chooser.change(function(evt) {
+            var selectedFile = $(this).val();
+            if (_.endsWith(selectedFile, '.md')) {
+                var doc = editor.getSession().getDocument();
+                var content = doc.getValue();
+                fs.writeFileSync(selectedFile, content);
             }
         });
 

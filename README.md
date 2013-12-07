@@ -69,3 +69,12 @@ version: v1
     - ui-design-button.jpg
     - ui-design-menu.jpg
 ```
+
+## Road Map
+
+### v0.1.0
+
+- Opens a md file and view it with markdown mode, preview mode and HTML mode.
+- Saves and save as a file.
+- Provides a settings UI to change preference.
+- Builds for Windows, MAC and Ubuntu.
