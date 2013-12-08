@@ -19,7 +19,13 @@
 		"js-beautify": "*"
 	},
 	"devDependencies": {
-		"request": "*"
+		"request": "*",
+		"grunt": "*",
+		"grunt-contrib-less": "*",
+		"grunt-dustjs": "*",
+		"grunt-contrib-clean": "*",
+		"grunt-contrib-jshint": "*",
+		"grunt-dust-html": "*"
 	},
 	"window": {
 		"title": "Packled Pepper Markdown Editor",
