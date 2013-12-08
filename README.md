@@ -78,8 +78,9 @@ version: v1
 - Saves and save as a file.
 - Provides a settings UI to change preference.
 - Builds for Windows, MAC and Ubuntu.
+- Thanks for dependencies and references.
 
-### v0.1.1
+### v0.2.0
 
 - Attachments(Images) support.
 - Publishes to PDF and its settings.
@@ -89,7 +90,7 @@ version: v1
 - Multi preview themes support.
 - Multi editing themes support.
 
-### v0.1.2
+### v0.3.0
 
 - Supports both ACE and CodeMirror.
 - 

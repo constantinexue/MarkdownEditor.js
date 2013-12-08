@@ -9,7 +9,15 @@ div.container-full {
 .navbar {
     margin-bottom: 0;
 }
-
+.navbar-inverse .navbar-nav>li>a {
+    font-size: 24px;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    padding-left: 0px;
+    padding-right: 0px;
+    width: 50px;
+    text-align: center;
+}
 .navbar-inverse .navbar-nav>li>a:hover {
     background-color: #333;
 }
