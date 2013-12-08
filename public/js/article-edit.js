@@ -102,15 +102,15 @@ $(function() {
 
     var initContainers = function() {
         var previewContainer = $("#container-preview"),
-            htmlContainer = $("#container-html"),
+            htmlcodeContainer = $("#container-htmlcode"),
             markdownContainer = $('#editor'),
             markdownButton = $('#button-markdown'),
             previewButton = $('#button-preview'),
-            htmlButton = $('#button-html'),
+            htmlcodeButton = $('#button-html'),
             activeContainer = null,
             activeButton = null;
         previewContainer.hide();
-        htmlContainer.hide();
+        htmlcodeContainer.hide();
         var activateButton = function(button) {
             if (activeButton) {
                 activeButton.parent().removeClass('active');
@@ -132,16 +132,22 @@ $(function() {
         });
         previewButton.click(function() {
             activateButton($(this));
-            activateContainer(previewContainer);
+            var doc = editor.getSession().getDocument();
+            var content = doc.getValue();
+            md2html(content).then(function(html) {
+                var previewPage = window.frames["iframe-preview"].document;
+                previewPage.showPreview(html);
+                activateContainer(previewContainer);
+            });
         });
-        htmlButton.click(function() {
+        htmlcodeButton.click(function() {
             activateButton($(this));
             var doc = editor.getSession().getDocument();
             var content = doc.getValue();
             md2html(content).then(function(html) {
-                var htmlFrameDocument = window.frames["iframe-html"].document;
-                htmlFrameDocument.showHtml(html);
-                activateContainer(htmlContainer);
+                var htmlcodePage = window.frames["iframe-htmlcode"].document;
+                htmlcodePage.showHtml(html);
+                activateContainer(htmlcodeContainer);
             });
         });
         markdownButton.click();

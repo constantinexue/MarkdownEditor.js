@@ -11,5 +11,5 @@ $(function() {
         $('body').css({
             backgroundColor: $('code').css('background-color')
         });
-    }
+    };
 });
