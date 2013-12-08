@@ -171,5 +171,5 @@ $(function() {
     initContainers();
     adjustEditorSize();
     editor.focus();
-    openFile("D:\\projects\\github\\packled-papper.js\\README.md");
+    openFile("D:\\projects\\github\\packled-papper.js\\data\\example1.md");
 });
