@@ -1,7 +1,7 @@
 {
 	"name": "packled-pepper.js",
 	"version": "0.0.1",
-	"main": "index.html",
+	"main": "public/index.html",
 	"dependencies": {
 		"express": "*",
 		"jade": "*",
@@ -25,7 +25,7 @@
 		"grunt-dustjs": "*",
 		"grunt-contrib-clean": "*",
 		"grunt-contrib-jshint": "*",
-		"grunt-dust-html": "*"
+		"grunt-contrib-jade": "*"
 	},
 	"window": {
 		"title": "Packled Pepper Markdown Editor",

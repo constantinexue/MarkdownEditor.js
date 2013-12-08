@@ -64,13 +64,19 @@ module.exports = function(grunt) {
         //     }
         // },
         clean: ['public/html'],
-        dusthtml: {
-            index: {
-                src: "./src/index.dust",
-                dest: "./public/html/index.html",
+        jade: {
+            compile: {
                 options: {
-                    basePath: "./src/",
-                    whitespace: true,
+                    pretty: true,
+                    data: {
+                        nodeEnv: 'development',
+                        version: '1.0.0'
+                    }
+                },
+                files: {
+                    './public/index.html': './src/index.jade',
+                    './public/preview.html': './src/preview.jade',
+                    './public/htmlcode.html': './src/htmlcode.jade',
                 }
             }
         }
@@ -88,13 +94,13 @@ module.exports = function(grunt) {
 
     // grunt.loadNpmTasks('grunt-contrib-less');
     // grunt.loadNpmTasks('grunt-contrib-requirejs');
-    // grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-clean');
     // grunt.loadNpmTasks('grunt-contrib-jshint');
     // grunt.loadNpmTasks('grunt-mocha-cli');
     // grunt.loadNpmTasks('grunt-dustjs');
     // grunt.loadTasks('./node_modules/makara/tasks/');
-    grunt.loadNpmTasks("grunt-dust-html");
-    grunt.registerTask('default');
+    grunt.loadNpmTasks('grunt-contrib-jade');
+    grunt.registerTask('default', ['jade']);
     // grunt.registerTask('i18n', ['clean', 'makara', 'dustjs', 'clean:tmp']);
     // grunt.registerTask('build', ['jshint', 'less', 'requirejs', 'i18n']);
     // grunt.registerTask('test', ['jshint', 'mochacli', 'clean:tmp']);
