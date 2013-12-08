@@ -12,11 +12,11 @@ block files-js
     script(src='http://cdn.bootcss.com/ace/1.1.01/worker-javascript.js')
     script(src='./js/article-edit.js')
 block content
-    .ui-layout-north
-        nav.navbar.navbar-inverse.navbar-static-top(role='navigation')
-            .navbar-header
+    div.ui-layout-north
+        div.navbar.navbar-inverse.navbar-static-top(role='navigation')
+            div.navbar-header
                 a.navbar-brand(href='#') Packled Pepper
-            .collapse.navbar-collapse
+            div.collapse.navbar-collapse
                 ul.nav.navbar-nav
                     li
                         a#openButton(href='javascript:;')
@@ -40,42 +40,42 @@ block content
                     li
                         a#button-about(data-toggle='modal', data-target='#myModal', href='javascript:;')
                             i.fa.fa-info-circle.fa-fw
-    .ui-layout-center
+    div.ui-layout-center
         #editor
         #container-preview
             iframe#iframe-preview(src='preview.html', frameborder='no', border='0')
         #container-htmlcode
             iframe#iframe-htmlcode(src='htmlcode.html', frameborder='no', border='0')
-    .ui-layout-east
-        .panel.panel-default
-            .panel-heading
+    div.ui-layout-east
+        div.panel.panel-default
+            div.panel-heading
                 | Attachments
-            .panel-body
+            div.panel-body
                 | Attachments
-    .hide
+    div.hide
         input#openFileDialog(type='file', style='display: none;')
         input#saveFileDialog(type='file', nwsaveas='nwsaveas')
-    #container-modals
-        #myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
-            .modal-dialog
-                .modal-content
-                    .modal-header
+    div#container-modals
+        div#myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+            div.modal-dialog
+                div.modal-content
+                    div.modal-header
                         button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
                         h4.modal-title About Paclked Petter
-                    .modal-body
+                    div.modal-body
                         p Author
                         p
                             a(href='https://github.com/constantinexue') ConstantineXue
-                        .panel.panel-default
-                            .panel-heading
+                        div.panel.panel-default
+                            div.panel-heading
                                 | Dependencies
-                            .panel-body
+                            div.panel-body
                                 p
                                     a(href='#') ACE Editor
-                        .panel.panel-default
-                            .panel-heading
+                        div.panel.panel-default
+                            div.panel-heading
                                 | References
-                            .panel-body
+                            div.panel-body
                                 p
                                     a(href='https://stackedit.io/') StackEditor
                                 p
@@ -84,5 +84,5 @@ block content
                                     a(href='https://stackedit.io/') StackEditor
                                 p
                                     a(href='https://stackedit.io/') StackEditor
-                    .modal-footer
+                    div.modal-footer
                         button.btn.btn-primary(type='button', data-dismiss='modal') OK

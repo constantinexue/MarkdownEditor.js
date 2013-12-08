@@ -1,16 +1,10 @@
-!!! 5
-html
-	head
-		meta(charset='utf-8')
-		meta(http-equiv='X-UA-Compatible', content='IE=edge')
-		meta(name='viewport', content='width=device-width, initial-scale=1')
-		title
-		link(href='http://cdn.bootcss.com/normalize/2.1.3/normalize.css', rel='stylesheet')
-		link(href='http://cdn.bootcss.com/highlight.js/7.4/styles/default.min.css', rel='stylesheet')
-		link(href='./css/htmlcode.css', rel='stylesheet')
-	body
-		pre.
-			
-		script(src='http://cdn.bootcss.com/jquery/2.0.3/jquery.min.js')
-		script(src='http://cdn.bootcss.com/highlight.js/7.4/highlight.min.js')
-		script(src='./js/htmlcode.js')
+extend layout
+block files-css
+    link(href='http://cdn.bootcss.com/normalize/2.1.3/normalize.css', rel='stylesheet')
+    link(href='http://cdn.bootcss.com/highlight.js/7.4/styles/default.min.css', rel='stylesheet')
+    link(href='./css/htmlcode.css', rel='stylesheet')
+block files-js
+    script(src='http://cdn.bootcss.com/highlight.js/7.4/highlight.min.js')
+    script(src='./js/htmlcode.js')
+block content
+    pre.xml: code

@@ -25,7 +25,8 @@
 		"grunt-dustjs": "*",
 		"grunt-contrib-clean": "*",
 		"grunt-contrib-jshint": "*",
-		"grunt-contrib-jade": "*"
+		"grunt-contrib-jade": "*",
+		"grunt-contrib-watch": "*"
 	},
 	"window": {
 		"title": "Packled Pepper Markdown Editor",

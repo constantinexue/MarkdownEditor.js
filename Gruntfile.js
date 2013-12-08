@@ -63,7 +63,7 @@ module.exports = function(grunt) {
         //         }
         //     }
         // },
-        clean: ['public/html'],
+        clean: ['public/*.html'],
         jade: {
             compile: {
                 options: {
@@ -79,28 +79,27 @@ module.exports = function(grunt) {
                     './public/htmlcode.html': './src/htmlcode.jade',
                 }
             }
+        },
+        watch: {
+            jade: {
+                files: ['./src/*.jade'],
+                tasks: ['default'],
+                options: {
+                    interrupt: true,
+                }
+            }
         }
-        // mochacli: {
-        //     src: ['test/*.js'],
-        //     options: {
-        //         globals: ['chai'],
-        //         timeout: 6000,
-        //         ignoreLeaks: false,
-        //         ui: 'bdd',
-        //         reporter: 'spec'
-        //     }
-        // }
     });
 
     // grunt.loadNpmTasks('grunt-contrib-less');
-    // grunt.loadNpmTasks('grunt-contrib-requirejs');
+    grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-clean');
     // grunt.loadNpmTasks('grunt-contrib-jshint');
     // grunt.loadNpmTasks('grunt-mocha-cli');
     // grunt.loadNpmTasks('grunt-dustjs');
     // grunt.loadTasks('./node_modules/makara/tasks/');
     grunt.loadNpmTasks('grunt-contrib-jade');
-    grunt.registerTask('default', ['jade']);
+    grunt.registerTask('default', ['clean', 'jade']);
     // grunt.registerTask('i18n', ['clean', 'makara', 'dustjs', 'clean:tmp']);
     // grunt.registerTask('build', ['jshint', 'less', 'requirejs', 'i18n']);
     // grunt.registerTask('test', ['jshint', 'mochacli', 'clean:tmp']);
