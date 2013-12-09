@@ -43,11 +43,12 @@ block content
                         a#button-about(data-toggle='modal', data-target='#myModal', href='javascript:;')
                             i.fa.fa-info-circle.fa-fw
     div.ui-layout-center
-        #editor
+        #container-editor
+            iframe#page-editor(src='page-editor.html', frameborder='no', border='0')
         #container-preview
-            iframe#iframe-preview(src='preview.html', frameborder='no', border='0')
+            iframe#page-preview(src='preview.html', frameborder='no', border='0')
         #container-htmlcode
-            iframe#iframe-htmlcode(src='htmlcode.html', frameborder='no', border='0')
+            iframe#page-htmlcode(src='htmlcode.html', frameborder='no', border='0')
     div.ui-layout-east
         div.panel.panel-default
             div.panel-heading

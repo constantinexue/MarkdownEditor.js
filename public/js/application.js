@@ -8,7 +8,8 @@
         _ = require('underscore'),
         _s = require('underscore.string'),
         when = require('when'),
-        klass = require('klass');
+        klass = require('klass'),
+        gui = require('nw.gui');
     _.mixin(_s.exports());
 
     mde.EventEmitter = klass({
@@ -104,8 +105,10 @@
                 theme: "ace/theme/twilight",
                 wrap: true
             }, options.editor);
-            self.aceContainer = $('#' + options.editor.id);
-            self.ace = ace.edit(options.editor.id);
+            var dom = window.frames["page-editor"].document;
+            dom = dom.getElementById('editor');
+            self.aceContainer = $(dom);
+            self.ace = ace.edit(dom);
             self.ace.setFontSize(options.editor.fontSize);
             self.ace.setShowPrintMargin(false);
             self.ace.setHighlightGutterLine(false);
@@ -155,49 +158,6 @@
             dialog.trigger('click');
 
             return deferred.promise;
-        }
-    });
-    mde.Controller = klass({
-        initialize: function(view, model) {
-            var self = this;
-            self.currentFile = null;
-            self.isDirty = false;
-            self.view = view;
-            self.model = model;
-            self.view.on('openButtonClicked', function() {
-                var fn = function() {
-                    self.view.selectFile('open')
-                        .then($.proxy(self.openFile, self));
-                };
-                if (self.isDirty) {
-                    self.promptToSave()
-                        .then(function(save) {
-                            if (save) {
-                                self.view.fire('saveButtonClicked');
-                            }
-                            return;
-                        })
-                        .then(fn);
-                } else {
-                    fn();
-                }
-            }).on('saveButtonClicked', function() {
-                if (_.isNull(self.currentFile)) {
-                    // Prompt to save
-                    self.view.selectFile('save')
-                        .then(function(filename) {
-                            self.currentFile = filename;
-                            self.isDirty = true;
-                        })
-                        .then($.proxy(self.saveFile, self));
-                } else if (self.isDirty) {
-                    self.saveFile(self.currentFile);
-                } else {
-                    // No need to save
-                }
-            }).on('contentChanged', function() {
-                self.isDirty = true;
-            });
         },
         promptToSave: function() {
             var deferred = when.defer();
@@ -230,6 +190,49 @@
                 }
             });
             return deferred.promise;
+        }
+    });
+    mde.Controller = klass({
+        initialize: function(view, model) {
+            var self = this;
+            self.currentFile = null;
+            self.isDirty = false;
+            self.view = view;
+            self.model = model;
+            self.view.on('openButtonClicked', function() {
+                var fn = function() {
+                    self.view.selectFile('open')
+                        .then($.proxy(self.openFile, self));
+                };
+                if (self.isDirty) {
+                    self.view.promptToSave()
+                        .then(function(save) {
+                            if (save) {
+                                self.view.fire('saveButtonClicked');
+                            }
+                            return;
+                        })
+                        .then(fn);
+                } else {
+                    fn();
+                }
+            }).on('saveButtonClicked', function() {
+                if (_.isNull(self.currentFile)) {
+                    // Prompt to save
+                    self.view.selectFile('save')
+                        .then(function(filename) {
+                            self.currentFile = filename;
+                            self.isDirty = true;
+                        })
+                        .then($.proxy(self.saveFile, self));
+                } else if (self.isDirty) {
+                    self.saveFile(self.currentFile);
+                } else {
+                    // No need to save
+                }
+            }).on('contentChanged', function() {
+                self.isDirty = true;
+            });
         },
         openFile: function(filename) {
             var self = this;
@@ -252,17 +255,20 @@
     mde.Application = klass({
         initialize: function() {},
         startup: function(options) {
+            var win = gui.Window.get();
+            win.maximize();
+
             this.view = new mde.View(options);
             this.model = new mde.Model();
             this.controller = new mde.Controller(this.view, this.model);
+
+            win.show();
         }
     });
 })();
 $(function() {
     var app = new mde.Application();
     app.startup({
-        editor: {
-            id: 'editor'
-        }
+        editor: {}
     });
 });
