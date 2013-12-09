@@ -5,7 +5,8 @@ var express = require('express'),
     marked = require('marked'),
     _ = require('underscore'),
     _s = require('underscore.string'),
-    when = require('when');
+    when = require('when'),
+    gui = require('nw.gui');
 _.mixin(_s.exports());
 $(function() {
     var mainLayout = null,
@@ -171,5 +172,7 @@ $(function() {
     initContainers();
     adjustEditorSize();
     editor.focus();
-    openFile("D:\\projects\\github\\packled-papper.js\\data\\example1.md");
+    //openFile("D:\\projects\\github\\packled-papper.js\\data\\example1.md");
+    var win = gui.Window.get();
+    win.maximize();
 });
