@@ -7,32 +7,31 @@
         marked = require('marked'),
         _ = require('underscore'),
         _s = require('underscore.string'),
-        when = require('when');
+        when = require('when'),
+        klass = require('klass');
     _.mixin(_s.exports());
 
-    var initEventsMap = function(eventNames) {
-        var map = {};
-        $.each(eventNames, function(index, item) {
-            map[item] = $.Callbacks();
-        });
-        return map;
-    };
-    mde.EventEmitter = Class.extend({
-        init: function() {},
-        register: function(events) {
-            this._events = initEventsMap(events);
+    mde.EventEmitter = klass({
+        initialize: function() {
+            this.events = {};
         },
         on: function(name, callback) {
-            this._events[name].add(callback);
+            if (!this.events.hasOwnProperty(name)) {
+                this.events[name] = $.Callbacks();
+            }
+            this.events[name].add(callback);
             return this;
         },
         fire: function(name, param) {
-            this._events[name].fire(param);
+            if (!this.events.hasOwnProperty(name)) {
+                this.events[name] = $.Callbacks();
+            }
+            this.events[name].fire(param);
             return this;
         }
     });
-    mde.Model = Class.extend({
-        init: function() {
+    mde.Model = klass({
+        initialize: function() {
 
         },
         loadFile: function(filename) {
@@ -41,7 +40,7 @@
                 if (err) {
                     deferred.reject(err);
                 } else {
-                    deferred.resolve(html);
+                    deferred.resolve(data);
                 }
             });
             return deferred.promise;
@@ -60,68 +59,12 @@
         loadSettings: function() {},
         saveSettings: function() {}
     });
-    mde.Navbar = mde.EventEmitter.extend({
-        init: function() {
-            var self = this;
-            self._super();
-            self.openDialog = $('#dialog-open'),
-            self.saveDialog = $('#dialog-save'),
-            self.openButton = $('#button-open'),
-            self.saveButton = $('#button-save'),
-            self.saveAsButton = $('#button-saveas');
-            self.register(['openFileSelected', 'saveFileSelected']);
-            var onDialogChanged = function(dialog, callback) {
-                dialog.change(function(evt) {
-                    var selectedFile = $(this).val();
-                    if (_.endsWith(selectedFile, '.md')) {
-                        callback(selectedFile);
-                    }
-
-                    // The DOM of file must be reset for next choosing.
-                    $(this).val('');
-                });
-            };
-            onDialogChanged(self.openDialog, function(selectedFile) {
-                self.fire('openFileSelected', selectedFile);
-            });
-            onDialogChanged(self.saveDialog, function(selectedFile) {
-                self.fire('saveFileSelected', selectedFile);
-            });
-            self.openButton.click(function() {
-                self.openDialog.trigger('click');
-            });
-            self.saveButton.click(function() {
-                self.saveDialog.trigger('click');
-            });
-        }
-    });
-    mde.Editor = Class.extend({
-        init: function(id, options) {
-            var self = this;
-            options = $.extend({
-                fontSize: 14,
-                theme: "ace/theme/twilight",
-                wrap: true
-            }, options);
-            self.aceContainer = $('#' + id);
-            self.ace = ace.edit(id);
-            self.ace.setFontSize(options.fontSize);
-            self.ace.setShowPrintMargin(false);
-            self.ace.setHighlightGutterLine(false);
-            self.ace.setTheme(options.theme);
-            self.ace.getSession().setMode("ace/mode/markdown");
-            self.ace.getSession().setUseWrapMode(options.wrap);
-        },
-        resize: function(height) {
-            var self = this;
-            self.aceContainer.height(height);
-            self.ace.resize();
-        }
-    });
     mde.View = mde.EventEmitter.extend({
-        init: function(options) {
+        initialize: function(options) {
             var self = this;
-            self._super();
+            self.supr();
+
+            // Layout setting
             self.mainLayout = $("body").layout({
                 applyDefaultStyles: false,
                 defaults: {
@@ -131,44 +74,195 @@
                 center: {
                     onresize: function() {
                         // Resize editor and iframes
-                        var height = mainLayout.state.center.innerHeight;
-                        self.editor.resize(height);
+                        var height = self.mainLayout.state.center.innerHeight;
+                        self.aceContainer.height(height);
+                        self.ace.resize();
                         $('iframe').attr('height', height + "px");
                     }
                 },
                 east: {}
             });
-            self.editor = new mde.Editor(options.editorId);
-            self.register(['centerPaneResized']);
+
+            $('iframe').hide();
+
+            // Navbar commands
+            self.openDialog = $('#dialog-open'),
+            self.saveDialog = $('#dialog-save'),
+            self.openButton = $('#button-open'),
+            self.saveButton = $('#button-save'),
+            self.saveAsButton = $('#button-saveas');
+            self.openButton.click(function() {
+                self.fire('openButtonClicked');
+            });
+            self.saveButton.click(function() {
+                self.fire('saveButtonClicked');
+            });
+
+            // ACE init
+            options.editor = $.extend({
+                fontSize: 14,
+                theme: "ace/theme/twilight",
+                wrap: true
+            }, options.editor);
+            self.aceContainer = $('#' + options.editor.id);
+            self.ace = ace.edit(options.editor.id);
+            self.ace.setFontSize(options.editor.fontSize);
+            self.ace.setShowPrintMargin(false);
+            self.ace.setHighlightGutterLine(false);
+            self.ace.setTheme(options.editor.theme);
+            self.ace.getSession().setMode("ace/mode/markdown");
+            self.ace.getSession().setUseWrapMode(options.editor.wrap);
+            self.ace.on('change', function(evt) {
+                self.fire('contentChanged');
+            });
         },
         getEditor: function() {
             return this.editor;
-        }
-    });
-    mde.Controller = Class.extend({
-        init: function(view, model) {
-            view.on('openButtonClicked', function() {
-
-            }).on('saveButtonClicked', function() {
-                view.selectFileToSave()
-                    .then(function(filename) {
-                        var content = view.getContent();
-                        model.saveFile(filename, content);
-                    });
+        },
+        setContent: function(value) {
+            var self = this,
+                doc = self.ace.getSession().getDocument();
+            doc.setValue(value);
+            self.ace.gotoLine(0);
+        },
+        getContent: function() {
+            var self = this,
+                doc = self.ace.getSession().getDocument();
+            return doc.getValue();
+        },
+        selectFile: function(mode) {
+            var self = this,
+                dialog = null,
+                deferred = when.defer();
+            switch (mode) {
+                case 'open':
+                    dialog = self.openDialog;
+                    break;
+                case 'save':
+                    dialog = self.saveDialog;
+                    break;
+                default:
+                    return;
+            }
+            dialog.off('change');
+            dialog.on('change', function(evt) {
+                var selectedFile = $(this).val();
+                if (_.endsWith(selectedFile, '.md')) {
+                    deferred.resolve(selectedFile);
+                }
+                $(this).val('');
             });
+            dialog.trigger('click');
+
+            return deferred.promise;
         }
     });
-    mde.Application = Class.extend({
-        init: function() {},
+    mde.Controller = klass({
+        initialize: function(view, model) {
+            var self = this;
+            self.currentFile = null;
+            self.isDirty = false;
+            self.view = view;
+            self.model = model;
+            self.view.on('openButtonClicked', function() {
+                var fn = function() {
+                    self.view.selectFile('open')
+                        .then($.proxy(self.openFile, self));
+                };
+                if (self.isDirty) {
+                    self.promptToSave()
+                        .then(function(save) {
+                            if (save) {
+                                self.view.fire('saveButtonClicked');
+                            }
+                            return;
+                        })
+                        .then(fn);
+                } else {
+                    fn();
+                }
+            }).on('saveButtonClicked', function() {
+                if (_.isNull(self.currentFile)) {
+                    // Prompt to save
+                    self.view.selectFile('save')
+                        .then(function(filename) {
+                            self.currentFile = filename;
+                            self.isDirty = true;
+                        })
+                        .then($.proxy(self.saveFile, self));
+                } else if (self.isDirty) {
+                    self.saveFile(self.currentFile);
+                } else {
+                    // No need to save
+                }
+            }).on('contentChanged', function() {
+                self.isDirty = true;
+            });
+        },
+        promptToSave: function() {
+            var deferred = when.defer();
+            // Prompt to save change first
+            bootbox.dialog({
+                message: "You have changed the content, do you want to save it first?",
+                title: "Prompt to save",
+                closeButton: false,
+                buttons: {
+                    save: {
+                        label: "Save it now",
+                        className: "btn-success",
+                        callback: function() {
+                            deferred.resolve(true);
+                        }
+                    },
+                    notsave: {
+                        label: "Discard change",
+                        className: "btn-danger",
+                        callback: function() {
+                            deferred.resolve(false);
+                        }
+                    },
+                    cancel: {
+                        label: "Cancel",
+                        callback: function() {
+                            deferred.reject();
+                        }
+                    }
+                }
+            });
+            return deferred.promise;
+        },
+        openFile: function(filename) {
+            var self = this;
+            self.model.loadFile(filename)
+                .then(function(content) {
+                    self.currentFile = filename;
+                    self.view.setContent(content);
+                    self.isDirty = false;
+                });
+        },
+        saveFile: function() {
+            var self = this,
+                content = self.view.getContent();
+            self.model.saveFile(self.currentFile, content)
+                .then(function() {
+                    self.isDirty = false;
+                });
+        }
+    });
+    mde.Application = klass({
+        initialize: function() {},
         startup: function(options) {
             this.view = new mde.View(options);
-            this.controller = new mde.View(this.view);
+            this.model = new mde.Model();
+            this.controller = new mde.Controller(this.view, this.model);
         }
     });
 })();
 $(function() {
     var app = new mde.Application();
     app.startup({
-        editorId: 'editor'
+        editor: {
+            id: 'editor'
+        }
     });
 });
