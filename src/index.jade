@@ -21,34 +21,25 @@ block content
             div.collapse.navbar-collapse
                 ul.nav.navbar-nav
                     li
-                        a#button-open(href='javascript:;')
-                            i.fa.fa-folder-open.fa-fw
+                        a#button-open(href='javascript:;') Open
                     li
-                        a#button-save(href='javascript:;')
-                            i.fa.fa-save.fa-fw
+                        a#button-save(href='javascript:;') Save
                     li
-                        a#button-markdown(href='javascript:;')
-                            i.fa.fa-edit.fa-fw
+                        a#button-markdown(href='javascript:;') Editor
                     li
-                        a#button-preview(href='javascript:;')
-                            i.fa.fa-eye.fa-fw
+                        a#button-preview(href='javascript:;') Preview
                     li
-                        a#button-html(href='javascript:;')
-                            i.fa.fa-code.fa-fw
+                        a#button-html(href='javascript:;') HTML
                 ul.nav.navbar-nav.navbar-right
                     li
-                        a#button-setting(href='javascript:;')
-                            i.fa.fa-cog.fa-fw
+                        a#button-setting(href='javascript:;') Settings
                     li
-                        a#button-about(data-toggle='modal', data-target='#myModal', href='javascript:;')
-                            i.fa.fa-info-circle.fa-fw
+                        a#button-about(data-toggle='modal', data-target='#myModal', href='javascript:;') About
     div.ui-layout-center
-        #container-editor
-            iframe#page-editor(src='page-editor.html', frameborder='no', border='0')
-        #container-preview
-            iframe#page-preview(src='preview.html', frameborder='no', border='0')
-        #container-htmlcode
-            iframe#page-htmlcode(src='htmlcode.html', frameborder='no', border='0')
+        div#container-editor
+            div#editor
+        div#container-preview
+        div#container-htmlcode
     div.ui-layout-east
         div.panel.panel-default
             div.panel-heading

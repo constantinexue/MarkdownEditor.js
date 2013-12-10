@@ -8,6 +8,8 @@
         _ = require('underscore'),
         _s = require('underscore.string'),
         when = require('when'),
+        sequence = require('when/sequence'),
+        pipeline = require('when/pipeline'),
         klass = require('klass'),
         gui = require('nw.gui');
     _.mixin(_s.exports());
@@ -105,10 +107,8 @@
                 theme: "ace/theme/twilight",
                 wrap: true
             }, options.editor);
-            var dom = window.frames["page-editor"].document;
-            dom = dom.getElementById('editor');
-            self.aceContainer = $(dom);
-            self.ace = ace.edit(dom);
+            self.aceContainer = $('#editor');
+            self.ace = ace.edit(self.aceContainer[0]);
             self.ace.setFontSize(options.editor.fontSize);
             self.ace.setShowPrintMargin(false);
             self.ace.setHighlightGutterLine(false);
@@ -127,6 +127,7 @@
                 doc = self.ace.getSession().getDocument();
             doc.setValue(value);
             self.ace.gotoLine(0);
+            self.ace.focus();
         },
         getContent: function() {
             var self = this,
@@ -200,35 +201,39 @@
             self.view = view;
             self.model = model;
             self.view.on('openButtonClicked', function() {
-                var fn = function() {
-                    self.view.selectFile('open')
-                        .then($.proxy(self.openFile, self));
-                };
+                var promise = when.resolve();
                 if (self.isDirty) {
-                    self.view.promptToSave()
-                        .then(function(save) {
-                            if (save) {
-                                self.view.fire('saveButtonClicked');
-                            }
-                            return;
-                        })
-                        .then(fn);
-                } else {
-                    fn();
+                    promise = promise.then(function() {
+                        return self.view.promptToSave();
+                    }).then(function(save) {
+                        if (save) {
+                            self.view.fire('saveButtonClicked');
+                        }
+                        return when.resolve();
+                    });
                 }
+                promise.then(function() {
+                    return self.view.selectFile('open');
+                }).then(function(filename) {
+                    return self.openFile(filename);
+                });
             }).on('saveButtonClicked', function() {
+                var promise = when.resolve();
+                // If this is a new file, prompts user to save
                 if (_.isNull(self.currentFile)) {
-                    // Prompt to save
-                    self.view.selectFile('save')
-                        .then(function(filename) {
-                            self.currentFile = filename;
-                            self.isDirty = true;
-                        })
-                        .then($.proxy(self.saveFile, self));
-                } else if (self.isDirty) {
-                    self.saveFile(self.currentFile);
-                } else {
-                    // No need to save
+                    promise = promise.then(function() {
+                        return self.view.selectFile('save');
+                    }).then(function(filename) {
+                        self.currentFile = filename;
+                        self.isDirty = true;
+                        return when.resolve();
+                    });
+                }
+                // File need to be writen to disk if only it is dirty.
+                if (self.isDirty) {
+                    promise.then(function() {
+                        return self.saveFile(self.currentFile);
+                    });
                 }
             }).on('contentChanged', function() {
                 self.isDirty = true;
@@ -256,13 +261,69 @@
         initialize: function() {},
         startup: function(options) {
             var win = gui.Window.get();
-            win.maximize();
+            // win.maximize();
 
             this.view = new mde.View(options);
             this.model = new mde.Model();
             this.controller = new mde.Controller(this.view, this.model);
-
             win.show();
+
+            // var stage1 = function(value) {
+            //     var deferred = when.defer();
+            //     setTimeout(function() {
+            //         console.log('stage 1: ' + value);
+            //         deferred.resolve(1);
+            //     }, 2000);
+            //     return deferred.promise;
+            // };
+
+            // var stage2 = function(value) {
+            //     var deferred = when.defer();
+            //     setTimeout(function() {
+            //         console.log('stage 2: ' + value);
+            //         deferred.resolve(2);
+            //     }, 2000);
+            //     return deferred.promise;
+            // };
+            // var promises = [
+
+            //     (function(value) {
+            //         var deferred = when.defer();
+            //         setTimeout(function() {
+            //             console.log('stage 1: ' + value);
+            //             deferred.resolve(1);
+            //         }, 2000);
+            //         return deferred.promise;
+            //     })(), (function(value) {
+            //         var deferred = when.defer();
+            //         setTimeout(function() {
+            //             console.log('stage 2: ' + value);
+            //             deferred.resolve(2);
+            //         }, 1000);
+            //         return deferred.promise;
+            //     })()
+            // ];
+
+            // when.join(promises[0], promises[1]).then(function(values) {
+            //     console.log('join:\t' + values);
+            // });
+
+            // when.all(promises).then(function(values) {
+            //     console.log('all:\t' + values);
+            // });
+
+            // when.settle([stage1(4), stage2(5)]).then(function(values) {
+            //     console.log('settle:\t' + values);
+            // });
+
+            // var sequence = require('when/sequence');
+            // var pipeline = require('when/pipeline');
+            // sequence([stage1, stage2], 100).then(function(values) {
+            //     console.log('sequence:\t' + values);
+            // });
+            // pipeline([stage1, stage2], 100).then(function(values) {
+            //     console.log('pipeline:\t' + values);
+            // });;
         }
     });
 })();
