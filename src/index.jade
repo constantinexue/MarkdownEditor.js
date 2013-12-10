@@ -2,6 +2,7 @@ extend layout
 block files-css
     link(href='http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css', rel='stylesheet')
     link(href='http://cdn.bootcss.com/font-awesome/4.0.3/css/font-awesome.css', rel='stylesheet')
+    link(href="http://cdn.bootcss.com/highlight.js/7.4/styles/default.min.css", rel="stylesheet")
     link(rel='stylesheet', href='./css/main.css')
 block files-js
     script(src='http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js')
@@ -9,6 +10,7 @@ block files-js
     script(src='http://cdn.bootcss.com/ace/1.1.01/ace.js')
     script(src='http://cdn.bootcss.com/ace/1.1.01/theme-twilight.js')
     script(src='http://cdn.bootcss.com/ace/1.1.01/worker-javascript.js')
+    script(src="http://cdn.bootcss.com/highlight.js/7.4/highlight.min.js")
     script(src='./js/client.js')
     script(src='./js/application.js')
 block content
@@ -53,10 +55,11 @@ block content
         table(cellspacing='0', cellpadding='0', border='0', style='width:100%; height:100%')
             tr
                 td(style='width:50%')
-                    div#container-editor
-                        div#editor
+                    div#ace-edit
+                        
                 td(style='width:50%')
-                    div 123
+                    div#ace-code
+                        
     div.hide
         input#dialog-open(type='file')
         input#dialog-save(type='file', nwsaveas)

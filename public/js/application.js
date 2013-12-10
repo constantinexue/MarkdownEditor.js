@@ -59,6 +59,17 @@
             });
             return deferred.promise;
         },
+        md2html: function(md) {
+            var deferred = when.defer();
+            marked(md, function(err, html) {
+                if (err) {
+                    deferred.reject(err);
+                } else {
+                    deferred.resolve(html);
+                }
+            });
+            return deferred.promise;
+        },
         loadSettings: function() {},
         saveSettings: function() {}
     });
@@ -90,45 +101,79 @@
                 theme: "ace/theme/twilight",
                 wrap: true
             }, options.editor);
-            self.aceContainer = $('#editor');
-            self.ace = ace.edit(self.aceContainer[0]);
-            self.ace.setFontSize(options.editor.fontSize);
-            self.ace.setShowPrintMargin(false);
-            self.ace.setHighlightGutterLine(false);
-            self.ace.setTheme(options.editor.theme);
-            self.ace.getSession().setMode("ace/mode/markdown");
-            self.ace.getSession().setUseWrapMode(options.editor.wrap);
-            self.ace.on('change', function(evt) {
+            self.aceEditContainer = $('#ace-edit');
+            self.aceEdit = ace.edit(self.aceEditContainer[0]);
+            self.aceEdit.setFontSize(options.editor.fontSize);
+            self.aceEdit.setShowPrintMargin(false);
+            self.aceEdit.setHighlightGutterLine(false);
+            self.aceEdit.setTheme(options.editor.theme);
+            self.aceEdit.getSession().setMode("ace/mode/markdown");
+            self.aceEdit.getSession().setUseWrapMode(options.editor.wrap);
+            self.aceEdit.on('change', function(evt) {
                 self.fire('contentChanged');
             });
-            self.ace.focus();
+            self.aceEdit.focus();
+
+            self.aceCodeContainer = $('#ace-code');
+            self.aceCode = ace.edit(self.aceCodeContainer[0]);
+            self.aceCode.setFontSize(options.editor.fontSize);
+            self.aceCode.setShowPrintMargin(false);
+            self.aceCode.setHighlightGutterLine(false);
+            self.aceCode.setTheme(options.editor.theme);
+            self.aceCode.getSession().setMode("ace/mode/html");
+            self.aceCode.getSession().setUseWrapMode(options.editor.wrap);
+            self.aceCode.setReadOnly(true);
 
             self.on('windowResized', function(evt) {
                 var height = $(window).innerHeight() - $('.navbar').outerHeight();
                 $('#container-workarea').css({
                     height: height
                 });
-                self.aceContainer.height(height);
-                self.ace.resize();
+                self.aceEditContainer.height(height);
+                self.aceEdit.resize();
+                self.aceCodeContainer.height(height);
+                self.aceCode.resize();
             });
             self.fire('windowResized');
+
+            self.aceEdit.getSelection().on('changeCursor', function() {
+                self.syncCursor();
+            });
         },
-        init: function() {
+        showCode: function(html) {
             var self = this;
+            var beautify_html = require('js-beautify').html;
+            html = beautify_html(html, {
+                indent_size: 4
+            });
+            self.aceCode.getSession().getDocument().setValue(html);
+            // Sync scroll and cursor
+            self.syncCursor();
+        },
+        syncCursor: function() {
+            var self = this;
+            var editAll = self.aceEdit.getSession().getDocument().getLength(),
+                codeAll = self.aceCode.getSession().getDocument().getLength(),
+                editRow = self.aceEdit.getCursorPosition().row,
+                codeRow = parseInt(editRow * codeAll / editAll);
+            self.aceCode.scrollToLine(codeRow, true, true);
+            self.aceCode.gotoLine(codeRow, 0, true);
+            // console.log(self.aceEdit.getCursorPosition());
+            // console.log(self.aceEdit.getCursorPositionScreen());
         },
         getEditor: function() {
             return this.editor;
         },
         setContent: function(value) {
             var self = this,
-                doc = self.ace.getSession().getDocument();
+                doc = self.aceEdit.getSession().getDocument();
             doc.setValue(value);
-            self.ace.gotoLine(0);
-            self.ace.focus();
+            self.aceEdit.gotoLine(0);
+            self.aceEdit.focus();
         },
         getContent: function() {
             var self = this,
-                doc = self.ace.getSession().getDocument();
+                doc = self.aceEdit.getSession().getDocument();
             return doc.getValue();
         },
         selectFile: function(mode) {
@@ -195,6 +240,7 @@
             var self = this;
             self.currentFile = null;
             self.isDirty = false;
+            self.currentTimerId = null;
             self.view = view;
             self.model = model;
             self.view.on('openButtonClicked', function() {
@@ -234,6 +280,15 @@
                 }
             }).on('contentChanged', function() {
                 self.isDirty = true;
+                if (!_.isNull(self.currentTimerId)) {
+                    clearTimeout(self.currentTimerId);
+                }
+                self.currentTimerId = setTimeout(function() {
+                    var content = self.view.getContent();
+                    self.model.md2html(content).then(function(html) {
+                        self.view.showCode(html);
+                    });
+                }, 1000);
             });
         },
         openFile: function(filename) {
