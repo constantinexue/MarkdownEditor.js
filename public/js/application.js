@@ -67,26 +67,9 @@
             var self = this;
             self.supr();
 
-            // Layout setting
-            self.mainLayout = $("body").layout({
-                applyDefaultStyles: false,
-                defaults: {
-                    spacing_open: 0,
-                    spacing_closed: 0
-                },
-                center: {
-                    onresize: function() {
-                        // Resize editor and iframes
-                        var height = self.mainLayout.state.center.innerHeight;
-                        self.aceContainer.height(height);
-                        self.ace.resize();
-                        $('iframe').attr('height', height + "px");
-                    }
-                },
-                east: {}
+            $(window).resize(function() {
+                self.fire('windowResized');
             });
-
-            $('iframe').hide();
 
             // Navbar commands
             self.openDialog = $('#dialog-open'),
@@ -118,6 +101,20 @@
             self.ace.on('change', function(evt) {
                 self.fire('contentChanged');
             });
+            self.ace.focus();
+
+            self.on('windowResized', function(evt) {
+                var height = $(window).innerHeight() - $('.navbar').outerHeight();
+                $('#container-workarea').css({
+                    height: height
+                });
+                self.aceContainer.height(height);
+                self.ace.resize();
+            });
+            self.fire('windowResized');
+        },
+        init: function() {
+            var self = this;
         },
         getEditor: function() {
             return this.editor;
@@ -267,63 +264,6 @@
             this.model = new mde.Model();
             this.controller = new mde.Controller(this.view, this.model);
             win.show();
-
-            // var stage1 = function(value) {
-            //     var deferred = when.defer();
-            //     setTimeout(function() {
-            //         console.log('stage 1: ' + value);
-            //         deferred.resolve(1);
-            //     }, 2000);
-            //     return deferred.promise;
-            // };
-
-            // var stage2 = function(value) {
-            //     var deferred = when.defer();
-            //     setTimeout(function() {
-            //         console.log('stage 2: ' + value);
-            //         deferred.resolve(2);
-            //     }, 2000);
-            //     return deferred.promise;
-            // };
-            // var promises = [
-
-            //     (function(value) {
-            //         var deferred = when.defer();
-            //         setTimeout(function() {
-            //             console.log('stage 1: ' + value);
-            //             deferred.resolve(1);
-            //         }, 2000);
-            //         return deferred.promise;
-            //     })(), (function(value) {
-            //         var deferred = when.defer();
-            //         setTimeout(function() {
-            //             console.log('stage 2: ' + value);
-            //             deferred.resolve(2);
-            //         }, 1000);
-            //         return deferred.promise;
-            //     })()
-            // ];
-
-            // when.join(promises[0], promises[1]).then(function(values) {
-            //     console.log('join:\t' + values);
-            // });
-
-            // when.all(promises).then(function(values) {
-            //     console.log('all:\t' + values);
-            // });
-
-            // when.settle([stage1(4), stage2(5)]).then(function(values) {
-            //     console.log('settle:\t' + values);
-            // });
-
-            // var sequence = require('when/sequence');
-            // var pipeline = require('when/pipeline');
-            // sequence([stage1, stage2], 100).then(function(values) {
-            //     console.log('sequence:\t' + values);
-            // });
-            // pipeline([stage1, stage2], 100).then(function(values) {
-            //     console.log('pipeline:\t' + values);
-            // });;
         }
     });
 })();

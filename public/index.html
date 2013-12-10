@@ -5,14 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title></title>
-    <link href="http://cdn.bootcss.com/twitter-bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://cdn.bootcss.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    <!-- <link href="public/css/bootswatch.css" rel="stylesheet" />-->
     <link rel="stylesheet" href="./css/main.css">
     <script src="http://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
     <script src="http://cdn.bootcss.com/dustjs-linkedin/2.0.0/dust-full.js"></script>
-    <script src="http://cdn.bootcss.com/jquery-layout/1.3.0-rc-30.79/jquery.layout.min.js"></script>
-    <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.2/js/bootstrap.min.js"></script>
+    <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <script src="http://cdn.bootcss.com/bootbox.js/4.0.0/bootbox.min.js"></script>
     <script src="http://cdn.bootcss.com/ace/1.1.01/ace.js"></script>
     <script src="http://cdn.bootcss.com/ace/1.1.01/theme-twilight.js"></script>
@@ -21,36 +19,48 @@
     <script src="./js/application.js"></script>
   </head>
   <body>
-    <div class="ui-layout-north">
+    <div>
       <div role="navigation" class="navbar navbar-inverse navbar-static-top">
-        <div class="navbar-header"><a href="#" class="navbar-brand">MarkdownEditor.js</a></div>
+        <div class="navbar-header"><a data-toggle="modal" data-target="#myModal" href="javascript:;" class="navbar-brand">MarkdownEditor.js</a></div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
+            <li><a id="button-new" href="javascript:;">New</a></li>
             <li><a id="button-open" href="javascript:;">Open</a></li>
             <li><a id="button-save" href="javascript:;">Save</a></li>
-            <li><a id="button-markdown" href="javascript:;">Editor</a></li>
-            <li><a id="button-preview" href="javascript:;">Preview</a></li>
-            <li><a id="button-html" href="javascript:;">HTML</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">Save As<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Save as Markdown</a></li>
+                <li><a href="#">Save as HTML</a></li>
+                <li><a href="#">Save as PDF</a></li>
+              </ul>
+            </li>
             <li><a id="button-setting" href="javascript:;">Settings</a></li>
-            <li><a id="button-about" data-toggle="modal" data-target="#myModal" href="javascript:;">About</a></li>
+          </ul>
+          <ul style="margin-right:15px;" class="nav navbar-nav navbar-right">
+            <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">MODE<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Preivew</a></li>
+                <li><a href="#">HTML Code</a></li>
+                <li><a href="#">Guide</a></li>
+              </ul>
+            </li>
           </ul>
         </div>
       </div>
     </div>
-    <div class="ui-layout-center">
-      <div id="container-editor">
-        <div id="editor"></div>
-      </div>
-      <div id="container-preview"></div>
-      <div id="container-htmlcode"></div>
-    </div>
-    <div class="ui-layout-east">
-      <div class="panel panel-default">
-        <div class="panel-heading">Attachments</div>
-        <div class="panel-body">Attachments</div>
-      </div>
+    <div id="container-workarea">
+      <table cellspacing="0" cellpadding="0" border="0" style="width:100%; height:100%">
+        <tr>
+          <td style="width:50%">
+            <div id="container-editor">
+              <div id="editor"></div>
+            </div>
+          </td>
+          <td style="width:50%">
+            <div>123</div>
+          </td>
+        </tr>
+      </table>
     </div>
     <div class="hide">
       <input id="dialog-open" type="file">

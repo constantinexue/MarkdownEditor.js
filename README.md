@@ -1,7 +1,7 @@
-packled-papper.js
+MarkdownEditor.js
 =================
 
-A place for sharing articles easily
+A desktop client for editing and publishing markdown documents.
 
 ## Goals
 
