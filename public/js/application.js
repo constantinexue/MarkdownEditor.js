@@ -4,7 +4,6 @@
         http = require('http'),
         path = require('path'),
         fs = require('fs'),
-        marked = require('marked'),
         _ = require('underscore'),
         _s = require('underscore.string'),
         when = require('when'),
@@ -34,9 +33,7 @@
         }
     });
     mde.Model = klass({
-        initialize: function() {
-
-        },
+        initialize: function() {},
         loadFile: function(filename) {
             var deferred = when.defer();
             fs.readFile(filename, 'utf8', function(err, data) {
@@ -60,8 +57,18 @@
             return deferred.promise;
         },
         md2html: function(md) {
+            var r = new marked.Renderer();
+            r.code = function(code, lang) {
+                console.log(code);
+                console.log(lang);
+            };
+            r.blockquote = function(quote) {
+                console.log(quote);
+            };
             var deferred = when.defer();
-            marked(md, function(err, html) {
+            marked.parse(md, {
+                renderer: r
+            }, function(err, html) {
                 if (err) {
                     deferred.reject(err);
                 } else {
