@@ -13,7 +13,7 @@ iframe {
 }
 
 #editor {
-    font-family: "consolas";
+    font-family: "consolas", Menlo, Monaco, Consolas, 'Courier New', monospace;
     margin: 0;
     top: 0;
     bottom: 0;
@@ -23,7 +23,7 @@ iframe {
  
 #container-code {
     width: 100%;
-    font-family: "consolas";
+    font-family: "consolas", Menlo, Monaco, Consolas, 'Courier New', monospace;
     resize: none;
     white-space: pre;
     overflow: scroll;

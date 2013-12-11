@@ -20,37 +20,40 @@ block content
                 a.navbar-brand(data-toggle='modal', data-target='#myModal', href='javascript:;') MarkdownEditor.js
             div.collapse.navbar-collapse
                 ul.nav.navbar-nav
-                    li
-                        a#button-new(href='javascript:;') New
-                    li
-                        a#button-open(href='javascript:;') Open
-                    li
-                        a#button-save(href='javascript:;') Save
                     li.dropdown
                         a.dropdown-toggle(href='#', data-toggle='dropdown')
-                            | Save As
+                            | File&nbsp;
                             b.caret
                         ul.dropdown-menu
                             li
-                                a(href='#') Save as Markdown
+                                a#button-new(href='javascript:;') New
                             li
-                                a(href='#') Save as HTML
+                                a#button-open(href='javascript:;') Open
                             li
-                                a(href='#') Save as PDF
+                                a#button-save(href='javascript:;') Save
+                            li
+                                a#button-saveas(href='javascript:;') Save As
+                            li.divider
+                            li
+                                a(href='#') Export to HTML
+                            li
+                                a(href='#') Export to PDF
                     li
                         a#button-setting(href='javascript:;') Settings
                 ul.nav.navbar-nav.navbar-right(style='margin-right:15px;')
                     li.dropdown
                         a.dropdown-toggle(href='#', data-toggle='dropdown')
-                            | MODE
+                            | MODE&nbsp;
                             b.caret
                         ul.dropdown-menu
                             li
-                                a(href='#') Preivew
+                                a(href='javascript:;') Preivew
                             li
-                                a(href='#') HTML Code
+                                a(href='javascript:;') HTML Code
                             li
-                                a(href='#') Guide
+                                a(href='javascript:;') Guide
+                            li
+                                a(href='javascript:;') Turn Off
     div#container-workarea
         table(cellspacing='0', cellpadding='0', border='0', style='width:100%; height:100%')
             tr
