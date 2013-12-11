@@ -94,6 +94,7 @@
             self.saveButton.click(function() {
                 self.fire('saveButtonClicked');
             });
+            self.viewPage = $('#page-view');
 
             // ACE init
             options.editor = $.extend({
@@ -142,6 +143,8 @@
         },
         showCode: function(html) {
             var self = this;
+            // Send to view page
+            self.viewPage.contents().find('body').html(html);
             var beautify_html = require('js-beautify').html;
             html = beautify_html(html, {
                 indent_size: 4
@@ -318,6 +321,7 @@
             this.view = new mde.View(options);
             this.model = new mde.Model();
             this.controller = new mde.Controller(this.view, this.model);
+            this.controller.openFile('data/example1.md');
             win.show();
         }
     });

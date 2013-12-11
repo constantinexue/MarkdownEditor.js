@@ -75,9 +75,7 @@ module.exports = function(grunt) {
                 },
                 files: {
                     './public/index.html': './src/index.jade',
-                    './public/page-editor.html': './src/page-editor.jade',
-                    './public/preview.html': './src/preview.jade',
-                    './public/htmlcode.html': './src/htmlcode.jade',
+                    './public/page-view.html': './src/page-view.jade'
                 }
             }
         },
