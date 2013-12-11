@@ -94,6 +94,9 @@
             self.saveButton.click(function() {
                 self.fire('saveButtonClicked');
             });
+            $('#button-export-html-plain').click(function() {
+                self.fire('exportHtmlPlainButtonClick');
+            });
             self.viewPage = $('#page-view');
 
             // ACE init
@@ -167,6 +170,11 @@
             });
             self.aceCode.getSession().getDocument().setValue(html);
         },
+        getCode: function() {
+            var self = this;
+            var pageBody = self.viewPage.contents().find('html');
+            return pageBody.html();
+        },
         syncCursor: function() {
             var self = this;
             var editAll = self.aceEdit.getSession().getDocument().getLength(),
@@ -175,9 +183,6 @@
                 codeRow = parseInt(editRow * codeAll / editAll);
             self.aceCode.scrollToLine(codeRow, true, true);
             self.aceCode.gotoLine(codeRow, 0, true);
-        },
-        getEditor: function() {
-            return this.editor;
         },
         setContent: function(value) {
             var self = this,
@@ -191,10 +196,13 @@
                 doc = self.aceEdit.getSession().getDocument();
             return doc.getValue();
         },
-        selectFile: function(mode) {
+        selectFile: function(mode, type) {
             var self = this,
                 dialog = null,
                 deferred = when.defer();
+            if (_.isUndefined(type)) {
+                type = '.md';
+            }
             switch (mode) {
                 case 'open':
                     dialog = self.openDialog;
@@ -208,7 +216,7 @@
             dialog.off('change');
             dialog.on('change', function(evt) {
                 var selectedFile = $(this).val();
-                if (_.endsWith(selectedFile, '.md')) {
+                if (_.endsWith(selectedFile, type)) {
                     deferred.resolve(selectedFile);
                 }
                 $(this).val('');
@@ -304,6 +312,16 @@
                         self.view.showCode(html);
                     });
                 }, 1000);
+            }).on('exportHtmlPlainButtonClick', function() {
+                var htmlFile = null,
+                    htmlText = null;
+                self.view.selectFile('save', '.html').then(function(filename) {
+                    htmlText = self.view.getCode();
+                    htmlFile = filename;
+                    return when.resolve();
+                }).then(function() {
+                    return self.model.saveFile(htmlFile, htmlText);
+                });
             });
         },
         openFile: function(filename) {

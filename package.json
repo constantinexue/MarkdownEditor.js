@@ -1,40 +1,40 @@
 {
-	"name": "packled-pepper.js",
-	"version": "0.0.1",
-	"main": "public/index.html",
-	"dependencies": {
-		"express": "*",
-		"jade": "*",
-		"marked": "*",
-		"underscore": "*",
-		"underscore.string": "*",
-		"async": "*",
-		"fs-extra": "*",
-		"dustjs-linkedin": "*",
-		"dustjs-helpers": "*",
-		"consolidate": "*",
-		"klass": "*",
-		"less-middleware": "*",
-		"when": "*",
-		"js-beautify": "*"
-	},
-	"devDependencies": {
-		"request": "*",
-		"grunt": "*",
-		"grunt-contrib-less": "*",
-		"grunt-dustjs": "*",
-		"grunt-contrib-clean": "*",
-		"grunt-contrib-jshint": "*",
-		"grunt-contrib-jade": "*",
-		"grunt-contrib-watch": "*"
-	},
-	"window": {
-		"title": "Packled Pepper Markdown Editor",
-		"width": 1024,
-		"height": 768,
-		"position": "center",
-		"min_width": 1024,
-		"min_height": 768,
-		"show": false
-	}
+    "name": "packled-pepper.js",
+    "version": "0.0.1",
+    "main": "public/index.html",
+    "dependencies": {
+        "express": "*",
+        "jade": "*",
+        "marked": "*",
+        "underscore": "*",
+        "underscore.string": "*",
+        "async": "*",
+        "fs-extra": "*",
+        "dustjs-linkedin": "*",
+        "dustjs-helpers": "*",
+        "consolidate": "*",
+        "klass": "*",
+        "less-middleware": "*",
+        "when": "*",
+        "js-beautify": "*"
+    },
+    "devDependencies": {
+        "request": "*",
+        "grunt": "*",
+        "grunt-contrib-less": "*",
+        "grunt-dustjs": "*",
+        "grunt-contrib-clean": "*",
+        "grunt-contrib-jshint": "*",
+        "grunt-contrib-jade": "*",
+        "grunt-contrib-watch": "*"
+    },
+    "window": {
+        "title": "Packled Pepper Markdown Editor",
+        "width": 1024,
+        "height": 768,
+        "position": "center",
+        "min_width": 1024,
+        "min_height": 768,
+        "show": false
+    }
 }

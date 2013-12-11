@@ -1,9 +1,12 @@
 @base-font-size: 14px;
-@base-line-height: 20px;
+@base-line-height: 25px;
 @base-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, "Microsoft Yahei", "Simsun";
+@code-font-size: 12px;
 @code-font-family: "consolas", Menlo, Monaco, Consolas, "Courier New", monospace;
 
 body {
+    max-width: 940px;
+    margin: 0px auto 0px auto;
     padding: 0px 20px 50px 20px;
     font-family: @base-font-family;
     font-size: @base-font-size;
@@ -22,35 +25,49 @@ p {
 ul {
     font-family: @base-font-family;
     font-size: @base-font-size;
-    line-height: @base-line-height + 10;
+    line-height: @base-line-height;
     li {
         // buttlin style
     }
 }
 
 pre {
-    background-color: #ececec;
+    background-color: #F8F8F8;
     padding: 5px;
-    border: 1px solid #ccc;
+    margin: 15px auto;
+    border: 1px solid #ddd;
+    overflow: auto;
+    border-radius: 3px;
     code {
+        border: none;
+        border-radius: 0px;
         font-family: @code-font-family;
-        font-size: @base-font-size;
+        font-size: @code-font-size;
         line-height: @base-line-height;
     }
 }
 
 code {
+    background-color: #F8F8F8;
+    border: 1px solid #ddd;
+    border-radius: 3px;
     font-family: @code-font-family;
-    font-size: @base-font-size;
+    font-size: @code-font-size;
     line-height: @base-line-height;
+    padding: 2px 5px;
 }
 
 blockquote {
 
 }
 
-a {
 
+a, a code {
+    color: #4183C4;
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;        
+    }
 }
 
 img {
