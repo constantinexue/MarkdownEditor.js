@@ -153,8 +153,6 @@
                 if (ls < lh) {
                     pageBody.scrollTop(rs);
                 }
-                console.log("" + ls + ', ' + lh + ', ' + rs + ', ' + rh);
-                console.log(pageBody.scrollTop());
             });
         },
         showCode: function(html) {

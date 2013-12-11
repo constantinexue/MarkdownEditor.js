@@ -33,11 +33,22 @@ block content
                                 a#button-save(href='javascript:;') Save
                             li
                                 a#button-saveas(href='javascript:;') Save As
+                    li.dropdown
+                        a.dropdown-toggle(href='#', data-toggle='dropdown')
+                            | Export&nbsp;
+                            b.caret
+                        ul.dropdown-menu
+                            li
+                                a#button-export-html-plain(href='javascript:;') HTML Plain
+                            li
+                                a#button-export-html-folder(href='javascript:;') HTML Folder
+                            li
+                                a#button-export-html-combined(href='javascript:;') HTML Combined
+                            li
+                                a#button-export-html-allinone(href='javascript:;') HTML AllInOne
                             li.divider
                             li
-                                a(href='#') Export to HTML
-                            li
-                                a(href='#') Export to PDF
+                                a(href='javascript:;') Export to PDF
                     li
                         a#button-setting(href='javascript:;') Settings
                 ul.nav.navbar-nav.navbar-right(style='margin-right:15px;')
