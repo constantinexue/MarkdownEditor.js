@@ -144,7 +144,10 @@
         showCode: function(html) {
             var self = this;
             // Send to view page
-            self.viewPage.contents().find('body').html(html);
+            var pageBody = self.viewPage.contents().find('body');
+            pageBody.html(html);
+            console.log(pageBody.scrollTop());
+            //pageBody.scrollTop(200);
             var beautify_html = require('js-beautify').html;
             html = beautify_html(html, {
                 indent_size: 4
