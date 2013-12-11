@@ -138,7 +138,23 @@
             self.fire('windowResized');
 
             self.aceEdit.getSelection().on('changeCursor', function() {
-                self.syncCursor();
+                //self.syncCursor();
+            });
+
+            self.aceEdit.getSession().on('changeScrollTop', function(scroll) {
+                scroll = parseInt(scroll) || 0;
+                self.aceCode.getSession().setScrollTop(scroll);
+                // Get percentage
+                var pageBody = self.viewPage.contents().find('body');
+                var lh = self.aceEdit.getSession().getScreenLength() * self.aceEdit.renderer.lineHeight,
+                    ls = scroll,
+                    rh = pageBody.prop('scrollHeight'),
+                    rs = parseInt(ls * rh / lh);
+                if (ls < lh) {
+                    pageBody.scrollTop(rs);
+                }
+                console.log("" + ls + ', ' + lh + ', ' + rs + ', ' + rh);
+                console.log(pageBody.scrollTop());
             });
         },
         showCode: function(html) {
@@ -146,15 +162,12 @@
             // Send to view page
             var pageBody = self.viewPage.contents().find('body');
             pageBody.html(html);
-            console.log(pageBody.scrollTop());
-            //pageBody.scrollTop(200);
+
             var beautify_html = require('js-beautify').html;
             html = beautify_html(html, {
                 indent_size: 4
             });
             self.aceCode.getSession().getDocument().setValue(html);
-            // Sync scroll and cursor
-            self.syncCursor();
         },
         syncCursor: function() {
             var self = this;
@@ -164,8 +177,6 @@
                 codeRow = parseInt(editRow * codeAll / editAll);
             self.aceCode.scrollToLine(codeRow, true, true);
             self.aceCode.gotoLine(codeRow, 0, true);
-            // console.log(self.aceEdit.getCursorPosition());
-            // console.log(self.aceEdit.getCursorPositionScreen());
         },
         getEditor: function() {
             return this.editor;
