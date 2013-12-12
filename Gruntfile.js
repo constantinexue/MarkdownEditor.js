@@ -10,48 +10,6 @@ module.exports = function(grunt) {
         //         jshintrc: '.jshintrc'
         //     }
         // },
-        // requirejs: {
-        //     compile: {
-        //         options: {
-        //             baseUrl: 'public/js',
-        //             mainConfigFile: 'public/js/config.js',
-        //             dir: '.build/js',
-        //             optimize: 'uglify',
-        //             modules: [{
-        //                 name: 'app'
-        //             }]
-        //         }
-        //     }
-        // },,
-        // makara: {
-        //     files: ['public/templates/**/*.dust'],
-        //     options: {
-        //         contentPath: ['locales/**/*.properties']
-        //     }
-        // },
-        // dustjs: {
-        //     compile: {
-        //         files: [
-        //             {
-        //                 expand: true,
-        //                 cwd: 'tmp/',
-        //                 src: '**/*.dust',
-        //                 dest: '.build/templates',
-        //                 ext: '.js'
-        //             }
-        //         ],
-        //         options: {
-        //             fullname: function(filepath) {
-        //                 var path = require('path'),
-        //                     name = path.basename(filepath, '.dust'),
-        //                     parts = filepath.split(path.sep),
-        //                     fullname = parts.slice(3, -1).concat(name);
-
-        //                 return fullname.join(path.sep);
-        //             }
-        //         }
-        //     }
-        // },
         clean: ['./public/*.html', './public/css/*.css'],
         jade: {
             compile: {
@@ -64,7 +22,8 @@ module.exports = function(grunt) {
                 },
                 files: {
                     './public/index.html': './src/index.jade',
-                    './public/page-view.html': './src/page-view.jade'
+                    './public/page-view.html': './src/page-view.jade',
+                    './public/page-temp.html': './src/page-temp.jade'
                 }
             }
         },

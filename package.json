@@ -3,14 +3,12 @@
     "version": "0.0.2",
     "main": "public/index.html",
     "repository": "http://github.com/constantinexue/packled-papper.js",
-    "dependencies": {
-    },
+    "dependencies": {},
     "devDependencies": {
         "jade": "*",
         "request": "*",
         "grunt": "*",
         "grunt-contrib-less": "*",
-        "grunt-dustjs": "*",
         "grunt-contrib-clean": "*",
         "grunt-contrib-jshint": "*",
         "grunt-contrib-jade": "*",

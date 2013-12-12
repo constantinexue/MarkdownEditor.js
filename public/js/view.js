@@ -132,10 +132,24 @@
             self.aceCode.getSession().getDocument().setValue(html);
             self.syncScroll();
         },
-        getCode: function() {
-            var self = this;
-            var pageBody = self.viewPane.contents().find('html');
-            return pageBody.html();
+        getCode: function(style) {
+            var self = this,
+                html = self.viewPane.contents().find('html'),
+                head = html.find('head'),
+                body = html.find('body'),
+                tempHtml = $('#page-temp').contents().find('html'),
+                tempHead = tempHtml.find('head'),
+                tempBody = tempHtml.find('body');
+            tempBody.empty();
+            body.clone().appendTo(tempBody);
+            switch (style) {
+                case 'styled':
+                    // Reads css from style-default.css
+                    break;
+                default:
+                    break;
+            }
+            return tempHtml.html();
         },
         syncCursor: function() {
             var self = this;

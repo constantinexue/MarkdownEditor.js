@@ -29,11 +29,8 @@
         exportToHtml: function(filename, html) {
             var self = this,
                 deferred = when.defer();
-            html = $.parseHTML(html);
-            html = html.find('head');
-            html.each(function(index){
-                console.log($(this));
-            });
+
+            console.log(html);
             return deferred.promise;
         },
         md2html: function(md) {
@@ -45,10 +42,11 @@
                 return quote;
             };
             var options = {
-                renderer: r
+                smartypants: true
+                //renderer: r
             };
             var deferred = when.defer();
-            marked.parse(md, function(err, html) {
+            marked.parse(md, options, function(err, html) {
                 if (err) {
                     deferred.reject(err);
                 } else {

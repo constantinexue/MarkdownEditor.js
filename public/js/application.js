@@ -13,9 +13,11 @@
             self.view = new mde.View(options);
             self.model = new mde.Model();
             self.controller = new mde.Controller(self.view, self.model);
-            // self.controller.openFile('data/example1.md').then(function() {
-            //     self.controller.exportToHtml('data/example1.html');
-            // });
+            self.controller.openFile('data/example2.md');
+            setTimeout(function() {
+                    self.controller.exportToHtml('data/example2.html');
+                },
+                2000);
             win.show();
         }
     });

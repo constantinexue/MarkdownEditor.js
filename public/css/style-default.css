@@ -1,1 +1,57 @@
-body{max-width:940px;margin:0 auto;padding:0 20px 50px;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif,"Microsoft Yahei",Simsun;font-size:14px;background-color:#fff}p{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif,"Microsoft Yahei",Simsun;font-size:14px;line-height:25px}ul{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif,"Microsoft Yahei",Simsun;font-size:14px;line-height:25px}pre{background-color:#F8F8F8;padding:5px;margin:15px auto;border:1px solid #ddd;overflow:auto;border-radius:3px}pre code{border:0;border-radius:0;font-family:consolas,Menlo,Monaco,Consolas,"Courier New",monospace;font-size:12px;line-height:25px}code{background-color:#F8F8F8;border:1px solid #ddd;border-radius:3px;font-family:consolas,Menlo,Monaco,Consolas,"Courier New",monospace;font-size:12px;line-height:25px;padding:2px 5px}a,a code{color:#4183C4;text-decoration:none}a:hover,a code:hover{text-decoration:underline}hr{height:1px;border:0;border-top:1px solid #555}
+@import "normalize.css";
+body {
+  max-width: 940px;
+  margin: 0px auto 0px auto;
+  padding: 0px 20px 50px 20px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, "Microsoft Yahei", "Simsun";
+  font-size: 14px;
+  background-color: white;
+}
+p {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, "Microsoft Yahei", "Simsun";
+  font-size: 14px;
+  line-height: 25px;
+}
+ul {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, "Microsoft Yahei", "Simsun";
+  font-size: 14px;
+  line-height: 25px;
+}
+pre {
+  background-color: #F8F8F8;
+  padding: 5px;
+  margin: 15px auto;
+  border: 1px solid #ddd;
+  overflow: auto;
+  border-radius: 3px;
+}
+pre code {
+  border: none;
+  border-radius: 0px;
+  font-family: "consolas", Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-size: 12px;
+  line-height: 25px;
+}
+code {
+  background-color: #F8F8F8;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  font-family: "consolas", Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-size: 12px;
+  line-height: 25px;
+  padding: 2px 5px;
+}
+a,
+a code {
+  color: #4183C4;
+  text-decoration: none;
+}
+a:hover,
+a code:hover {
+  text-decoration: underline;
+}
+hr {
+  height: 1px;
+  border: none;
+  border-top: 1px solid #555555;
+}

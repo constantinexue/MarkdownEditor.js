@@ -84,8 +84,8 @@
         },
         exportToHtml: function(htmlFile) {
             var self = this,
-                html = self.view.getCode();
-            return self.model.exportToHtml(htmlFile, html);
+                html = self.view.getCode('styled');
+            return self.model.saveFile(htmlFile, html);
         }
     });
 })();

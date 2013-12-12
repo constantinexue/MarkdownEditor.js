@@ -5,6 +5,7 @@ block files-css
     link(rel='stylesheet', href='http://cdn.bootcss.com/highlight.js/7.4/styles/default.min.css')
     link(rel='stylesheet', href='./css/main.css')
 block files-js
+    script(src='http://cdn.bootcss.com/jquery/2.0.3/jquery.min.js')
     script(src='http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js')
     script(src='http://cdn.bootcss.com/bootbox.js/4.0.0/bootbox.min.js')
     script(src='http://cdn.bootcss.com/ace/1.1.01/ace.js')
@@ -88,6 +89,7 @@ block content
     div.hide
         input#dialog-open(type='file')
         input#dialog-save(type='file', nwsaveas)
+        iframe#page-temp(src='page-temp.html', frameborder='no', border='0')
     div#container-modals
         div#myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
             div.modal-dialog
