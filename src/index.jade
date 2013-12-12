@@ -67,22 +67,23 @@ block content
                             b.caret
                         ul.dropdown-menu
                             li
-                                a(href='javascript:;') Preivew
+                                a#button-showview(href='javascript:;') Preivew
                             li
-                                a(href='javascript:;') HTML Code
+                                a#button-showcode(href='javascript:;') HTML Code
                             li
-                                a(href='javascript:;') Guide
+                                a#button-showhelp(href='javascript:;') Guide
                             li
-                                a(href='javascript:;') Turn Off
+                                a#button-hide(href='javascript:;') Turn Off
     div#container-workarea
         table(cellspacing='0', cellpadding='0', border='0', style='width:100%; height:100%')
             tr
-                td(style='width:50%')
+                td#area-right(style='width:50%')
                     div#ace-edit
                         
-                td(style='width:50%')
-                    iframe#page-view.hide(src='page-view.html', frameborder='no', border='0')
+                td#area-left(style='width:50%')
+                    iframe#page-view(src='page-view.html', frameborder='no', border='0')
                     div#ace-code
+                    div#pane-help
                         
     div.hide
         input#dialog-open(type='file')

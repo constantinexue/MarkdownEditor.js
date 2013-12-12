@@ -23,7 +23,52 @@
         $('#button-export-html-plain').click(function() {
             self.fire('exportHtmlPlainButtonClick');
         });
-        self.viewPage = $('#page-view');
+
+        // Right panels operations
+        self.viewPane = $('#page-view');
+        self.codePane = $('#ace-code');
+        self.helpPane = $('#pane-help');
+        self.arealeft = $('#area-left');
+        var currentPaneButton = $('#button-showview');
+
+        var highlightButton = function(button) {
+            currentPaneButton.parent().removeClass('active');
+            currentPaneButton = button;
+            currentPaneButton.parent().addClass('active');
+        };
+        var setLeftPanesWidth = function(width) {
+            self.arealeft.css('width', width);
+            self.fire('windowResized');
+        };
+        $('#button-showview').click(function() {
+            self.codePane.hide();
+            self.helpPane.hide();
+            self.viewPane.show();
+            setLeftPanesWidth('50%');
+            highlightButton($(this));
+        });
+        $('#button-showcode').click(function() {
+            self.viewPane.hide();
+            self.helpPane.hide();
+            self.codePane.show();
+            setLeftPanesWidth('50%');
+            highlightButton($(this));
+        });
+        $('#button-showhelp').click(function() {
+            self.viewPane.hide();
+            self.codePane.hide();
+            self.helpPane.show();
+            setLeftPanesWidth('50%');
+            highlightButton($(this));
+        });
+        $('#button-hide').click(function() {
+            self.viewPane.hide();
+            self.codePane.hide();
+            self.helpPane.hide();
+            setLeftPanesWidth('0');
+            highlightButton($(this));
+        });
+        $('#button-showview').click();
 
         // ACE init
         options.editor = $.extend({
@@ -78,7 +123,7 @@
         showCode: function(html) {
             var self = this;
             // Send to view page
-            var pageBody = self.viewPage.contents().find('body');
+            var pageBody = self.viewPane.contents().find('body');
             pageBody.html(html);
 
             html = html_beautify(html, {
@@ -89,7 +134,7 @@
         },
         getCode: function() {
             var self = this;
-            var pageBody = self.viewPage.contents().find('html');
+            var pageBody = self.viewPane.contents().find('html');
             return pageBody.html();
         },
         syncCursor: function() {
@@ -104,7 +149,7 @@
         syncScroll: function() {
             var self = this;
             // Sync preview
-            var pageBody = self.viewPage.contents().find('body');
+            var pageBody = self.viewPane.contents().find('body');
             var lh = self.aceEdit.getSession().getScreenLength() * self.aceEdit.renderer.lineHeight,
                 ls = self.aceEdit.renderer.getScrollTop(),
                 rh = pageBody.prop('scrollHeight'),
