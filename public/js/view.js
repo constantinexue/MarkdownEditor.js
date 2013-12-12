@@ -71,17 +71,8 @@
         });
 
         self.aceEdit.getSession().on('changeScrollTop', function(scroll) {
-            scroll = parseInt(scroll) || 0;
-            self.aceCode.getSession().setScrollTop(scroll);
-            // Get percentage
-            var pageBody = self.viewPage.contents().find('body');
-            var lh = self.aceEdit.getSession().getScreenLength() * self.aceEdit.renderer.lineHeight,
-                ls = scroll,
-                rh = pageBody.prop('scrollHeight'),
-                rs = parseInt(ls * rh / lh);
-            if (ls < lh) {
-                pageBody.scrollTop(rs);
-            }
+            //scroll = parseInt(scroll) || 0;
+            self.syncScroll();
         });
     }).methods({
         showCode: function(html) {
@@ -94,6 +85,7 @@
                 indent_size: 4
             });
             self.aceCode.getSession().getDocument().setValue(html);
+            self.syncScroll();
         },
         getCode: function() {
             var self = this;
@@ -108,6 +100,24 @@
                 codeRow = parseInt(editRow * codeAll / editAll);
             self.aceCode.scrollToLine(codeRow, true, true);
             self.aceCode.gotoLine(codeRow, 0, true);
+        },
+        syncScroll: function() {
+            var self = this;
+            // Sync preview
+            var pageBody = self.viewPage.contents().find('body');
+            var lh = self.aceEdit.getSession().getScreenLength() * self.aceEdit.renderer.lineHeight,
+                ls = self.aceEdit.renderer.getScrollTop(),
+                rh = pageBody.prop('scrollHeight'),
+                rs = parseInt(ls * rh / lh);
+            if (ls < lh) {
+                pageBody.scrollTop(rs);
+            }
+            // Sync HTML code
+            rh = self.aceCode.getSession().getScreenLength() * self.aceCode.renderer.lineHeight,
+            rs = parseInt(ls * rh / lh);
+            if (ls < lh) {
+                self.aceCode.getSession().setScrollTop(rs);
+            }
         },
         setContent: function(value) {
             var self = this,
