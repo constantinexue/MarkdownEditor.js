@@ -1,1 +1,0 @@
-var mde = window.mde || {};

@@ -17,8 +17,16 @@
     <script src="http://cdn.bootcss.com/ace/1.1.01/theme-twilight.js"></script>
     <script src="http://cdn.bootcss.com/ace/1.1.01/worker-javascript.js"></script>
     <script src="http://cdn.bootcss.com/highlight.js/7.4/highlight.min.js"></script>
-    <script src="./js/marked.js"></script>
-    <script src="./js/client.js"></script>
+    <script src="http://cdn.bootcss.com/underscore.js/1.5.2/underscore-min.js"></script>
+    <script src="http://cdn.bootcss.com/underscore.string/2.3.3/underscore.string.min.js"></script>
+    <script src="http://cdn.bootcss.com/klass/1.0/klass.js"></script>
+    <script src="./vendor/when.js"></script>
+    <script src="./vendor/marked.js"></script>
+    <script src="./vendor/beautify-html.js"></script>
+    <script src="./js/core.js"></script>
+    <script src="./js/model.js"></script>
+    <script src="./js/view.js"></script>
+    <script src="./js/controller.js"></script>
     <script src="./js/application.js"></script>
   </head>
   <body>
@@ -67,8 +75,8 @@
             <div id="ace-edit"></div>
           </td>
           <td style="width:50%">
-            <iframe id="page-view" src="page-view.html" frameborder="no" border="0"></iframe>
-            <div id="ace-code" class="hide"></div>
+            <iframe id="page-view" src="page-view.html" frameborder="no" border="0" class="hide"></iframe>
+            <div id="ace-code"></div>
           </td>
         </tr>
       </table>

@@ -11,8 +11,16 @@ block files-js
     script(src='http://cdn.bootcss.com/ace/1.1.01/theme-twilight.js')
     script(src='http://cdn.bootcss.com/ace/1.1.01/worker-javascript.js')
     script(src="http://cdn.bootcss.com/highlight.js/7.4/highlight.min.js")
-    script(src='./js/marked.js')
-    script(src='./js/client.js')
+    script(src="http://cdn.bootcss.com/underscore.js/1.5.2/underscore-min.js")
+    script(src="http://cdn.bootcss.com/underscore.string/2.3.3/underscore.string.min.js")
+    script(src="http://cdn.bootcss.com/klass/1.0/klass.js")
+    script(src='./vendor/when.js')
+    script(src='./vendor/marked.js')
+    script(src='./vendor/beautify-html.js')
+    script(src='./js/core.js')
+    script(src='./js/model.js')
+    script(src='./js/view.js')
+    script(src='./js/controller.js')
     script(src='./js/application.js')
 block content
     div
@@ -73,8 +81,8 @@ block content
                     div#ace-edit
                         
                 td(style='width:50%')
-                    iframe#page-view(src='page-view.html', frameborder='no', border='0')
-                    div#ace-code.hide
+                    iframe#page-view.hide(src='page-view.html', frameborder='no', border='0')
+                    div#ace-code
                         
     div.hide
         input#dialog-open(type='file')

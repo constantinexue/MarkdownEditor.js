@@ -3,22 +3,9 @@
     "version": "0.0.1",
     "main": "public/index.html",
     "dependencies": {
-        "express": "*",
-        "jade": "*",
-        "marked": "*",
-        "underscore": "*",
-        "underscore.string": "*",
-        "async": "*",
-        "fs-extra": "*",
-        "dustjs-linkedin": "*",
-        "dustjs-helpers": "*",
-        "consolidate": "*",
-        "klass": "*",
-        "less-middleware": "*",
-        "when": "*",
-        "js-beautify": "*"
     },
     "devDependencies": {
+        "jade": "*",
         "request": "*",
         "grunt": "*",
         "grunt-contrib-less": "*",
