@@ -1,12 +1,13 @@
 extend layout
 block files-css
-    link(rel='stylesheet', href='http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css')
+    link(rel='stylesheet', href='./vendor/bootstrap.css')
+    link(rel='stylesheet', href='./vendor/bootstrap-theme.css')
     link(rel='stylesheet', href='http://cdn.bootcss.com/font-awesome/4.0.3/css/font-awesome.css')
     link(rel='stylesheet', href='http://cdn.bootcss.com/highlight.js/7.4/styles/default.min.css')
     link(rel='stylesheet', href='./css/main.css')
 block files-js
     script(src='http://cdn.bootcss.com/jquery/2.0.3/jquery.min.js')
-    script(src='http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js')
+    script(src='./vendor/bootstrap.js')
     script(src='http://cdn.bootcss.com/bootbox.js/4.0.0/bootbox.min.js')
     script(src='http://cdn.bootcss.com/ace/1.1.01/ace.js')
     script(src='http://cdn.bootcss.com/ace/1.1.01/theme-twilight.js')
@@ -25,7 +26,8 @@ block files-js
     script(src='./js/application.js')
 block content
     div
-        div.navbar.navbar-inverse.navbar-static-top(role='navigation')
+        //.navbar-inverse
+        div.navbar.navbar-default.navbar-static-top(role='navigation')
             div.navbar-header
                 a.navbar-brand(data-toggle='modal', data-target='#myModal', href='javascript:;') MarkdownEditor.js
             div.collapse.navbar-collapse

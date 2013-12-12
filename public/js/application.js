@@ -14,10 +14,10 @@
             self.model = new mde.Model();
             self.controller = new mde.Controller(self.view, self.model);
             self.controller.openFile('data/example2.md');
-            setTimeout(function() {
-                    self.controller.exportToHtml('data/example2.html');
-                },
-                2000);
+            // setTimeout(function() {
+            //         self.controller.exportToHtml('data/example2.html');
+            //     },
+            //     2000);
             win.show();
         }
     });

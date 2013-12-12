@@ -29,12 +29,9 @@ module.exports = function(grunt) {
         },
         less: {
             compile: {
-                options: {
-                    paths: ['./public/less']
-                },
                 files: {
                     './public/css/main.css': './src/less/main.less',
-                    './public/css/style-default.css': './src/less/style-default.less',
+                    './public/css/style-default.css': './src/less/style-default.less'
                 }
             }
         },

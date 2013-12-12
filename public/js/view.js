@@ -26,6 +26,7 @@
 
         // Right panels operations
         self.viewPane = $('#page-view');
+        self.tempPane = $('#page-temp');
         self.codePane = $('#ace-code');
         self.helpPane = $('#pane-help');
         self.arealeft = $('#area-left');
@@ -137,7 +138,7 @@
                 html = self.viewPane.contents().find('html'),
                 head = html.find('head'),
                 body = html.find('body'),
-                tempHtml = $('#page-temp').contents().find('html'),
+                tempHtml = self.tempPane.contents().find('html'),
                 tempHead = tempHtml.find('head'),
                 tempBody = tempHtml.find('body');
             tempBody.empty();
@@ -145,6 +146,9 @@
             switch (style) {
                 case 'styled':
                     // Reads css from style-default.css
+                    var fs = require('fs'),
+                        css = fs.readFileSync('./public/css/style-default.css', 'utf-8');
+                    tempHead.append('<style>' + css + '</style>');
                     break;
                 default:
                     break;
