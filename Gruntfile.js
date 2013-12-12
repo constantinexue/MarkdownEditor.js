@@ -22,18 +22,7 @@ module.exports = function(grunt) {
         //             }]
         //         }
         //     }
-        // },
-        // less: {
-        //     compile: {
-        //         options: {
-        //             yuicompress: true,
-        //             paths: ['public/css']
-        //         },
-        //         files: {
-        //             '.build/css/app.css': 'public/css/app.less'
-        //         }
-        //     }
-        // },
+        // },,
         // makara: {
         //     files: ['public/templates/**/*.dust'],
         //     options: {
@@ -63,7 +52,7 @@ module.exports = function(grunt) {
         //         }
         //     }
         // },
-        clean: ['public/*.html'],
+        clean: ['./public/*.html', './public/css/*.css'],
         jade: {
             compile: {
                 options: {
@@ -79,9 +68,20 @@ module.exports = function(grunt) {
                 }
             }
         },
+        less: {
+            compile: {
+                options: {
+                    paths: ['./public/less']
+                },
+                files: {
+                    './public/css/main.css': './src/less/main.less',
+                    './public/css/style-default.css': './src/less/style-default.less',
+                }
+            }
+        },
         watch: {
-            jade: {
-                files: ['./src/*.jade'],
+            compile: {
+                files: ['./src/*.jade', './src/less/*.less'],
                 tasks: ['default'],
                 options: {
                     interrupt: true,
@@ -90,7 +90,7 @@ module.exports = function(grunt) {
         }
     });
 
-    // grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-clean');
     // grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -98,7 +98,7 @@ module.exports = function(grunt) {
     // grunt.loadNpmTasks('grunt-dustjs');
     // grunt.loadTasks('./node_modules/makara/tasks/');
     grunt.loadNpmTasks('grunt-contrib-jade');
-    grunt.registerTask('default', ['clean', 'jade']);
+    grunt.registerTask('default', ['clean', 'jade', 'less']);
     // grunt.registerTask('i18n', ['clean', 'makara', 'dustjs', 'clean:tmp']);
     // grunt.registerTask('build', ['jshint', 'less', 'requirejs', 'i18n']);
     // grunt.registerTask('test', ['jshint', 'mochacli', 'clean:tmp']);

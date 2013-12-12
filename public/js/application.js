@@ -6,13 +6,16 @@
         this.name = 'Markdown.js'
     }).methods({
         startup: function(options) {
-            var win = gui.Window.get();
+            var self = this,
+                win = gui.Window.get();
             // win.maximize();
 
-            this.view = new mde.View(options);
-            this.model = new mde.Model();
-            this.controller = new mde.Controller(this.view, this.model);
-            this.controller.openFile('data/example1.md');
+            self.view = new mde.View(options);
+            self.model = new mde.Model();
+            self.controller = new mde.Controller(self.view, self.model);
+            // self.controller.openFile('data/example1.md').then(function() {
+            //     self.controller.exportToHtml('data/example1.html');
+            // });
             win.show();
         }
     });

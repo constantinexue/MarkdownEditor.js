@@ -1,7 +1,8 @@
 {
     "name": "packled-pepper.js",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "main": "public/index.html",
+    "repository": "http://github.com/constantinexue/packled-papper.js",
     "dependencies": {
     },
     "devDependencies": {

@@ -62,26 +62,30 @@
                 htmlFile = filename;
                 return when.resolve();
             }).then(function() {
-                return self.model.saveFile(htmlFile, htmlText);
+                return self.model.exportToHtml(htmlFile, htmlText);
             });
         });
     }).methods({
         openFile: function(filename) {
             var self = this;
-            self.model.loadFile(filename)
-                .then(function(content) {
-                    self.currentFile = filename;
-                    self.view.setContent(content);
-                    self.isDirty = false;
-                });
+            return self.model.loadFile(filename).then(function(content) {
+                self.currentFile = filename;
+                self.view.setContent(content);
+                self.isDirty = false;
+                return when.resolve();
+            });
         },
         saveFile: function() {
             var self = this,
                 content = self.view.getContent();
-            self.model.saveFile(self.currentFile, content)
-                .then(function() {
-                    self.isDirty = false;
-                });
+            self.model.saveFile(self.currentFile, content).then(function() {
+                self.isDirty = false;
+            });
+        },
+        exportToHtml: function(htmlFile) {
+            var self = this,
+                html = self.view.getCode();
+            return self.model.exportToHtml(htmlFile, html);
         }
     });
 })();

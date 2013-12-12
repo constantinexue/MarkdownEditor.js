@@ -26,19 +26,29 @@
             });
             return deferred.promise;
         },
+        exportToHtml: function(filename, html) {
+            var self = this,
+                deferred = when.defer();
+            html = $.parseHTML(html);
+            html = html.find('head');
+            html.each(function(index){
+                console.log($(this));
+            });
+            return deferred.promise;
+        },
         md2html: function(md) {
             var r = new marked.Renderer();
             r.code = function(code, lang) {
-                console.log(code);
-                console.log(lang);
+                return code;
             };
             r.blockquote = function(quote) {
-                console.log(quote);
+                return quote;
+            };
+            var options = {
+                renderer: r
             };
             var deferred = when.defer();
-            marked.parse(md, {
-                renderer: r
-            }, function(err, html) {
+            marked.parse(md, function(err, html) {
                 if (err) {
                     deferred.reject(err);
                 } else {
