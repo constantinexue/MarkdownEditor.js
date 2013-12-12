@@ -33,6 +33,12 @@
             console.log(html);
             return deferred.promise;
         },
+        exportToPdf: function(filename, html) {
+            // Save html to a temp file
+            // Invoke child process of phantomjs to render the temp file to pdf
+            // e.g: https://github.com/benweet/html2pdf.it/blob/master/lib/webservices/pdf.js
+            //      https://github.com/ariya/phantomjs/blob/master/examples/rasterize.js
+        },
         md2html: function(md) {
             var r = new marked.Renderer();
             r.code = function(code, lang) {
