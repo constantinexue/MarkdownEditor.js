@@ -8,7 +8,22 @@
         self.currentTimerId = null;
         self.view = view;
         self.model = model;
-        self.view.on('openButtonClicked', function() {
+        self.view.on('newButtonClicked', function() {
+            var promise = when.resolve();
+            if (self.isDirty) {
+                promise = promise.then(function() {
+                    return self.view.promptToSave();
+                }).then(function(save) {
+                    if (save) {
+                        self.view.fire('saveButtonClicked');
+                    }
+                    return when.resolve();
+                });
+            }
+            promise.then(function() {
+                return self.view.setContent('Markdown.js\n===========');
+            });
+        }).on('openButtonClicked', function() {
             var promise = when.resolve();
             if (self.isDirty) {
                 promise = promise.then(function() {
@@ -43,6 +58,17 @@
                     return self.saveFile(self.currentFile);
                 });
             }
+        }).on('saveAsButtonClicked', function() {
+            var promise = when.resolve();
+            promise = promise.then(function() {
+                return self.view.selectFile('save');
+            }).then(function(filename) {
+                self.currentFile = filename;
+                self.isDirty = true;
+                return when.resolve();
+            }).then(function() {
+                return self.saveFile(self.currentFile);
+            });
         }).on('contentChanged', function() {
             self.isDirty = true;
             if (!_.isNull(self.currentTimerId)) {

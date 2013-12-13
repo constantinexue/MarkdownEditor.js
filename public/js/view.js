@@ -11,14 +11,21 @@
         // Navbar commands
         self.openDialog = $('#dialog-open'),
         self.saveDialog = $('#dialog-save'),
+        self.newButton = $('#button-new'),
         self.openButton = $('#button-open'),
         self.saveButton = $('#button-save'),
         self.saveAsButton = $('#button-saveas');
+        self.newButton.click(function() {
+            self.fire('newButtonClicked');
+        });
         self.openButton.click(function() {
             self.fire('openButtonClicked');
         });
         self.saveButton.click(function() {
             self.fire('saveButtonClicked');
+        });
+        self.saveAsButton.click(function() {
+            self.fire('saveAsButtonClicked');
         });
         $('#button-export-html-plain').click(function() {
             self.fire('exportHtmlPlainButtonClick');
@@ -120,6 +127,11 @@
             //scroll = parseInt(scroll) || 0;
             self.syncScroll();
         });
+
+        Mousetrap.bindGlobal('ctrl+s', function(e) {
+            alert('save');
+            return false;
+        });
     }).methods({
         showCode: function(html) {
             var self = this;
@@ -183,9 +195,8 @@
             }
         },
         setContent: function(value) {
-            var self = this,
-                doc = self.aceEdit.getSession().getDocument();
-            doc.setValue(value);
+            var self = this;
+            self.aceEdit.getSession().setValue(value);
             self.aceEdit.gotoLine(0);
             self.aceEdit.focus();
         },
