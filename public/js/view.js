@@ -231,9 +231,6 @@
             var self = this,
                 dialog = null,
                 deferred = when.defer();
-            if (_.isUndefined(type)) {
-                type = '.md';
-            }
             switch (mode) {
                 case 'open':
                     dialog = self.openDialog;
@@ -244,12 +241,11 @@
                 default:
                     return;
             }
+            dialog.attr('accept', type);
             dialog.off('change');
             dialog.on('change', function(evt) {
                 var selectedFile = $(this).val();
-                if (_.str.endsWith(selectedFile, type)) {
-                    deferred.resolve(selectedFile);
-                }
+                deferred.resolve(selectedFile);
                 $(this).val('');
             });
             dialog.trigger('click');

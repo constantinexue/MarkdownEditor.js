@@ -86,7 +86,7 @@
             var self = this,
                 steps = self.getStepsOfSave();
             steps.push(function(confirmed) {
-                return self.view.selectFile('open');
+                return self.view.selectFile('open', '.md');
             });
             steps.push(function(filename) {
                 return self.openFile(filename);
@@ -99,7 +99,7 @@
             // If this is a new file, prompts user to save
             if (_.isNull(self.currentFile)) {
                 steps.push(function() {
-                    return self.view.selectFile('save');
+                    return self.view.selectFile('save', '.md');
                 });
                 steps.push(function(filename) {
                     self.changeCurrentFile(filename);
@@ -120,7 +120,7 @@
                 steps = [];
 
             steps.push(function() {
-                return self.view.selectFile('save');
+                return self.view.selectFile('save', '.md');
             });
             steps.push(function(filename) {
                 self.changeCurrentFile(filename);
