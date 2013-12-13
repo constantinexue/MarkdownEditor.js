@@ -1,7 +1,6 @@
 extend layout
 block files-css
     link(rel='stylesheet', href='./vendor/bootstrap.css')
-    link(rel='stylesheet', href='./vendor/bootstrap-theme.css')
     link(rel='stylesheet', href='http://cdn.bootcss.com/font-awesome/4.0.3/css/font-awesome.css')
     link(rel='stylesheet', href='http://cdn.bootcss.com/highlight.js/7.4/styles/default.min.css')
     link(rel='stylesheet', href='./css/main.css')
@@ -53,6 +52,13 @@ block content
                                 a#button-saveas(href='javascript:;') Save As
                     li.dropdown
                         a.dropdown-toggle(href='#', data-toggle='dropdown')
+                            | Histories&nbsp;
+                            b.caret
+                        ul.dropdown-menu
+                            li
+                                a(href='javascript:;') Empty
+                    li.dropdown
+                        a.dropdown-toggle(href='#', data-toggle='dropdown')
                             | Export&nbsp;
                             b.caret
                         ul.dropdown-menu
@@ -89,7 +95,6 @@ block content
             tr
                 td#area-right(style='width:50%')
                     div#ace-edit
-                        
                 td#area-left(style='width:50%')
                     iframe#page-view(src='page-view.html', frameborder='no', border='0')
                     div#ace-code
@@ -100,33 +105,4 @@ block content
         input#dialog-save(type='file', nwsaveas)
         iframe#page-temp(src='page-temp.html', frameborder='no', border='0')
     div#container-modals
-        div#myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
-            div.modal-dialog
-                div.modal-content
-                    div.modal-header
-                        button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
-                        h4.modal-title About Paclked Petter
-                    div.modal-body
-                        p Author
-                        p
-                            a(href='https://github.com/constantinexue') ConstantineXue
-                        div.panel.panel-default
-                            div.panel-heading
-                                | Dependencies
-                            div.panel-body
-                                p
-                                    a(href='#') ACE Editor
-                        div.panel.panel-default
-                            div.panel-heading
-                                | References
-                            div.panel-body
-                                p
-                                    a(href='https://stackedit.io/') StackEditor
-                                p
-                                    a(href='https://stackedit.io/') StackEditor
-                                p
-                                    a(href='https://stackedit.io/') StackEditor
-                                p
-                                    a(href='https://stackedit.io/') StackEditor
-                    div.modal-footer
-                        button.btn.btn-primary(type='button', data-dismiss='modal') OK
+        include partial-about

@@ -7,19 +7,22 @@ A cross-platform desktop editor for writing and publishing markdown documents.
 Feature List
 ============
 
-- [ ] **File menu**
-    - [ ] Save
-    - [ ] Save as
-    - [ ] Prompt saving change before closed.
-    - [ ] File type filter
-- [ ] **Export to HTML**
-    - [x] To plain HTML
-    - [ ] To styled HTML
-    - [ ] To styles HTML with base64 Images
+- [x] **File menu**
+    - [x] New
+    - [x] Open
+    - [x] Save
+    - [x] Save as
+- [ ] **Histories**
+    - [ ] List opened files
+    - [ ] Remove unexisted files (on openning file)
+- [ ] **Export**
+    - [x] HTML Plain
+    - [x] HTML Styled
+    - [ ] HTML Styled+Base64
+    - [ ] PDF
 - [ ] **Settings**
     - [ ] Dialog to change preferences
     - [ ] Save status and settings to localStorage
-- [ ] **Export to PDF**
 - [ ] **Shortcut**
     - [ ] For Windows & Linux
     - [ ] For MacOS
