@@ -351,8 +351,14 @@ p {
   font-size: 14px;
   line-height: 25px;
 }
-ul {
+ul,
+ol {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, "Microsoft Yahei", "Simsun";
+  font-size: 14px;
+  line-height: 25px;
+}
+ul li,
+ol li {
   font-size: 14px;
   line-height: 25px;
 }

@@ -149,6 +149,7 @@
             var self = this;
             $('#button-showview').click();
             self.newButton.click();
+            win.maximize();
             win.show();
         },
         setTitle: function(title) {
