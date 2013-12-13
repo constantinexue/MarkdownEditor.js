@@ -1,12 +1,18 @@
 (function() {
     "use strict";
+    var gui = require('nw.gui'),
+        win = gui.Window.get();
 
     mde.View = mde.EventEmitter.extend(function(options) {
         var self = this;
 
+        win.on('close', function() {
+            self.fire('windowClosing');
+        });
         $(window).resize(function() {
             self.fire('windowResized');
         });
+        self.fire('windowResized');
 
         // Navbar commands
         self.openDialog = $('#dialog-open'),
@@ -76,7 +82,6 @@
             setLeftPanesWidth('0');
             highlightButton($(this));
         });
-        $('#button-showview').click();
 
         // ACE init
         options.editor = $.extend({
@@ -117,7 +122,6 @@
             self.aceCodeContainer.height(height);
             self.aceCode.resize();
         });
-        self.fire('windowResized');
 
         self.aceEdit.getSelection().on('changeCursor', function() {
             //self.syncCursor();
@@ -128,11 +132,32 @@
             self.syncScroll();
         });
 
-        Mousetrap.bindGlobal('ctrl+s', function(e) {
-            alert('save');
-            return false;
+        var eventKeyMap = {
+            'ctrl+n': 'newButtonClicked',
+            'ctrl+o': 'openButtonClicked',
+            'ctrl+s': 'saveButtonClicked',
+            'ctrl+shift+s': 'saveAsButtonClicked'
+        };
+        $.each(eventKeyMap, function(key, value) {
+            Mousetrap.bindGlobal(key, function(e) {
+                self.fire(value);
+                return false;
+            });
         });
     }).methods({
+        init: function() {
+            var self = this;
+            $('#button-showview').click();
+            self.newButton.click();
+            win.show();
+        },
+        getWindowTitle: function() {
+            return win.title;
+        },
+        setWindowTitle: function(value) {
+            win.title = value;
+            return this;
+        },
         showCode: function(html) {
             var self = this;
             // Send to view page
@@ -265,6 +290,36 @@
                 }
             });
             return deferred.promise;
+        },
+        prompt: function(eventName) {
+            var message = '';
+            switch (eventName) {
+                case 'saved':
+                    message = 'File is saved';
+                    break;
+                case 'exported':
+                    message = 'File is exported';
+                    break;
+                default:
+                    break;
+            }
+            $.bootstrapGrowl(message, {
+                ele: 'body', // which element to append to
+                type: 'info', // (null, 'info', 'error', 'success')
+                offset: {
+                    from: 'bottom',
+                    amount: 20
+                }, // 'top', or 'bottom'
+                align: 'center', // ('left', 'right', or 'center')
+                width: 300, // (integer, or 'auto')
+                delay: 1000,
+                allow_dismiss: true,
+                stackup_spacing: 10 // spacing between consecutively stacked growls.
+            });
+        },
+        close: function() {
+            this.fire('windowClosed');
+            win.close(true);
         }
     });
 })();
