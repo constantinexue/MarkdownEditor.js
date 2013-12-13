@@ -151,12 +151,8 @@
             self.newButton.click();
             win.show();
         },
-        getWindowTitle: function() {
-            return win.title;
-        },
-        setWindowTitle: function(value) {
-            win.title = value;
-            return this;
+        setTitle: function(title) {
+            win.title = title + '- Markdown.js';
         },
         showCode: function(html) {
             var self = this;

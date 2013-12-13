@@ -17,7 +17,7 @@
         }).on('saveAsButtonClicked', function() {
             return self.onSaveAsButtonClicked();
         }).on('contentChanged', function() {
-            self.isDirty = true;
+            self.changeDirty(true);
             if (!_.isNull(self.currentTimerId)) {
                 clearTimeout(self.currentTimerId);
             }
@@ -74,9 +74,9 @@
                 steps = self.getStepsOfSave();
             steps.push(function(confirmed) {
                 if (confirmed) {
-                    self.currentFile = null;
+                    self.changeCurrentFile(null);
                     self.view.setContent('Markdown.js\n===========');
-                    self.isDirty = false;
+                    self.changeDirty(false);
                 }
                 return when.resolve(confirmed);
             });
@@ -102,8 +102,8 @@
                     return self.view.selectFile('save');
                 });
                 steps.push(function(filename) {
-                    self.currentFile = filename;
-                    self.isDirty = true;
+                    self.changeCurrentFile(filename);
+                    self.changeDirty(true);
                     return when.resolve();
                 });
             }
@@ -123,8 +123,8 @@
                 return self.view.selectFile('save');
             });
             steps.push(function(filename) {
-                self.currentFile = filename;
-                self.isDirty = true;
+                self.changeCurrentFile(filename);
+                self.changeDirty(true);
                 return when.resolve();
             });
             steps.push(function(filename) {
@@ -135,9 +135,9 @@
         openFile: function(filename) {
             var self = this;
             return self.model.loadFile(filename).then(function(content) {
-                self.currentFile = filename;
+                self.changeCurrentFile(filename);
                 self.view.setContent(content);
-                self.isDirty = false;
+                self.changeDirty(false);
                 return when.resolve(true);
             });
         },
@@ -145,7 +145,7 @@
             var self = this,
                 content = self.view.getContent();
             return self.model.saveFile(self.currentFile, content).then(function() {
-                self.isDirty = false;
+                self.changeDirty(false);
                 return when.resolve();
             }).then(function() {
                 self.view.prompt('saved');
@@ -159,6 +159,22 @@
                 self.view.prompt('exported');
                 return when.resolve(true);
             });;
+        },
+        changeCurrentFile: function(filename) {
+            this.currentFile = filename;
+            this.changeTitle();
+            return this;
+        },
+        changeDirty: function(isDirty) {
+            this.isDirty = isDirty;
+            this.changeTitle();
+            return this;
+        },
+        changeTitle: function() {
+            var fileTitle = (this.currentFile == null) ? 'New File' : this.currentFile,
+                dirtyTitle = this.isDirty ? ' * ' : ' ';
+            this.view.setTitle(fileTitle + dirtyTitle);
+            return this;
         }
     });
 })();
