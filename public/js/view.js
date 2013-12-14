@@ -153,7 +153,7 @@
             win.show();
         },
         setTitle: function(title) {
-            win.title = title + '- Markdown.js';
+            win.title = title + '- MarkdownEditor.js';
         },
         showCode: function(html) {
             var self = this;

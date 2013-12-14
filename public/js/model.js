@@ -3,13 +3,25 @@
     var path = require('path'),
         fs = require('fs');
 
-    mde.Model = klass(function() {}).methods({
+    mde.Model = mde.EventEmitter.extend(function() {}).methods({
+        getHistories: function() {
+            var jsonString = localStorage.getItem('histories');
+            try {
+                var histories = JSON.parse(jsonString);
+                return (_.isArray(histories)) ? histories : [];
+            } catch (err) {
+                localStorage.removeItem('histories');
+                return [];
+            }
+        },
         loadFile: function(filename) {
-            var deferred = when.defer();
+            var self = this,
+                deferred = when.defer();
             fs.readFile(filename, 'utf8', function(err, data) {
                 if (err) {
                     deferred.reject(err);
                 } else {
+                    self.updateHistories(filename);
                     deferred.resolve(data);
                 }
             });
@@ -21,7 +33,8 @@
                 if (err) {
                     deferred.reject(err);
                 } else {
-                    deferred.resolve();
+                    self.updateHistories(filename);
+                    deferred.resolve(true);
                 }
             });
             return deferred.promise;
@@ -62,6 +75,29 @@
             return deferred.promise;
         },
         loadSettings: function() {},
-        saveSettings: function() {}
+        saveSettings: function() {},
+        updateHistories: function(newlyFile) {
+            var histories = this.getHistories(),
+                index = -1;
+            if (_.isArray(histories)) {
+                index = _.indexOf(histories, newlyFile);
+                if (index !== -1) {
+                    // Remove it firstly
+                    histories = _.without(histories, newlyFile);
+                }
+            } else {
+                histories = [];
+            }
+            // Add to the head
+            histories.unshift(newlyFile);
+            // Keep top 10
+            histories = histories.slice(0, 10);
+            var jsonString = JSON.stringify(histories);
+            localStorage.setItem('histories', jsonString);
+
+            this.fire('historiesChanged', histories);
+
+            return when.resolve(histories);
+        }
     });
 })();

@@ -21,6 +21,8 @@ block files-js
     //- PNotify for information prompt
     script(src="http://cdn.bootcss.com/bootstrap-growl/1.0.0/jquery.bootstrap-growl.js")
 
+    script(src="http://cdn.bootcss.com/angular.js/1.2.1/angular.js")
+
     script(src='./vendor/when.js')
     script(src='./vendor/marked.js')
     script(src='./vendor/beautify-html.js')
@@ -50,13 +52,13 @@ block content
                                 a#button-save(href='javascript:;') Save
                             li
                                 a#button-saveas(href='javascript:;') Save As
-                    li.dropdown
+                    li#list-histories.dropdown
                         a.dropdown-toggle(href='#', data-toggle='dropdown')
                             | Histories&nbsp;
                             b.caret
-                        ul.dropdown-menu
-                            li
-                                a(href='javascript:;') Empty
+                        ul.dropdown-menu(ng-controller='HistoriesCtrl')
+                            li(ng-repeat='history in histories')
+                                a(href='javascript:;') {{history}}
                     li.dropdown
                         a.dropdown-toggle(href='#', data-toggle='dropdown')
                             | Export&nbsp;

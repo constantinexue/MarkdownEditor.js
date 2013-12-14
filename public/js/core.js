@@ -1,7 +1,6 @@
-var mde = window.mde || {};
 (function() {
     "use strict";
-
+    window.mde ={};
 })();
 (function() {
     "use strict";

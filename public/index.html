@@ -21,6 +21,7 @@
     <script src="http://cdn.bootcss.com/mousetrap/1.4.5/mousetrap.js"></script>
     <script src="./vendor/mousetrap-global-bind.js"></script>
     <script src="http://cdn.bootcss.com/bootstrap-growl/1.0.0/jquery.bootstrap-growl.js"></script>
+    <script src="http://cdn.bootcss.com/angular.js/1.2.1/angular.js"></script>
     <script src="./vendor/when.js"></script>
     <script src="./vendor/marked.js"></script>
     <script src="./vendor/beautify-html.js"></script>
@@ -45,9 +46,9 @@
                 <li><a id="button-saveas" href="javascript:;">Save As</a></li>
               </ul>
             </li>
-            <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">Histories&nbsp;<b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="javascript:;">Empty</a></li>
+            <li id="list-histories" class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">Histories&nbsp;<b class="caret"></b></a>
+              <ul ng-controller="HistoriesCtrl" class="dropdown-menu">
+                <li ng-repeat="history in histories"><a href="javascript:;">{{history}}</a></li>
               </ul>
             </li>
             <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">Export&nbsp;<b class="caret"></b></a>

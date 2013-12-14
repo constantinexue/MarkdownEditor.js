@@ -12,11 +12,25 @@
             self.controller = new mde.Controller(self.view, self.model);
             self.view.init();
             //self.controller.openFile('data/example2.md');
+
+            window.mvc = angular.module('mvc', []);
+            window.mvc.factory('model', function() {
+                return self.model;
+            });
+            window.mvc.controller('HistoriesCtrl', function($scope, $http, model) {
+                self.model.on('historiesChanged', function(histories) {
+                    $scope.$apply(function() {
+                        $scope.histories = histories;
+                    });
+                });
+                $scope.histories = model.getHistories();
+            });
+            angular.bootstrap('#list-histories', ['mvc']);
         }
     });
 })();
 $(function() {
-    var app = new mde.Application();
+    window.app = new mde.Application();
     app.startup({
         editor: {}
     });
