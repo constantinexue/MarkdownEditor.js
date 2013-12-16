@@ -13,8 +13,7 @@ function pullAceLibs() {
     async.eachSeries(lines, function(line, callback) {
         var index = line.lastIndexOf('/'),
             url = line,
-            filename = path.join(__dirname, '../public/js/ace', path.basename(line)),
-            puller = new Puller(line, filename);
+            filename = path.join(__dirname, '../public/js/ace', path.basename(line));
         request(url, function(err, response, body) {
             fs.writeFileSync(filename, body, 'utf8');
             callback();
