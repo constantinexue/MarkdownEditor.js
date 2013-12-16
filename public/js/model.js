@@ -14,6 +14,11 @@
                 return [];
             }
         },
+        setHistories: function(value) {
+            var jsonString = JSON.stringify(value);
+            localStorage.setItem('histories', jsonString);
+            return this;
+        },
         loadFile: function(filename) {
             var self = this,
                 deferred = when.defer();
@@ -93,9 +98,7 @@
             histories.unshift(newlyFile);
             // Keep top 10
             histories = histories.slice(0, 10);
-            var jsonString = JSON.stringify(histories);
-            localStorage.setItem('histories', jsonString);
-
+            this.setHistories(histories);
             this.fire('historiesChanged', histories);
 
             return when.resolve(histories);

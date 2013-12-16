@@ -35,7 +35,7 @@
     <div>
       <!--.navbar-inverse-->
       <div role="navigation" class="navbar navbar-default navbar-static-top">
-        <div class="navbar-header"><a data-toggle="modal" data-target="#myModal" href="javascript:;" class="navbar-brand">MarkdownEditor.js</a></div>
+        <div class="navbar-header"><a data-toggle="modal" data-target="#modal-about" href="javascript:;" class="navbar-brand">MarkdownEditor.js</a></div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">File&nbsp;<b class="caret"></b></a>
@@ -62,7 +62,7 @@
                 <li><a id="button-image" href="javascript:;">Image</a></li>
               </ul>
             </li>
-            <li><a id="button-setting" href="javascript:;">Settings</a></li>
+            <li><a id="button-setting" data-toggle="modal" data-target="#modal-settings" href="javascript:;">Settings</a></li>
           </ul>
           <ul style="margin-right:15px;" class="nav navbar-nav navbar-right">
             <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">MODE&nbsp;<b class="caret"></b></a>
@@ -97,12 +97,12 @@
       <iframe id="page-temp" src="page-temp.html" frameborder="no" border="0"></iframe>
     </div>
     <div id="container-modals">
-      <div id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" class="modal fade">
+      <div id="modal-about" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
-              <h4 class="modal-title">About Paclked Petter</h4>
+              <h4 class="modal-title">About MarkdownEditor.js</h4>
             </div>
             <div class="modal-body">
               <p>Author</p>
@@ -125,6 +125,31 @@
             </div>
             <div class="modal-footer">
               <button type="button" data-dismiss="modal" class="btn btn-primary">OK</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="modal-settings" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Settings</h4>
+            </div>
+            <div class="modal-body">
+              <ul class="nav nav-tabs">
+                <li class="active"><a href="#settings-general" data-toggle="tab">General</a></li>
+                <li><a href="#settings-styles" data-toggle="tab">Styles</a></li>
+                <li><a href="#settings-shortcuts" data-toggle="tab">Shortcuts</a></li>
+              </ul>
+              <div class="tab-content">
+                <div id="settings-general" class="tab-pane fade in active">A</div>
+                <div id="settings-styles" class="tab-pane fade">B</div>
+                <div id="settings-shortcuts" class="tab-pane fade">C</div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-success">&nbsp;&nbsp;Save&nbsp;&nbsp;</button>
+              <button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
             </div>
           </div>
         </div>

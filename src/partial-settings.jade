@@ -1,0 +1,21 @@
+div#modal-settings.modal.fade(tabindex='-1', role='dialog', aria-hidden='true', data-backdrop='static')
+    div.modal-dialog
+        div.modal-content
+            div.modal-header
+                //-button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+                h4.modal-title Settings
+            div.modal-body
+                ul.nav.nav-tabs
+                    li.active
+                        a(href='#settings-general', data-toggle='tab') General
+                    li
+                        a(href='#settings-styles', data-toggle='tab') Styles
+                    li
+                        a(href='#settings-shortcuts', data-toggle='tab') Shortcuts
+                div.tab-content
+                  div#settings-general.tab-pane.fade.in.active A
+                  div#settings-styles.tab-pane.fade B
+                  div#settings-shortcuts.tab-pane.fade C
+            div.modal-footer
+                button.btn.btn-success(type='button') &nbsp;&nbsp;Save&nbsp;&nbsp;
+                button.btn.btn-default(type='button', data-dismiss='modal') Cancel

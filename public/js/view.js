@@ -85,7 +85,7 @@
 
         // ACE init
         options.editor = $.extend({
-            fontSize: 14,
+            fontSize: 16,
             theme: "ace/theme/twilight",
             wrap: true
         }, options.editor);
