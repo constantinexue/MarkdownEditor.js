@@ -86,7 +86,7 @@
         // ACE init
         options.editor = $.extend({
             fontSize: 16,
-            theme: "ace/theme/twilight",
+            theme: "ace/theme/eclipse",
             wrap: true
         }, options.editor);
         self.aceEditContainer = $('#ace-edit');
@@ -149,6 +149,10 @@
             evt.preventDefault();
             var link = $(this).attr('href');
             gui.Shell.openExternal(link);
+        });
+        // http://stackoverflow.com/questions/15726411/how-to-use-bootstrap-select
+        $('.selectpicker').selectpicker({
+            //size: 4
         });
     }).methods({
         init: function() {

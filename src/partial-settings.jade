@@ -9,13 +9,26 @@ div#modal-settings.modal.fade(tabindex='-1', role='dialog', aria-hidden='true', 
                     li.active
                         a(href='#settings-general', data-toggle='tab') General
                     li
-                        a(href='#settings-styles', data-toggle='tab') Styles
-                    li
                         a(href='#settings-shortcuts', data-toggle='tab') Shortcuts
                 div.tab-content
-                  div#settings-general.tab-pane.fade.in.active A
-                  div#settings-styles.tab-pane.fade B
-                  div#settings-shortcuts.tab-pane.fade C
+                    div#settings-general.tab-pane.fade.in.active
+                        br
+                        form.form-horizontal(role='form')
+                            div.form-group
+                                label.col-sm-3.control-label Editor Theme
+                                div.col-sm-9
+                                    select.form-control.selectpicker
+                                        - each theme in ace.themes
+                                            option #{theme}
+                            div.form-group
+                                label.col-sm-3.control-label Editor Font Size
+                                div.col-sm-9
+                                    select.form-control.selectpicker
+                                        option 12
+                                        option 14
+                                        option 16
+                                        option 18
+                    div#settings-shortcuts.tab-pane.fade C
             div.modal-footer
                 button.btn.btn-success(type='button') &nbsp;&nbsp;Save&nbsp;&nbsp;
                 button.btn.btn-default(type='button', data-dismiss='modal') Cancel

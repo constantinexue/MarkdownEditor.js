@@ -21,6 +21,8 @@
     <script src="http://cdn.bootcss.com/mousetrap/1.4.5/mousetrap.js"></script>
     <script src="./vendor/mousetrap-global-bind.js"></script>
     <script src="http://cdn.bootcss.com/bootstrap-growl/1.0.0/jquery.bootstrap-growl.js"></script>
+    <link href="./vendor/bootstrap-select.css" rel="stylesheet">
+    <script src="./vendor/bootstrap-select.js"></script>
     <script src="http://cdn.bootcss.com/angular.js/1.2.1/angular.js"></script>
     <script src="./vendor/when.js"></script>
     <script src="./vendor/marked.js"></script>
@@ -138,12 +140,61 @@
             <div class="modal-body">
               <ul class="nav nav-tabs">
                 <li class="active"><a href="#settings-general" data-toggle="tab">General</a></li>
-                <li><a href="#settings-styles" data-toggle="tab">Styles</a></li>
                 <li><a href="#settings-shortcuts" data-toggle="tab">Shortcuts</a></li>
               </ul>
               <div class="tab-content">
-                <div id="settings-general" class="tab-pane fade in active">A</div>
-                <div id="settings-styles" class="tab-pane fade">B</div>
+                <div id="settings-general" class="tab-pane fade in active"><br>
+                  <form role="form" class="form-horizontal">
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label">Editor Theme</label>
+                      <div class="col-sm-9">
+                        <select class="form-control selectpicker">
+                          <option>ambiance</option>
+                          <option>chaos</option>
+                          <option>chrome</option>
+                          <option>clouds</option>
+                          <option>clouds_midnight</option>
+                          <option>cobalt</option>
+                          <option>crimson_editor</option>
+                          <option>dawn</option>
+                          <option>dreamweaver</option>
+                          <option>eclipse</option>
+                          <option>github</option>
+                          <option>idle_fingers</option>
+                          <option>kr_theme</option>
+                          <option>merbivore</option>
+                          <option>merbivore_soft</option>
+                          <option>monokai</option>
+                          <option>mono_industrial</option>
+                          <option>pastel_on_dark</option>
+                          <option>solarized_dark</option>
+                          <option>solarized_light</option>
+                          <option>terminal</option>
+                          <option>textmate</option>
+                          <option>tomorrow</option>
+                          <option>tomorrow_night</option>
+                          <option>tomorrow_night_blue</option>
+                          <option>tomorrow_night_bright</option>
+                          <option>tomorrow_night_eighties</option>
+                          <option>twilight</option>
+                          <option>vibrant_ink</option>
+                          <option>xcode</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-3 control-label">Editor Font Size</label>
+                      <div class="col-sm-9">
+                        <select class="form-control selectpicker">
+                          <option>12</option>
+                          <option>14</option>
+                          <option>16</option>
+                          <option>18</option>
+                        </select>
+                      </div>
+                    </div>
+                  </form>
+                </div>
                 <div id="settings-shortcuts" class="tab-pane fade">C</div>
               </div>
             </div>
