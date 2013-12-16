@@ -24,8 +24,11 @@
                     });
                 });
                 $scope.histories = model.getHistories();
+                $scope.openFile = function(filename) {
+                    self.controller.tryToOpenFile(filename);
+                };
             });
-            angular.bootstrap('#list-histories', ['mvc']);
+            angular.bootstrap('body', ['mvc']);
         }
     });
 })();

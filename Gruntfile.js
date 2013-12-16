@@ -15,9 +15,8 @@ module.exports = function(grunt) {
             compile: {
                 options: {
                     pretty: true,
-                    data: {
-                        nodeEnv: 'development',
-                        version: '1.0.0'
+                    data: function(dest, src) {
+                        return require('./config');
                     }
                 },
                 files: {

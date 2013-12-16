@@ -1,0 +1,13 @@
+{
+    "about": {
+        "dependencies": {
+            "nodejs": "",
+            "node-webkit": ""
+        },
+        "references": {
+            "StackEdit": "https://stackedit.io/",
+            "markdowneditor": "http://www.ctrlshift.net/project/markdowneditor/",
+            "Markdown Here": "http://markdown-here.com/"
+        }
+    }
+}

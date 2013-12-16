@@ -48,7 +48,7 @@
             </li>
             <li id="list-histories" class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">Histories&nbsp;<b class="caret"></b></a>
               <ul ng-controller="HistoriesCtrl" class="dropdown-menu">
-                <li ng-repeat="history in histories"><a href="javascript:;">{{history}}</a></li>
+                <li ng-repeat="history in histories"><a href="javascript:;" ng-click="openFile(history)">{{history}}</a></li>
               </ul>
             </li>
             <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">Export&nbsp;<b class="caret"></b></a>
@@ -110,16 +110,16 @@
               <div class="panel panel-default">
                 <div class="panel-heading">Dependencies</div>
                 <div class="panel-body">
-                  <p><a href="#">ACE Editor</a></p>
+                  <p><a target="_system" href="">nodejs</a></p>
+                  <p><a target="_system" href="">node-webkit</a></p>
                 </div>
               </div>
               <div class="panel panel-default">
                 <div class="panel-heading">References</div>
                 <div class="panel-body">
-                  <p><a href="https://stackedit.io/">StackEditor</a></p>
-                  <p><a href="https://stackedit.io/">StackEditor</a></p>
-                  <p><a href="https://stackedit.io/">StackEditor</a></p>
-                  <p><a href="https://stackedit.io/">StackEditor</a></p>
+                  <p><a target="_system" href="https://stackedit.io/">StackEdit</a></p>
+                  <p><a target="_system" href="http://www.ctrlshift.net/project/markdowneditor/">markdowneditor</a></p>
+                  <p><a target="_system" href="http://markdown-here.com/">Markdown Here</a></p>
                 </div>
               </div>
             </div>

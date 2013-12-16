@@ -144,6 +144,12 @@
                 return false;
             });
         });
+        // https://groups.google.com/forum/#!topic/node-webkit/LIcbwBrF_CI
+        $('a[target="_system"]').click(function(evt) {
+            evt.preventDefault();
+            var link = $(this).attr('href');
+            gui.Shell.openExternal(link);
+        });
     }).methods({
         init: function() {
             var self = this;

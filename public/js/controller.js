@@ -132,6 +132,17 @@
             });
             return when.pipeline(steps);
         },
+        tryToOpenFile: function(filename) {
+            var self = this,
+                steps = self.getStepsOfSave();
+            steps.push(function(confirmed) {
+                if (confirmed) {
+                    self.openFile(filename);
+                }
+                return when.resolve(confirmed);
+            });
+            return when.pipeline(steps, true);
+        },
         openFile: function(filename) {
             var self = this;
             return self.model.loadFile(filename).then(function(content) {

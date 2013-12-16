@@ -12,19 +12,15 @@ div#myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLab
                     div.panel-heading
                         | Dependencies
                     div.panel-body
-                        p
-                            a(href='#') ACE Editor
+                        - each val, key in about.dependencies
+                            p
+                                a(target='_system', href='#{val}') #{key}
                 div.panel.panel-default
                     div.panel-heading
                         | References
                     div.panel-body
-                        p
-                            a(href='https://stackedit.io/') StackEditor
-                        p
-                            a(href='https://stackedit.io/') StackEditor
-                        p
-                            a(href='https://stackedit.io/') StackEditor
-                        p
-                            a(href='https://stackedit.io/') StackEditor
+                        - each val, key in about.references
+                            p
+                                a(target='_system', href='#{val}') #{key}
             div.modal-footer
                 button.btn.btn-primary(type='button', data-dismiss='modal') OK

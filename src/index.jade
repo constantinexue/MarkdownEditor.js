@@ -58,7 +58,7 @@ block content
                             b.caret
                         ul.dropdown-menu(ng-controller='HistoriesCtrl')
                             li(ng-repeat='history in histories')
-                                a(href='javascript:;') {{history}}
+                                a(href='javascript:;', ng-click='openFile(history)') {{history}}
                     li.dropdown
                         a.dropdown-toggle(href='#', data-toggle='dropdown')
                             | Export&nbsp;

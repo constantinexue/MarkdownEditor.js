@@ -28,7 +28,8 @@
             return deferred.promise;
         },
         saveFile: function(filename, content) {
-            var deferred = when.defer();
+            var self = this,
+                deferred = when.defer();
             fs.writeFile(filename, content, 'utf8', function(err) {
                 if (err) {
                     deferred.reject(err);
