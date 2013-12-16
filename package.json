@@ -7,6 +7,10 @@
     "devDependencies": {
         "jade": "*",
         "request": "*",
+        "when": "*",
+        "rest": "*",
+        "fs-extra": "*",
+        "async": "*",
         "grunt": "*",
         "grunt-contrib-less": "*",
         "grunt-contrib-clean": "*",
