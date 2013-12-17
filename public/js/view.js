@@ -133,10 +133,10 @@
         });
 
         var eventKeyMap = {
-            'ctrl+n': 'newButtonClicked',
-            'ctrl+o': 'openButtonClicked',
-            'ctrl+s': 'saveButtonClicked',
-            'ctrl+shift+s': 'saveAsButtonClicked'
+            'mod+n': 'newButtonClicked',
+            'mod+o': 'openButtonClicked',
+            'mod+s': 'saveButtonClicked',
+            'mod+shift+s': 'saveAsButtonClicked'
         };
         $.each(eventKeyMap, function(key, value) {
             Mousetrap.bindGlobal(key, function(e) {
