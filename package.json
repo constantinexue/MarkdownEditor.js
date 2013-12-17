@@ -10,6 +10,8 @@
         "when": "*",
         "rest": "*",
         "fs-extra": "*",
+        "parse5": "*",
+        "html5": "*",
         "async": "*",
         "grunt": "*",
         "grunt-contrib-less": "*",

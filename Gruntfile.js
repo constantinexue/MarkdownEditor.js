@@ -30,7 +30,8 @@ module.exports = function(grunt) {
             compile: {
                 files: {
                     './public/css/main.css': './src/less/main.less',
-                    './public/css/style-default.css': './src/less/style-default.less'
+                    './public/css/style-default.css': './src/less/style-default.less',
+                    './public/css/style-gfm.css': './src/less/style-gfm.less'
                 }
             }
         },
