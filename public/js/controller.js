@@ -26,6 +26,8 @@
                 self.model.md2html(content).then(function(html) {
                     self.view.showCode(html);
                 });
+                contents_modified = true;
+                spell_check(self.view.getEditor().getSession());
             }, 1000);
         }).on('exportHtmlPlainButtonClick', function() {
             var htmlFile = null,

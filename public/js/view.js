@@ -162,6 +162,9 @@
             win.maximize();
             win.show();
         },
+        getEditor: function() {
+            return this.aceEdit;
+        },
         setTitle: function(title) {
             win.title = title + '- MarkdownEditor.js';
         },
