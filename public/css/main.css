@@ -3,11 +3,11 @@
 }
 #ace-edit {
   width: 100%;
-  font-family: "consolas", Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: Menlo, Monaco, Consolas, 'Courier New', monospace, 'Microsoft Yahei';
 }
 #ace-code {
   width: 100%;
-  font-family: "consolas", Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: Menlo, Monaco, Consolas, 'Courier New', monospace, 'Microsoft Yahei';
 }
 #container-workarea {
   padding-top: 0px;
