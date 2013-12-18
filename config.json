@@ -7,7 +7,12 @@
         "references": {
             "StackEdit": "https://stackedit.io/",
             "markdowneditor": "http://www.ctrlshift.net/project/markdowneditor/",
-            "Markdown Here": "http://markdown-here.com/"
+            "Markdown Here": "http://markdown-here.com/",
+            "Prose": "http://prose.io/",
+            "Cmd Markdown": "http://www.zybuluo.com/mdeditor/",
+            "马克飞象": "http://maxiang.info/",
+            "Haroo Pad": "http://pad.haroopress.com/",
+            "Dillinger": "http://dillinger.io/"
         }
     },
     "ace": {

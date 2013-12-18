@@ -1,4 +1,4 @@
-@import "normalize.less";
+//@import "normalize.less";
 
 @base-font-size: 14px;
 @base-line-height: 25px;
@@ -15,8 +15,38 @@ body {
     background-color: white;
 }
 
+.heading(@font-size) {
+    font-size: @font-size;
+    margin-top: @font-size * 2;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 20px 0px 5px 0px;
+    padding: 0px 0px 5px 0px;
+    font-weight: bold;
+    color: black;
+}
+
 h1 {
-    // Underline, fontsize, 
+    .heading(28px);
+    border-bottom: 1px solid #cccccc;
+}
+
+h2 {
+    .heading(24px);
+    border-bottom: 1px solid #cccccc;
+}
+
+h3 {
+    .heading(18px);
+}
+
+h4 {
+    .heading(16px);
+}
+
+h5 {
+    .heading(14px);
 }
 
 p {
@@ -83,7 +113,16 @@ a, a code {
 }
 
 img {
+    max-width: 100%;
+    display: block;
+    border-top: 1px solid red;
+}
 
+p {
+    img {
+        display: inline;
+        border: none;
+    }
 }
 
 hr {

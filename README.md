@@ -1,7 +1,7 @@
 MarkdownEditor.js
 =================
 
-A cross-platform desktop editor for writing and publishing markdown documents.
+A free cross-platform desktop editor for writing, publishing and sharing markdown documents.
 
 
 Feature List

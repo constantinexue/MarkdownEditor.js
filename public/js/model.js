@@ -60,50 +60,8 @@
             //      https://github.com/ariya/phantomjs/blob/master/examples/rasterize.js
         },
         md2html: function(md) {
-            // var parser = new Parser();
-            // var document = parser.parse('<!DOCTYPE html><html><head></head><body>Hi there!</body></html>');
-            // console.log(document);
-            var headingNumbers = [null, 0, 0, 0, 0, 0, 0];
-            var r = new marked.Renderer();
-            var old = r.code;
-            r.code = function(code, lang) {
-                var html = '';
-                if (!lang) {
-                    html = '<pre><code>' + escape(code, true) + '\n</code></pre>';
-                } else {
-                    if (lang === 'js') {
-                        lang = 'javascript';
-                    }
-                    html = hljs.highlight(lang, code).value;
-                    html = '<pre><code class="' + 'lang-' + lang + '">' + html + '\n</code></pre>\n'
-                }
-                return html;
-            };
-            r.heading = function(text, level) {
-                var i = 0,
-                    number = '',
-                    html = '';
-                for (i = level; i > 0; i--) {
-                    if (number === '') {
-                        headingNumbers[i]++;
-                    }
-                    number = headingNumbers[i] + '.' + number;
-                }
-                html = _.str.sprintf('<h%1$d>%3$s\t%2$s</h%1$d>', level, text, number);
-                return html;
-            };
-            var options = {
-                renderer: r
-            };
-            var deferred = when.defer();
-            marked.parse(md, options, function(err, html) {
-                if (err) {
-                    deferred.reject(err);
-                } else {
-                    deferred.resolve(html);
-                }
-            });
-            return deferred.promise;
+            var converter = new mde.Converter();
+            return converter.convert(md);
         },
         loadSettings: function() {},
         saveSettings: function() {},

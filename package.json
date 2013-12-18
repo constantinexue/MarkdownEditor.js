@@ -3,13 +3,19 @@
     "version": "0.0.2",
     "main": "public/index.html",
     "repository": "http://github.com/constantinexue/packled-papper.js",
-    "dependencies": {},
-    "devDependencies": {
+    "dependencies": {
+        "express": "*",
         "jade": "*",
-        "request": "*",
-        "when": "*",
-        "rest": "*",
         "fs-extra": "*",
+        "when": "*",
+        "klass": "*",
+        "marked": "https://github.com/chjj/marked/tarball/master",
+        "underscore": "*",
+        "underscore.string": "*"
+    },
+    "devDependencies": {
+        "request": "*",
+        "rest": "*",
         "parse5": "*",
         "async": "*",
         "grunt": "*",
