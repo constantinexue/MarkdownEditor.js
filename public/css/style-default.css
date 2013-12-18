@@ -104,6 +104,12 @@ p img {
   display: inline;
   border: none;
 }
+blockquote {
+  border-left: 4px solid #dddddd;
+  padding: 0 15px;
+  color: #777777;
+  background-color: #f8f8f8;
+}
 hr {
   height: 1px;
   border: none;

@@ -1,6 +1,5 @@
 (function() {
     "use strict";
-    var server = require('./js/server');
 
     mde.Application = klass(function() {
         this.name = 'Markdown.js'
@@ -31,7 +30,7 @@
             });
             angular.bootstrap('body', ['mvc']);
 
-            server();
+            //require('./js/server')();
         }
     });
 })();

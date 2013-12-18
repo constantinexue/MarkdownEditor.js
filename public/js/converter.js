@@ -6,10 +6,10 @@
         marked = marked || require('marked'),
         _ = _;
 
-        if (!_){
-            _ = require('underscore');
-            _.str = require('underscore.string');
-        }
+    if (!_) {
+        _ = require('underscore');
+        _.str = require('underscore.string');
+    }
 
 
     var Converter = klass(function() {
@@ -19,7 +19,7 @@
         r.code = function(code, lang) {
             var html = '';
             if (!lang) {
-                html = '<pre><code>' + escape(code, true) + '\n</code></pre>';
+                html = '<pre><code>' + code + '\n</code></pre>';
             } else {
                 if (lang === 'js') {
                     lang = 'javascript';
@@ -38,6 +38,10 @@
                     self.headingNumbers[i]++;
                 }
                 number = self.headingNumbers[i] + '.' + number;
+            }
+            // Reset child numbers
+            for (i = level + 1; i < 7; i++) {
+                self.headingNumbers[i] = 0;
             }
             html = _.str.sprintf('<h%1$d>%3$s\t%2$s</h%1$d>', level, text, number);
             return html;
