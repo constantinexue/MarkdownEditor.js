@@ -28,6 +28,8 @@
                     self.controller.tryToOpenFile(filename);
                 };
             });
+            window.mvc.controller('ExportCtrl', function($scope, $http, model) {
+            });
             angular.bootstrap('body', ['mvc']);
 
             //require('./js/server')();
