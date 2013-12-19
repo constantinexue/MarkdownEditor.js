@@ -4,7 +4,7 @@
     var Converter = require('./js/converter');
     var converter = new Converter();
     var exportService = require('./js/service-export')();
-    
+
     mde.Application = klass(function() {
         this.name = 'MarkdownEditor.js';
     }).methods({
@@ -39,12 +39,17 @@
                 };
             });
             window.mvc.controller('ExportController', function($scope, $http, exportService, converter) {
-                $scope.toHTML = function() {
-                    var md = self.view.getContent();
-                    converter.convert(md, {
-                        base64Image: true
+                $scope.toHTML = function(mode) {
+                    var md = self.view.getContent(),
+                        filename = '';
+                    self.view.selectFile('save', '.html').then(function(file) {
+                        filename = file;
+                        return converter.convert(md, {
+                            base64Image: (mode === 'styled2')
+                        });
                     }).then(function(htmlBody) {
-                        return exportService.toHTML('./test.html', htmlBody);
+                        mode = (mode === 'styled2') ? 'styled' : mode;
+                        return exportService.toHTML(filename, htmlBody, mode);
                     });
                 };
             });

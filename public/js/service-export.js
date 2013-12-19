@@ -1,32 +1,51 @@
 var klass = require('klass'),
     when = require('when'),
+    pipeline = require('when/pipeline'),
     fs = require('fs');
 
 var ExportService = klass(function() {}).methods({
-    toHTML: function(filename, htmlBody) {
+    toHTML: function(filename, htmlBody, mode) {
         var self = this,
-            deferred = when.defer();
+            deferred = when.defer(),
+            html = '';
 
-        return self.getTemplate().then(function(template) {
-            var html = template.replace(/\{\{body\}\}/g, htmlBody);
-            fs.writeFile(filename, html, 'utf8', function(err) {
-                if (err) {
-                    deferred.reject(err);
-                } else {
-                    deferred.resolve(html);
-                }
-            });
-            return deferred.promise;
+        mode = mode || 'plain';
+
+        self.getTemplate().then(function(template) {
+            html = template.replace(/\{\{body\}\}/g, htmlBody);
+            return deferred.resolve(html);
+        }).then(function(html) {
+            if (mode === 'styled') {
+                return self.getStyle();
+            } else {
+                return deferred.resolve('');
+            }
+        }).then(function(style) {
+            html = html.replace(/\{\{style\}\}/g, style);
+            return deferred.resolve(html);
+        }).then(function(html) {
+            return self.save(filename, html);
         });
-    },
-    toHtmlWithImages: function(filename, body) {
-
+        return deferred.promise;
     },
     toPdf: function(filename, body) {
 
     },
     toImage: function(filename, body) {
 
+    },
+    save: function(filename, content) {
+        var self = this,
+            deferred = when.defer();
+        fs.writeFile(filename, content, 'utf8', function(err) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(content);
+            }
+        });
+
+        return deferred.promise;
     },
     getTemplate: function() {
         var self = this,
@@ -35,14 +54,19 @@ var ExportService = klass(function() {}).methods({
             if (err) {
                 deferred.reject(err);
             } else {
-                fs.readFile('./public/css/style-default.css', 'utf8', function(err, css) {
-                    if (err) {
-                        deferred.reject(err);
-                    } else {
-                        template = template.replace(/\{\{style\}\}/g, css);
-                        deferred.resolve(template);
-                    }
-                });
+                deferred.resolve(template);
+            }
+        });
+        return deferred.promise;
+    },
+    getStyle: function() {
+        var self = this,
+            deferred = when.defer();
+        fs.readFile('./public/css/style-default.css', 'utf8', function(err, css) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(css);
             }
         });
         return deferred.promise;

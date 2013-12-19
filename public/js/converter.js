@@ -68,26 +68,6 @@
                     self.imageMappings[id] = href;
                     html = oldImageFunc('{{' + id + '}}', title, text);
                     return html;
-                    // var deferred = when.defer();
-                    // when(href, function() {
-                    //     // Retrieves image data from URL
-                    //     request(href, function(err, response, body) {
-                    //         if (err) {
-                    //             console.log(err);
-                    //             deferred.reject(err);
-                    //         } else {
-                    //             deferred.resolve(response.body);
-                    //         }
-                    //     });
-                    //     return deferred.promise;
-                    // }).then(function(body) {
-                    //     // Converts to base64
-                    //     base64 = new Buffer(body).toString('base64');
-                    //     return deferred.resolve(base64);
-                    // });
-                    // // Replaces the href attribute
-                    // html = _.str.sprintf('<img src="%1$s" title="%2$s" />', base64, title);
-                    // return html;
                 };
             }
             var options = {

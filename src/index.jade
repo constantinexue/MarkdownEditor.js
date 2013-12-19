@@ -74,7 +74,11 @@ block content
                             b.caret
                         ul.dropdown-menu(ng-controller='ExportController')
                             li
-                                a(href='javascript:;', ng-click='toHTML()') HTML
+                                a(href='javascript:;', ng-click='toHTML("plain")') HTML Plain
+                            li
+                                a(href='javascript:;', ng-click='toHTML("styled")') HTML Styled
+                            li
+                                a(href='javascript:;', ng-click='toHTML("styled2")') HTML Styled+Image
                             li
                                 a(href='javascript:;') PDF
                             li
