@@ -1,8 +1,12 @@
 (function() {
     "use strict";
 
+    var Converter = require('./js/converter');
+    var converter = new Converter();
+    var exportService = require('./js/service-export')();
+    
     mde.Application = klass(function() {
-        this.name = 'Markdown.js'
+        this.name = 'MarkdownEditor.js';
     }).methods({
         startup: function(options) {
             var self = this;
@@ -17,6 +21,12 @@
             window.mvc.factory('model', function() {
                 return self.model;
             });
+            window.mvc.factory('converter', function() {
+                return converter;
+            });
+            window.mvc.factory('exportService', function() {
+                return exportService;
+            });
             window.mvc.controller('HistoriesCtrl', function($scope, $http, model) {
                 self.model.on('historiesChanged', function(histories) {
                     $scope.$apply(function() {
@@ -28,7 +38,15 @@
                     self.controller.tryToOpenFile(filename);
                 };
             });
-            window.mvc.controller('ExportCtrl', function($scope, $http, model) {
+            window.mvc.controller('ExportController', function($scope, $http, exportService, converter) {
+                $scope.toHTML = function() {
+                    var md = self.view.getContent();
+                    converter.convert(md, {
+                        base64Image: true
+                    }).then(function(htmlBody) {
+                        return exportService.toHTML('./test.html', htmlBody);
+                    });
+                };
             });
             angular.bootstrap('body', ['mvc']);
 

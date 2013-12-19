@@ -11,7 +11,9 @@
         "klass": "*",
         "marked": "https://github.com/chjj/marked/tarball/master",
         "underscore": "*",
-        "underscore.string": "*"
+        "underscore.string": "*",
+        "highlight.js": "*",
+        "http-get": "*"
     },
     "devDependencies": {
         "request": "*",

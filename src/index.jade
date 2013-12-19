@@ -72,19 +72,13 @@ block content
                         a.dropdown-toggle(href='#', data-toggle='dropdown')
                             | Export&nbsp;
                             b.caret
-                        ul.dropdown-menu
+                        ul.dropdown-menu(ng-controller='ExportController')
                             li
-                                a#button-html-plain(href='javascript:;') HTML Plain
+                                a(href='javascript:;', ng-click='toHTML()') HTML
                             li
-                                a#button-html-styled(href='javascript:;') HTML Styled
+                                a(href='javascript:;') PDF
                             li
-                                a#button-html-styled-base64(href='javascript:;') HTML Styled+Base64
-                            li.divider
-                            li
-                                a#button-pdf(href='javascript:;') PDF
-                            li.divider
-                            li
-                                a#button-image(href='javascript:;') Image
+                                a(href='javascript:;') Image
                     li
                         a#button-setting(data-toggle='modal', data-target='#modal-settings', href='javascript:;') Settings
                 ul.nav.navbar-nav.navbar-right(style='margin-right:15px;')
