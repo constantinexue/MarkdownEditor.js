@@ -84,19 +84,20 @@
         });
 
         // ACE init
-        options.editor = $.extend({
+        self.options = {};
+        self.options.editor = $.extend({
             fontSize: 16,
             theme: "ace/theme/twilight",
             wrap: true
         }, options.editor);
         self.aceEditContainer = $('#ace-edit');
         self.aceEdit = ace.edit(self.aceEditContainer[0]);
-        self.aceEdit.setFontSize(options.editor.fontSize);
+        self.aceEdit.setFontSize(self.options.editor.fontSize);
         self.aceEdit.setShowPrintMargin(false);
         self.aceEdit.setHighlightGutterLine(false);
-        self.aceEdit.setTheme(options.editor.theme);
+        self.aceEdit.setTheme(self.options.editor.theme);
         self.aceEdit.getSession().setMode("ace/mode/markdown");
-        self.aceEdit.getSession().setUseWrapMode(options.editor.wrap);
+        self.aceEdit.getSession().setUseWrapMode(self.options.editor.wrap);
         self.aceEdit.on('change', function(evt) {
             self.fire('contentChanged');
         });
@@ -104,12 +105,12 @@
 
         self.aceCodeContainer = $('#ace-code');
         self.aceCode = ace.edit(self.aceCodeContainer[0]);
-        self.aceCode.setFontSize(options.editor.fontSize);
+        self.aceCode.setFontSize(self.options.editor.fontSize);
         self.aceCode.setShowPrintMargin(false);
         self.aceCode.setHighlightGutterLine(false);
-        self.aceCode.setTheme(options.editor.theme);
+        self.aceCode.setTheme(self.options.editor.theme);
         self.aceCode.getSession().setMode("ace/mode/html");
-        self.aceCode.getSession().setUseWrapMode(options.editor.wrap);
+        self.aceCode.getSession().setUseWrapMode(self.options.editor.wrap);
         self.aceCode.setReadOnly(true);
 
         self.on('windowResized', function(evt) {
@@ -159,8 +160,11 @@
             var self = this;
             $('#button-showview').click();
             self.newButton.click();
-            win.maximize();
+            //win.maximize();
             win.show();
+        },
+        getOptions: function() {
+            return this.options;
         },
         getEditor: function() {
             return this.aceEdit;

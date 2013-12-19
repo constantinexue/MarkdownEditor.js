@@ -17,17 +17,14 @@
             self.view.init();
             //self.controller.openFile('data/example2.md');
 
-            window.mvc = angular.module('mvc', []);
+            window.mvc = angular.module('mvc', []); //'$strap.directives'
             window.mvc.factory('model', function() {
                 return self.model;
-            });
-            window.mvc.factory('converter', function() {
+            }).factory('converter', function() {
                 return converter;
-            });
-            window.mvc.factory('exportService', function() {
+            }).factory('exportService', function() {
                 return exportService;
-            });
-            window.mvc.controller('HistoriesCtrl', function($scope, $http, model) {
+            }).controller('HistoriesCtrl', function($scope, $http, model) {
                 self.model.on('historiesChanged', function(histories) {
                     $scope.$apply(function() {
                         $scope.histories = histories;
@@ -37,8 +34,7 @@
                 $scope.openFile = function(filename) {
                     self.controller.tryToOpenFile(filename);
                 };
-            });
-            window.mvc.controller('ExportController', function($scope, $http, exportService, converter) {
+            }).controller('ExportController', function($scope, $http, exportService, converter) {
                 $scope.toHTML = function(mode) {
                     var md = self.view.getContent(),
                         filename = '';
@@ -51,6 +47,19 @@
                         mode = (mode === 'styled2') ? 'styled' : mode;
                         return exportService.toHTML(filename, htmlBody, mode);
                     });
+                };
+            }).controller('SettingsController', function($scope) {
+                $scope.fontSize = self.view.getOptions().editor.fontSize;
+                $('#select-font-size').selectpicker('val', $scope.fontSize);
+                $scope.editorTheme = self.view.getEditor().getTheme().substring(10); //ace/theme/twilight
+                $('#select-editor-theme').selectpicker('val', $scope.editorTheme);
+
+                $scope.save = function() {
+                    var fontSize = parseInt($scope.fontSize),
+                        editorTheme = 'ace/theme/' + $scope.editorTheme;
+                    self.view.getEditor().setFontSize(fontSize);
+                    self.view.getEditor().setTheme(editorTheme);
+                    $('#modal-settings').modal('hide');
                 };
             });
             angular.bootstrap('body', ['mvc']);

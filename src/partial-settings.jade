@@ -1,5 +1,5 @@
 div#modal-settings.modal.fade(tabindex='-1', role='dialog', aria-hidden='true', data-backdrop='static')
-    div.modal-dialog
+    div.modal-dialog(ng-controller='SettingsController')
         div.modal-content
             div.modal-header
                 //-button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
@@ -17,18 +17,18 @@ div#modal-settings.modal.fade(tabindex='-1', role='dialog', aria-hidden='true', 
                             div.form-group
                                 label.col-sm-3.control-label Editor Theme
                                 div.col-sm-9
-                                    select.form-control.selectpicker
+                                    select#select-editor-theme.form-control.selectpicker(ng-model='editorTheme')
                                         - each theme in ace.themes
                                             option #{theme}
                             div.form-group
                                 label.col-sm-3.control-label Editor Font Size
                                 div.col-sm-9
-                                    select.form-control.selectpicker
+                                    select#select-font-size.form-control.selectpicker(ng-model='fontSize')
                                         option 12
                                         option 14
                                         option 16
                                         option 18
                     div#settings-shortcuts.tab-pane.fade C
             div.modal-footer
-                button.btn.btn-success(type='button') &nbsp;&nbsp;Save&nbsp;&nbsp;
+                button.btn.btn-success(type='button', ng-click='save()') &nbsp;&nbsp;Save&nbsp;&nbsp;
                 button.btn.btn-default(type='button', data-dismiss='modal') Cancel
