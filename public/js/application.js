@@ -48,6 +48,19 @@
                         return exportService.toHTML(filename, htmlBody, mode);
                     });
                 };
+                $scope.toPDF = function(mode) {
+                    var md = self.view.getContent(),
+                        filename = '';
+                    self.view.selectFile('save', '.pdf').then(function(file) {
+                        filename = file;
+                        return converter.convert(md, {
+                            base64Image: (mode === 'styled2')
+                        });
+                    }).then(function(htmlBody) {
+                        mode = (mode === 'styled2') ? 'styled' : mode;
+                        return exportService.toPDF(filename, htmlBody, mode);
+                    });
+                };
             }).controller('SettingsController', function($scope) {
                 $scope.fontSize = self.view.getOptions().editor.fontSize;
                 $('#select-font-size').selectpicker('val', $scope.fontSize);

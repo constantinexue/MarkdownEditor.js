@@ -13,7 +13,8 @@
         "underscore": "*",
         "underscore.string": "*",
         "highlight.js": "*",
-        "http-get": "*"
+        "http-get": "*",
+        "slang": "*"
     },
     "devDependencies": {
         "request": "*",

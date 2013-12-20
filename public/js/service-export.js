@@ -1,7 +1,10 @@
 var klass = require('klass'),
     when = require('when'),
     pipeline = require('when/pipeline'),
-    fs = require('fs');
+    fs = require('fs'),
+    path = require('path'),
+    _ = require('underscore');
+_.str = require('underscore.string');
 
 var ExportService = klass(function() {}).methods({
     toHTML: function(filename, htmlBody, mode) {
@@ -28,8 +31,35 @@ var ExportService = klass(function() {}).methods({
         });
         return deferred.promise;
     },
-    toPdf: function(filename, body) {
-
+    toPDF: function(filename, htmlBody, mode) {
+        // Generates a temp HTML
+        var tempDir = path.join(__dirname, 'temp');
+        if (!fs.existsSync(tempDir)) {
+            fs.mkdirSync(tempDir);
+        }
+        var tempFile = _.uniqueId('topdf_') + '.html';
+        tempFile = path.join(tempDir, tempFile);
+        var self = this,
+            deferred = when.defer();
+        return self.toHTML(tempFile, htmlBody, mode).then(function() {
+            return self.pdfify(tempFile, filename);
+        }).ensure(function() {
+            // Deletes unused temp file.
+            fs.unlinkSync(tempFile);
+        });
+    },
+    pdfify: function(tempFile, filename) {
+        var self = this,
+            deferred = when.defer();
+        // Converts to PDF with child process running wkhtmltopdf
+        var wkhtmltopdf = require('./wkhtmltopdf');
+        wkhtmltopdf.command = './bin/wkhtmltopdf';
+        wkhtmltopdf('file:///' + tempFile, {
+            output: filename
+        }, function(code, signal) {
+            deferred.resolve();
+        });
+        return deferred.promise;
     },
     toImage: function(filename, body) {
 
