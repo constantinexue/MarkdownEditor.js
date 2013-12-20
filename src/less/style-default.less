@@ -17,6 +17,7 @@ body {
 
 .heading(@font-size) {
     font-size: @font-size;
+    line-height: @font-size;
     margin-top: @font-size * 2;
 }
 
@@ -28,24 +29,29 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
+    .heading(36px);
+    padding: 0px 0px 10px 0px;
+    border-bottom: 2px solid #cccccc;
+}
+
+h2 {
     .heading(28px);
     border-bottom: 1px solid #cccccc;
 }
 
-h2 {
-    .heading(24px);
-    border-bottom: 1px solid #cccccc;
-}
-
 h3 {
-    .heading(18px);
+    .heading(22px);
 }
 
 h4 {
-    .heading(16px);
+    .heading(18px);
 }
 
 h5 {
+    .heading(16px);
+}
+
+h6 {
     .heading(14px);
 }
 

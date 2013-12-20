@@ -57,7 +57,7 @@
                     for (i = level + 1; i < 7; i++) {
                         self.headingNumbers[i] = 0;
                     }
-                    html = _.str.sprintf('<h%1$d>%3$s\t%2$s</h%1$d>', level, text, number);
+                    html = _.str.sprintf('<h%1$d>%3$s&emsp;%2$s</h%1$d>', level, text, number);
                     return html;
                 };
             }
