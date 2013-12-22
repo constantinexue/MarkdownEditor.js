@@ -52,8 +52,23 @@ var ExportService = klass(function() {}).methods({
         var self = this,
             deferred = when.defer();
         // Converts to PDF with child process running wkhtmltopdf
-        var wkhtmltopdf = require('./wkhtmltopdf');
-        wkhtmltopdf.command = './bin/wkhtmltopdf';
+        var os = require('os'),
+            wkhtmltopdf = require('wkhtmltopdf');
+        switch (os.platform()) {
+            case 'win32':
+                wkhtmltopdf.command = './bin/win32/wkhtmltopdf.exe';
+                break;
+            case 'linux':
+                wkhtmltopdf.command = (os.arch() === 'x64') ? './bin/linux64/wkhtmltopdf' : './bin/linux32/wkhtmltopdf';
+                break;
+            case 'darwin':
+                wkhtmltopdf.command = './bin/macos/wkhtmltopdf';
+                break;
+            default:
+                break;
+        }
+        console.log(os.type());
+        console.log(os.platform());
         wkhtmltopdf('file:///' + tempFile, {
             output: filename
         }, function(code, signal) {

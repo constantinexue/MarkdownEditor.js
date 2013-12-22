@@ -14,7 +14,7 @@
         "underscore.string": "*",
         "highlight.js": "*",
         "http-get": "*",
-        "slang": "*"
+        "wkhtmltopdf": "*"
     },
     "devDependencies": {
         "request": "*",
