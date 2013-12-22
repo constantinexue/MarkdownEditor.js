@@ -2,7 +2,8 @@
     "about": {
         "dependencies": {
             "nodejs": "",
-            "node-webkit": ""
+            "node-webkit": "",
+            "wkhtmltopdf": ""
         },
         "references": {
             "StackEdit": "https://stackedit.io/",

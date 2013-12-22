@@ -70,7 +70,8 @@ var ExportService = klass(function() {}).methods({
         console.log(os.type());
         console.log(os.platform());
         wkhtmltopdf('file:///' + tempFile, {
-            output: filename
+            output: filename,
+            footerCenter: '[page]/[topage]'
         }, function(code, signal) {
             deferred.resolve();
         });
