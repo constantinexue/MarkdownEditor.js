@@ -15,7 +15,6 @@
             self.model = new mde.Model();
             self.controller = new mde.Controller(self.view, self.model);
             self.view.init();
-            //self.controller.openFile('data/example2.md');
 
             window.mvc = angular.module('mvc', []); //'$strap.directives'
             window.mvc.factory('model', function() {
@@ -24,6 +23,18 @@
                 return converter;
             }).factory('exportService', function() {
                 return exportService;
+            }).factory('settingsService', function() {
+                return new mde.SettingsService();
+            }).directive('integer', function() {
+                // http://stackoverflow.com/questions/15072152/angularjs-input-model-changes-from-integer-to-string-when-changed
+                return {
+                    require: 'ngModel',
+                    link: function(scope, ele, attr, ctrl) {
+                        ctrl.$parsers.unshift(function(viewValue) {
+                            return parseInt(viewValue);
+                        });
+                    }
+                };
             }).controller('HistoriesCtrl', function($scope, $http, model) {
                 self.model.on('historiesChanged', function(histories) {
                     $scope.$apply(function() {
@@ -61,19 +72,22 @@
                         return exportService.toPDF(filename, htmlBody, mode);
                     });
                 };
-            }).controller('SettingsController', function($scope) {
-                $scope.fontSize = self.view.getOptions().editor.fontSize;
-                $('#select-font-size').selectpicker('val', $scope.fontSize);
-                $scope.editorTheme = self.view.getEditor().getTheme().substring(10); //ace/theme/twilight
-                $('#select-editor-theme').selectpicker('val', $scope.editorTheme);
-
+            }).controller('SettingsController', function($scope, settingsService) {
+                //https://groups.google.com/forum/#!topic/angular/WNeY0v9xn1k
+                var settings = settingsService.load();
+                $scope.settings = settings;
+                $scope.apply = function() {
+                    self.view.getEditor().setFontSize($scope.settings.editor.fontSize);
+                    self.view.getEditor().setTheme('ace/theme/' + $scope.settings.editor.theme);
+                };
                 $scope.save = function() {
-                    var fontSize = parseInt($scope.fontSize),
-                        editorTheme = 'ace/theme/' + $scope.editorTheme;
-                    self.view.getEditor().setFontSize(fontSize);
-                    self.view.getEditor().setTheme(editorTheme);
+                    $scope.apply();
+                    settingsService.save($scope.settings);
                     $('#modal-settings').modal('hide');
                 };
+                $scope.apply();
+                $('#select-font-size').selectpicker('val', settings.editor.fontSize);
+                $('#select-editor-theme').selectpicker('val', settings.editor.theme);
             });
             angular.bootstrap('body', ['mvc']);
 

@@ -3,6 +3,7 @@
 }
 #ace-edit {
   width: 100%;
+  line-height: 200%;
   font-family: Menlo, Monaco, Consolas, 'Courier New', monospace, 'Microsoft Yahei';
 }
 #ace-code {

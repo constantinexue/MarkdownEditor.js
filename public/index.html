@@ -30,6 +30,7 @@
     <script src="./vendor/marked.js"></script>
     <script src="./vendor/beautify-html.js"></script>
     <script src="./js/core.js"></script>
+    <script src="./js/service-settings.js"></script>
     <script src="./js/model.js"></script>
     <script src="./js/view.js"></script>
     <script src="./js/controller.js"></script>
@@ -114,6 +115,7 @@
                 <div class="panel-body">
                   <p><a target="_system" href="">nodejs</a></p>
                   <p><a target="_system" href="">node-webkit</a></p>
+                  <p><a target="_system" href="">wkhtmltopdf</a></p>
                 </div>
               </div>
               <div class="panel panel-default">
@@ -153,7 +155,7 @@
                     <div class="form-group">
                       <label class="col-sm-3 control-label">Editor Theme</label>
                       <div class="col-sm-9">
-                        <select id="select-editor-theme" ng-model="editorTheme" class="form-control selectpicker">
+                        <select id="select-editor-theme" ng-model="settings.editor.theme" class="form-control selectpicker">
                           <option>ambiance</option>
                           <option>chaos</option>
                           <option>chrome</option>
@@ -190,7 +192,7 @@
                     <div class="form-group">
                       <label class="col-sm-3 control-label">Editor Font Size</label>
                       <div class="col-sm-9">
-                        <select id="select-font-size" ng-model="fontSize" class="form-control selectpicker">
+                        <select id="select-font-size" ng-model="settings.editor.fontSize" integer class="form-control selectpicker">
                           <option>12</option>
                           <option>14</option>
                           <option>16</option>

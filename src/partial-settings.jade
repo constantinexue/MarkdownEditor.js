@@ -17,13 +17,13 @@ div#modal-settings.modal.fade(tabindex='-1', role='dialog', aria-hidden='true', 
                             div.form-group
                                 label.col-sm-3.control-label Editor Theme
                                 div.col-sm-9
-                                    select#select-editor-theme.form-control.selectpicker(ng-model='editorTheme')
+                                    select#select-editor-theme.form-control.selectpicker(ng-model='settings.editor.theme')
                                         - each theme in ace.themes
                                             option #{theme}
                             div.form-group
                                 label.col-sm-3.control-label Editor Font Size
                                 div.col-sm-9
-                                    select#select-font-size.form-control.selectpicker(ng-model='fontSize')
+                                    select#select-font-size.form-control.selectpicker(ng-model='settings.editor.fontSize', integer)
                                         option 12
                                         option 14
                                         option 16
