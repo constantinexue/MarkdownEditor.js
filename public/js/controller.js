@@ -29,16 +29,6 @@
                 //contents_modified = true;
                 //spell_check(self.view.getEditor().getSession());
             }, 1000);
-        }).on('exportHtmlPlainButtonClick', function() {
-            var htmlFile = null,
-                htmlText = null;
-            self.view.selectFile('save', '.html').then(function(filename) {
-                htmlText = self.view.getCode();
-                htmlFile = filename;
-                return when.resolve();
-            }).then(function() {
-                return self.model.exportToHtml(htmlFile, htmlText);
-            });
         }).on('windowClosing', function() {
             return self.onWindowClosing();
         });
@@ -164,14 +154,6 @@
                 self.view.prompt('saved');
                 return when.resolve(true);
             });
-        },
-        exportToHtml: function(htmlFile) {
-            var self = this,
-                html = self.view.getCode('styled');
-            return self.model.saveFile(htmlFile, html).then(function() {
-                self.view.prompt('exported');
-                return when.resolve(true);
-            });;
         },
         changeCurrentFile: function(filename) {
             this.currentFile = filename;
