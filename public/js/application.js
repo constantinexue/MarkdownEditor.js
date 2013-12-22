@@ -1,6 +1,5 @@
 (function() {
     "use strict";
-
     var compileService = require('./js/service-compile')();
     var exportService = require('./js/service-export')();
     mde.Application = klass(function() {
@@ -14,7 +13,8 @@
             self.controller = new mde.Controller(self.view, self.model);
             self.view.init();
             window.mvc = angular.module('mvc', []); //'$strap.directives'
-            window.mvc.factory('model', function() {
+            window.mvc.factory('model', function(historiesService) {
+                self.model.historiesService = historiesService;
                 return self.model;
             }).factory('compileService', function() {
                 return compileService;
@@ -22,6 +22,8 @@
                 return exportService;
             }).factory('settingsService', function() {
                 return new mde.SettingsService();
+            }).factory('historiesService', function() {
+                return new mde.HistoriesService();
             }).directive('integer', function() {
                 // http://stackoverflow.com/questions/15072152/angularjs-input-model-changes-from-integer-to-string-when-changed
                 return {
@@ -32,13 +34,13 @@
                         });
                     }
                 };
-            }).controller('HistoriesCtrl', function($scope, $http, model) {
-                self.model.on('historiesChanged', function(histories) {
+            }).controller('HistoriesCtrl', function($scope, $http, historiesService, model) {
+                historiesService.on('historiesChanged', function(histories) {
                     $scope.$apply(function() {
                         $scope.histories = histories;
                     });
                 });
-                $scope.histories = model.getHistories();
+                $scope.histories = historiesService.getHistories();
                 $scope.openFile = function(filename) {
                     self.controller.tryToOpenFile(filename);
                 };
