@@ -82,6 +82,8 @@
                 $scope.apply();
                 $('#select-font-size').selectpicker('val', settings.editor.fontSize);
                 $('#select-editor-theme').selectpicker('val', settings.editor.theme);
+            }).run(function(){
+                console.log('Angular is started');
             });
             angular.bootstrap('body', ['mvc']);
 
