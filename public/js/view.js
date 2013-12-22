@@ -92,10 +92,10 @@
         }, options.editor);
         self.aceEditContainer = $('#ace-edit');
         self.aceEdit = ace.edit(self.aceEditContainer[0]);
-        self.aceEdit.setFontSize(self.options.editor.fontSize);
+        //self.aceEdit.setFontSize(self.options.editor.fontSize);
         self.aceEdit.setShowPrintMargin(false);
         self.aceEdit.setHighlightGutterLine(false);
-        self.aceEdit.setTheme(self.options.editor.theme);
+        //self.aceEdit.setTheme(self.options.editor.theme);
         self.aceEdit.getSession().setMode("ace/mode/markdown");
         self.aceEdit.getSession().setUseWrapMode(self.options.editor.wrap);
         self.aceEdit.on('change', function(evt) {
@@ -145,6 +145,20 @@
                 return false;
             });
         });
+        //http://stackoverflow.com/questions/13677898/how-to-disable-ace-editors-find-dialog
+        self.aceEdit.commands.addCommands([{
+            name: "findnext",
+            bindKey: {
+                win: "Ctrl-D",
+                mac: "Command-D"
+            },
+            exec: function(editor, line) {
+                console.log(self.aceEdit.getSelection());
+                console.log(self.aceEdit.getSelectionRange());
+                return false;
+            },
+            readOnly: true
+        }]);
         // https://groups.google.com/forum/#!topic/node-webkit/LIcbwBrF_CI
         $('a[target="_system"]').click(function(evt) {
             evt.preventDefault();

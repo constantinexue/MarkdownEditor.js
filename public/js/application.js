@@ -1,10 +1,8 @@
 (function() {
     "use strict";
 
-    var Converter = require('./js/converter');
-    var converter = new Converter();
+    var compileService = require('./js/service-compile')();
     var exportService = require('./js/service-export')();
-
     mde.Application = klass(function() {
         this.name = 'MarkdownEditor.js';
     }).methods({
@@ -15,12 +13,11 @@
             self.model = new mde.Model();
             self.controller = new mde.Controller(self.view, self.model);
             self.view.init();
-
             window.mvc = angular.module('mvc', []); //'$strap.directives'
             window.mvc.factory('model', function() {
                 return self.model;
-            }).factory('converter', function() {
-                return converter;
+            }).factory('compileService', function() {
+                return compileService;
             }).factory('exportService', function() {
                 return exportService;
             }).factory('settingsService', function() {
@@ -45,32 +42,27 @@
                 $scope.openFile = function(filename) {
                     self.controller.tryToOpenFile(filename);
                 };
-            }).controller('ExportController', function($scope, $http, exportService, converter) {
-                $scope.toHTML = function(mode) {
+            }).controller('ExportController', function($scope, $http, exportService, compileService) {
+                $scope.export = function(mode, filetype) {
                     var md = self.view.getContent(),
-                        filename = '';
-                    self.view.selectFile('save', '.html').then(function(file) {
-                        filename = file;
-                        return converter.convert(md, {
-                            base64Image: (mode === 'styled2')
+                        filename = '',
+                        theme = (mode === 'plain') ? 'none' : 'default';
+                    return self.view.selectFile('save', filetype)
+                        .then(function(file) {
+                            filename = file;
+                            return compileService.compile(md, {
+                                base64Image: (mode === 'styled2')
+                            }, theme);
+                        })
+                        .then(function(html) {
+                            return exportService.export(filename, html);
                         });
-                    }).then(function(htmlBody) {
-                        mode = (mode === 'styled2') ? 'styled' : mode;
-                        return exportService.toHTML(filename, htmlBody, mode);
-                    });
+                };
+                $scope.toHTML = function(mode) {
+                    $scope.export(mode, '.html');
                 };
                 $scope.toPDF = function(mode) {
-                    var md = self.view.getContent(),
-                        filename = '';
-                    self.view.selectFile('save', '.pdf').then(function(file) {
-                        filename = file;
-                        return converter.convert(md, {
-                            base64Image: (mode === 'styled2')
-                        });
-                    }).then(function(htmlBody) {
-                        mode = (mode === 'styled2') ? 'styled' : mode;
-                        return exportService.toPDF(filename, htmlBody, mode);
-                    });
+                    $scope.export(mode, '.pdf');
                 };
             }).controller('SettingsController', function($scope, settingsService) {
                 //https://groups.google.com/forum/#!topic/angular/WNeY0v9xn1k

@@ -1,10 +1,13 @@
 body {
   max-width: 940px;
   margin: 0px auto 0px auto;
-  padding: 0px 20px 50px 20px;
+  padding: 20px 20px 50px 20px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, "Microsoft Yahei", "Simsun";
   font-size: 14px;
   background-color: white;
+}
+body > *:first-child {
+  margin-top: 0 !important;
 }
 h1,
 h2,

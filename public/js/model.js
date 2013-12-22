@@ -2,8 +2,7 @@
     "use strict";
     var path = require('path'),
         fs = require('fs'),
-        Parser = require('parse5').Parser,
-        Converter = require('./js/converter');
+        compileService = require('./js/service-compile')();
 
     mde.Model = mde.EventEmitter.extend(function() {}).methods({
         getHistories: function() {
@@ -61,11 +60,10 @@
             //      https://github.com/ariya/phantomjs/blob/master/examples/rasterize.js
         },
         md2html: function(md) {
-            var converter = new Converter();
-            return converter.convert(md);
+            // var converter = new Converter();
+            // return converter.convert(md);
+            return compileService.compile(md);
         },
-        loadSettings: function() {},
-        saveSettings: function() {},
         updateHistories: function(newlyFile) {
             var histories = this.getHistories(),
                 index = -1;

@@ -118,7 +118,7 @@
     if (typeof exports === 'object') {
         module.exports = Converter;
     } else {
-        window.mde.Converter = Converter;
+         = Converter;
     }
 
-})();
+})(typeof exports === 'undefined'? window.mde.Converter = {}: exports);

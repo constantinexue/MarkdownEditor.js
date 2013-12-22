@@ -7,78 +7,57 @@ var klass = require('klass'),
 _.str = require('underscore.string');
 
 var ExportService = klass(function() {}).methods({
-    toHTML: function(filename, htmlBody, mode) {
-        var self = this,
-            deferred = when.defer(),
-            html = '';
-
-        mode = mode || 'plain';
-
-        self.getTemplate().then(function(template) {
-            html = template.replace(/\{\{body\}\}/g, htmlBody);
-            return deferred.resolve(html);
-        }).then(function(html) {
-            if (mode === 'styled') {
-                return self.getStyle();
-            } else {
-                return deferred.resolve('');
-            }
-        }).then(function(style) {
-            html = html.replace(/\{\{style\}\}/g, style);
-            return deferred.resolve(html);
-        }).then(function(html) {
-            return self.save(filename, html);
-        });
-        return deferred.promise;
+    export: function(filename, html) {
+        var self = this;
+        switch (path.extname(filename)) {
+            case '.html':
+                return self.save(filename, html);
+            case '.pdf':
+                return self.toPDF(filename, html);
+            default:
+                break;
+        }
     },
-    toPDF: function(filename, htmlBody, mode) {
+    toPDF: function(filename, html, mode) {
         // Generates a temp HTML
-        var tempDir = path.join(__dirname, 'temp');
+        var tempDir = path.join(__dirname, '../../', 'temp');
         if (!fs.existsSync(tempDir)) {
             fs.mkdirSync(tempDir);
         }
         var tempFile = _.uniqueId('topdf_') + '.html';
         tempFile = path.join(tempDir, tempFile);
-        var self = this,
-            deferred = when.defer();
-        return self.toHTML(tempFile, htmlBody, mode).then(function() {
-            return self.pdfify(tempFile, filename);
+        var self = this;
+        return self.save(tempFile, html).then(function() {
+            var deferred = when.defer();
+            // Converts to PDF with child process running wkhtmltopdf
+            var os = require('os'),
+                wkhtmltopdf = require('wkhtmltopdf');
+            switch (os.platform()) {
+                case 'win32':
+                    wkhtmltopdf.command = './bin/win32/wkhtmltopdf.exe';
+                    break;
+                case 'linux':
+                    wkhtmltopdf.command = (os.arch() === 'x64') ? './bin/linux64/wkhtmltopdf' : './bin/linux32/wkhtmltopdf';
+                    break;
+                case 'darwin':
+                    wkhtmltopdf.command = './bin/macos/wkhtmltopdf';
+                    break;
+                default:
+                    break;
+            }
+            console.log(os.type());
+            console.log(os.platform());
+            wkhtmltopdf('file:///' + tempFile, {
+                output: filename,
+                footerCenter: '[page]/[topage]'
+            }, function(code, signal) {
+                deferred.resolve();
+            });
+            return deferred.promise;
         }).ensure(function() {
             // Deletes unused temp file.
             fs.unlinkSync(tempFile);
         });
-    },
-    pdfify: function(tempFile, filename) {
-        var self = this,
-            deferred = when.defer();
-        // Converts to PDF with child process running wkhtmltopdf
-        var os = require('os'),
-            wkhtmltopdf = require('wkhtmltopdf');
-        switch (os.platform()) {
-            case 'win32':
-                wkhtmltopdf.command = './bin/win32/wkhtmltopdf.exe';
-                break;
-            case 'linux':
-                wkhtmltopdf.command = (os.arch() === 'x64') ? './bin/linux64/wkhtmltopdf' : './bin/linux32/wkhtmltopdf';
-                break;
-            case 'darwin':
-                wkhtmltopdf.command = './bin/macos/wkhtmltopdf';
-                break;
-            default:
-                break;
-        }
-        console.log(os.type());
-        console.log(os.platform());
-        wkhtmltopdf('file:///' + tempFile, {
-            output: filename,
-            footerCenter: '[page]/[topage]'
-        }, function(code, signal) {
-            deferred.resolve();
-        });
-        return deferred.promise;
-    },
-    toImage: function(filename, body) {
-
     },
     save: function(filename, content) {
         var self = this,
@@ -91,30 +70,6 @@ var ExportService = klass(function() {}).methods({
             }
         });
 
-        return deferred.promise;
-    },
-    getTemplate: function() {
-        var self = this,
-            deferred = when.defer();
-        fs.readFile('./public/page-temp.html', 'utf8', function(err, template) {
-            if (err) {
-                deferred.reject(err);
-            } else {
-                deferred.resolve(template);
-            }
-        });
-        return deferred.promise;
-    },
-    getStyle: function() {
-        var self = this,
-            deferred = when.defer();
-        fs.readFile('./public/css/style-default.css', 'utf8', function(err, css) {
-            if (err) {
-                deferred.reject(err);
-            } else {
-                deferred.resolve(css);
-            }
-        });
         return deferred.promise;
     }
 });

@@ -36,7 +36,6 @@
             var jsonString = JSON.stringify(value);
             localStorage.setItem('settings', jsonString);
             return this;
-        },
+        }
     });
-
 })();
