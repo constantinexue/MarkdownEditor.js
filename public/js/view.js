@@ -36,7 +36,7 @@
 
         // Right panels operations
         self.viewPane = $('#page-view');
-        self.codePane = $('#ace-code');
+        self.codePane = $('#page-code');
         self.helpPane = $('#pane-help');
         self.arealeft = $('#area-left');
         var currentPaneButton = $('#button-showview');
@@ -99,16 +99,6 @@
         });
         self.aceEdit.focus();
 
-        self.aceCodeContainer = $('#ace-code');
-        self.aceCode = ace.edit(self.aceCodeContainer[0]);
-        self.aceCode.setFontSize(self.options.editor.fontSize);
-        self.aceCode.setShowPrintMargin(false);
-        self.aceCode.setHighlightGutterLine(false);
-        self.aceCode.setTheme(self.options.editor.theme);
-        self.aceCode.getSession().setMode("ace/mode/html");
-        self.aceCode.getSession().setUseWrapMode(self.options.editor.wrap);
-        self.aceCode.setReadOnly(true);
-
         self.on('windowResized', function(evt) {
             var height = $(window).innerHeight() - $('.navbar').outerHeight();
             $('#container-workarea').css({
@@ -116,8 +106,6 @@
             });
             self.aceEditContainer.height(height);
             self.aceEdit.resize();
-            self.aceCodeContainer.height(height);
-            self.aceCode.resize();
         });
 
         self.aceEdit.getSelection().on('changeCursor', function() {
@@ -191,35 +179,48 @@
             html = html_beautify(html, {
                 indent_size: 4
             });
-            self.aceCode.getSession().getDocument().setValue(html);
+            //self.aceCode.getSession().getDocument().setValue(html);
+            var code = hljs.highlight('xml', html).value;
+            pageBody = self.codePane.contents().find('code');
+            pageBody.html(code);
+
             self.syncScroll();
         },
         syncCursor: function() {
             var self = this;
             var editAll = self.aceEdit.getSession().getDocument().getLength(),
-                codeAll = self.aceCode.getSession().getDocument().getLength(),
+                //codeAll = self.aceCode.getSession().getDocument().getLength(),
+                codeAll = 0,
                 editRow = self.aceEdit.getCursorPosition().row,
                 codeRow = parseInt(editRow * codeAll / editAll);
-            self.aceCode.scrollToLine(codeRow, true, true);
-            self.aceCode.gotoLine(codeRow, 0, true);
+            // self.aceCode.scrollToLine(codeRow, true, true);
+            // self.aceCode.gotoLine(codeRow, 0, true);
         },
         syncScroll: function() {
-            var self = this;
+            var self = this,
+                pageBody, ls, lh, rh, rs,
+                paneHeight = self.aceEditContainer.height();
             // Sync preview
-            var pageBody = self.viewPane.contents().find('body');
-            var lh = self.aceEdit.getSession().getScreenLength() * self.aceEdit.renderer.lineHeight,
-                ls = self.aceEdit.renderer.getScrollTop(),
-                rh = pageBody.prop('scrollHeight'),
-                rs = parseInt(ls * rh / lh);
-            if (ls < lh) {
-                pageBody.scrollTop(rs);
+            pageBody = self.viewPane.contents().find('body');
+            ls = self.aceEdit.renderer.getScrollTop() + (paneHeight / 2);
+            lh = self.aceEdit.getSession().getScreenLength() * self.aceEdit.renderer.lineHeight;
+            rh = pageBody.prop('scrollHeight'),
+            rs = parseInt(ls * rh / lh) - (paneHeight / 2);
+            if (ls < lh && rs > 0) {
+                //pageBody.scrollTop(rs);
             }
+            //console.log(_.str.sprintf('%d/%d = %d/%d ? %d', ls, lh, rs, rh, pageBody.scrollTop()));
             // Sync HTML code
-            rh = self.aceCode.getSession().getScreenLength() * self.aceCode.renderer.lineHeight,
-            rs = parseInt(ls * rh / lh);
-            if (ls < lh) {
-                self.aceCode.getSession().setScrollTop(rs);
+            pageBody = self.codePane.contents().find('body');
+            rh = pageBody.prop('scrollHeight');
+            rs = parseInt(ls * rh / lh) - (paneHeight / 2);
+            if (ls < lh && rs > 0) {
+                //pageBody.scrollTop(rs);
             }
+            // console.log(pageBody.innerHeight());
+            // console.log(pageBody.height());
+            // console.log(pageBody.outerHeight());
+            // console.log(pageBody.prop('scrollHeight'));
         },
         setContent: function(value) {
             var self = this;

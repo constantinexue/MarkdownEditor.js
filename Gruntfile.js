@@ -22,6 +22,7 @@ module.exports = function(grunt) {
                 files: {
                     './public/index.html': './src/index.jade',
                     './public/page-view.html': './src/page-view.jade',
+                    './public/page-code.html': './src/page-code.jade',
                     './public/page-temp.html': './src/page-temp.jade'
                 }
             }
@@ -30,6 +31,7 @@ module.exports = function(grunt) {
             compile: {
                 files: {
                     './public/css/main.css': './src/less/main.less',
+                    './public/css/page-code.css': './src/less/page-code.less',
                     './public/css/style-default.css': './src/less/style-default.less',
                     './public/css/style-gfm.css': './src/less/style-gfm.less'
                 }

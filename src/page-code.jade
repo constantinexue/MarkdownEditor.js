@@ -1,0 +1,10 @@
+extend layout
+block files-css
+    //- http://softwaremaniacs.org/blog/2011/05/22/highlighters-comparison/
+    link(rel='stylesheet', href='http://cdn.bootcss.com/highlight.js/7.4/styles/default.min.css')
+    link(rel='stylesheet', href='./css/page-code.css')
+block files-js
+    //script(src='http://cdn.bootcss.com/highlight.js/7.4/highlight.min.js')
+block content
+    pre
+        code

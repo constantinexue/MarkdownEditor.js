@@ -2,7 +2,6 @@ extend layout
 block files-css
     link(rel='stylesheet', href='./vendor/bootstrap.css')
     link(rel='stylesheet', href='http://cdn.bootcss.com/font-awesome/4.0.3/css/font-awesome.css')
-    link(rel='stylesheet', href='http://cdn.bootcss.com/highlight.js/7.4/styles/default.min.css')
     link(rel='stylesheet', href='./css/main.css')
 block files-js
     script(src='http://cdn.bootcss.com/jquery/2.0.3/jquery.min.js')
@@ -15,7 +14,9 @@ block files-js
     script(src="./vendor/typo.js")
     script(src="./vendor/ace-spellcheck.js")
 
+    //link(rel='stylesheet', href='http://cdn.bootcss.com/highlight.js/7.4/styles/default.min.css')
     script(src='http://cdn.bootcss.com/highlight.js/7.4/highlight.min.js')
+        
     script(src='http://cdn.bootcss.com/underscore.js/1.5.2/underscore-min.js')
     script(src='http://cdn.bootcss.com/underscore.string/2.3.3/underscore.string.min.js')
     script(src='http://cdn.bootcss.com/klass/1.0/klass.js')
@@ -108,7 +109,7 @@ block content
                     div#ace-edit
                 td#area-left(style='width:50%')
                     iframe#page-view(src='page-view.html', frameborder='no', border='0')
-                    div#ace-code
+                    iframe#page-code(src='page-code.html', frameborder='no', border='0')
                     div#pane-help
                         
     div.hide

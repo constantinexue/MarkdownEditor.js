@@ -57,17 +57,22 @@ p {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, "Microsoft Yahei", "Simsun";
   font-size: 14px;
   line-height: 25px;
+  margin: 14px 0px;
+  text-indent: 2em;
 }
 ul,
 ol {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, "Microsoft Yahei", "Simsun";
   font-size: 14px;
   line-height: 25px;
+  margin: 14px 0px;
+  padding-left: 4em;
 }
 ul li,
 ol li {
   font-size: 14px;
   line-height: 25px;
+  margin: 14px 0px;
 }
 pre {
   background-color: #F8F8F8;

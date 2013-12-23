@@ -3,8 +3,12 @@
 @base-font-size: 14px;
 @base-line-height: 25px;
 @base-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, "Microsoft Yahei", "Simsun";
+
 @code-font-size: 12px;
 @code-font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+
+@paragraph-margin: 14px;
+@paragraph-indent: 2em;
 
 body {
     max-width: 940px;
@@ -62,15 +66,20 @@ p {
     font-family: @base-font-family;
     font-size: @base-font-size;
     line-height: @base-line-height;
+    margin: @paragraph-margin 0px;
+    text-indent: @paragraph-indent;
 }
 
 ul, ol {
     font-family: @base-font-family;
     font-size: @base-font-size;
     line-height: @base-line-height;
+    margin: @paragraph-margin 0px;
+    padding-left: @paragraph-indent + 2em;
     li {
         font-size: @base-font-size;
         line-height: @base-line-height;
+        margin: @paragraph-margin 0px;
     }
 }
 
