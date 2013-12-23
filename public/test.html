@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html ng-app="test">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="http://cdn.bootcss.com/angular.js/1.2.1/angular.js"></script>
+    <script src="./js/test.js"></script>
+  </head>
+  <body ng-controller="testController"><a href="javascript:;" ng-click="select(button1)">Select 1</a><a href="javascript:;" ng-click="select(button2)">Select 2</a><a href="javascript:;" ng-click="select(button3)">Select 3</a>
+    <div ng-buttons>
+      <div>{{button1.selected}}</div>
+      <div>{{button2.selected}}</div>
+      <div>{{button3.selected}}</div>
+      <div ng-show="button1.selected">Button 1</div>
+      <div ng-show="button2.selected">Button 2</div>
+      <div ng-show="button3.selected">Button 3</div>
+    </div>
+  </body>
+</html>

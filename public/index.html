@@ -35,26 +35,26 @@
     <script src="./js/model.js"></script>
     <script src="./js/view.js"></script>
     <script src="./js/controller.js"></script>
+    <script src="./js/controller-editor.js"></script>
     <script src="./js/application.js"></script>
   </head>
   <body>
-    <div>
-      <!--.navbar-inverse-->
+    <div ng-controller="editorController">
       <div role="navigation" class="navbar navbar-default navbar-static-top">
         <div class="navbar-header"><a data-toggle="modal" data-target="#modal-about" href="javascript:;" class="navbar-brand">MarkdownEditor.js</a></div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">File&nbsp;<b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a id="button-new" href="javascript:;">New</a></li>
-                <li><a id="button-open" href="javascript:;">Open</a></li>
-                <li><a id="button-save" href="javascript:;">Save</a></li>
-                <li><a id="button-saveas" href="javascript:;">Save As</a></li>
+                <li><a href="javascript:;" ng-click="init()">New</a></li>
+                <li><a href="javascript:;" ng-click="open()">Open</a></li>
+                <li><a href="javascript:;" ng-click="save()">Save</a></li>
+                <li><a href="javascript:;" ng-click="saveas()">Save As</a></li>
               </ul>
             </li>
             <li id="list-histories" class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">Histories&nbsp;<b class="caret"></b></a>
-              <ul ng-controller="HistoriesCtrl" class="dropdown-menu">
-                <li ng-repeat="history in histories"><a href="javascript:;" ng-click="openFile(history)">{{history}}</a></li>
+              <ul ng-controller="historiesController" class="dropdown-menu">
+                <li ng-repeat="history in histories"><a href="javascript:;" ng-click="open(history)">{{history}}</a></li>
               </ul>
             </li>
             <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">Export&nbsp;<b class="caret"></b></a>
@@ -71,143 +71,143 @@
           <ul style="margin-right:15px;" class="nav navbar-nav navbar-right">
             <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">MODE&nbsp;<b class="caret"></b></a>
               <ul ng-pane-tabs class="dropdown-menu">
-                <li ng-class="{active:viewPane.selected}"><a id="button-showview" href="javascript:;" ng-click="select(viewPane)">Preivew</a></li>
-                <li ng-class="{active:codePane.selected}"><a id="button-showcode" href="javascript:;" ng-click="select(codePane)">HTML Code</a></li>
-                <li ng-class="{active:helpPane.selected}"><a id="button-showhelp" href="javascript:;" ng-click="select(helpPane)">Guide</a></li>
+                <li ng-class="{active:viewPane.selected}"><a id="button-showview" href="javascript:;" ng-click="selectPane(viewPane)">Preivew</a></li>
+                <li ng-class="{active:codePane.selected}"><a id="button-showcode" href="javascript:;" ng-click="selectPane(codePane)">HTML Code</a></li>
+                <li ng-class="{active:helpPane.selected}"><a id="button-showhelp" href="javascript:;" ng-click="selectPane(helpPane)">Guide</a></li>
                 <li><a id="button-hide" href="javascript:;">Turn Off</a></li>
               </ul>
             </li>
           </ul>
         </div>
       </div>
-    </div>
-    <div id="container-workarea" ng-pane-pages ng-controller="editorController">
-      <table cellspacing="0" cellpadding="0" border="0" style="width:100%; height:100%">
-        <tr>
-          <td id="area-right" style="width:50%">
-            <div id="ace-edit"></div>
-          </td>
-          <td id="area-left" style="width:50%">
-            <iframe id="page-view" src="page-view.html" frameborder="no" border="0" ng-show="viewPane.selected" ng-page-view></iframe>
-            <iframe id="page-code" src="page-code.html" frameborder="no" border="0" ng-show="codePane.selected" ng-page-code></iframe>
-            <iframe id="page-help" src="              " frameborder="no" border="0" ng-show="helpPane.selected"></iframe>
-          </td>
-        </tr>
-      </table>
-    </div>
-    <div class="hide">
-      <input id="dialog-open" type="file">
-      <input id="dialog-save" type="file" nwsaveas>
-    </div>
-    <div id="container-modals">
-      <div id="modal-about" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
-              <h4 class="modal-title">About MarkdownEditor.js</h4>
-            </div>
-            <div class="modal-body">
-              <p>Author</p>
-              <p><a href="https://github.com/constantinexue">ConstantineXue</a></p>
-              <div class="panel panel-default">
-                <div class="panel-heading">Dependencies</div>
-                <div class="panel-body">
-                  <p><a target="_system" href="">nodejs</a></p>
-                  <p><a target="_system" href="">node-webkit</a></p>
-                  <p><a target="_system" href="">wkhtmltopdf</a></p>
+      <div id="container-workarea" ng-pane-pages>
+        <table cellspacing="0" cellpadding="0" border="0" style="width:100%; height:100%">
+          <tr>
+            <td id="area-right" style="width:50%">
+              <div id="ace-edit"></div>
+            </td>
+            <td id="area-left" style="width:50%">
+              <iframe id="page-view" src="page-view.html" frameborder="no" border="0" ng-show="viewPane.selected"></iframe>
+              <iframe id="page-code" src="page-code.html" frameborder="no" border="0" ng-show="codePane.selected"></iframe>
+              <iframe id="page-help" src="" frameborder="no" border="0" ng-show="false"></iframe>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="hide">
+        <input id="dialog-open" type="file">
+        <input id="dialog-save" type="file" nwsaveas>
+      </div>
+      <div id="container-modals">
+        <div id="modal-about" tabindex="-1" role="dialog" aria-hidden="true" class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" data-dismiss="modal" aria-hidden="true" class="close">×</button>
+                <h4 class="modal-title">About MarkdownEditor.js</h4>
+              </div>
+              <div class="modal-body">
+                <p>Author</p>
+                <p><a href="https://github.com/constantinexue">ConstantineXue</a></p>
+                <div class="panel panel-default">
+                  <div class="panel-heading">Dependencies</div>
+                  <div class="panel-body">
+                    <p><a target="_system" href="">nodejs</a></p>
+                    <p><a target="_system" href="">node-webkit</a></p>
+                    <p><a target="_system" href="">wkhtmltopdf</a></p>
+                  </div>
+                </div>
+                <div class="panel panel-default">
+                  <div class="panel-heading">References</div>
+                  <div class="panel-body">
+                    <p><a target="_system" href="https://stackedit.io/">StackEdit</a></p>
+                    <p><a target="_system" href="http://www.ctrlshift.net/project/markdowneditor/">markdowneditor</a></p>
+                    <p><a target="_system" href="http://markdown-here.com/">Markdown Here</a></p>
+                    <p><a target="_system" href="http://prose.io/">Prose</a></p>
+                    <p><a target="_system" href="http://www.zybuluo.com/mdeditor/">Cmd Markdown</a></p>
+                    <p><a target="_system" href="http://maxiang.info/">马克飞象</a></p>
+                    <p><a target="_system" href="http://pad.haroopress.com/">Haroo Pad</a></p>
+                    <p><a target="_system" href="http://dillinger.io/">Dillinger</a></p>
+                  </div>
                 </div>
               </div>
-              <div class="panel panel-default">
-                <div class="panel-heading">References</div>
-                <div class="panel-body">
-                  <p><a target="_system" href="https://stackedit.io/">StackEdit</a></p>
-                  <p><a target="_system" href="http://www.ctrlshift.net/project/markdowneditor/">markdowneditor</a></p>
-                  <p><a target="_system" href="http://markdown-here.com/">Markdown Here</a></p>
-                  <p><a target="_system" href="http://prose.io/">Prose</a></p>
-                  <p><a target="_system" href="http://www.zybuluo.com/mdeditor/">Cmd Markdown</a></p>
-                  <p><a target="_system" href="http://maxiang.info/">马克飞象</a></p>
-                  <p><a target="_system" href="http://pad.haroopress.com/">Haroo Pad</a></p>
-                  <p><a target="_system" href="http://dillinger.io/">Dillinger</a></p>
-                </div>
+              <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-primary">OK</button>
               </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" data-dismiss="modal" class="btn btn-primary">OK</button>
             </div>
           </div>
         </div>
-      </div>
-      <div id="modal-settings" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" class="modal fade">
-        <div ng-controller="SettingsController" class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Settings</h4>
-            </div>
-            <div class="modal-body">
-              <ul class="nav nav-tabs">
-                <li class="active"><a href="#settings-general" data-toggle="tab">General</a></li>
-                <li><a href="#settings-shortcuts" data-toggle="tab">Shortcuts</a></li>
-              </ul>
-              <div class="tab-content">
-                <div id="settings-general" class="tab-pane fade in active"><br>
-                  <form role="form" class="form-horizontal">
-                    <div class="form-group">
-                      <label class="col-sm-3 control-label">Editor Theme</label>
-                      <div class="col-sm-9">
-                        <select id="select-editor-theme" ng-model="settings.editor.theme" class="form-control selectpicker">
-                          <option>ambiance</option>
-                          <option>chaos</option>
-                          <option>chrome</option>
-                          <option>clouds</option>
-                          <option>clouds_midnight</option>
-                          <option>cobalt</option>
-                          <option>crimson_editor</option>
-                          <option>dawn</option>
-                          <option>dreamweaver</option>
-                          <option>eclipse</option>
-                          <option>github</option>
-                          <option>idle_fingers</option>
-                          <option>kr_theme</option>
-                          <option>merbivore</option>
-                          <option>merbivore_soft</option>
-                          <option>monokai</option>
-                          <option>mono_industrial</option>
-                          <option>pastel_on_dark</option>
-                          <option>solarized_dark</option>
-                          <option>solarized_light</option>
-                          <option>terminal</option>
-                          <option>textmate</option>
-                          <option>tomorrow</option>
-                          <option>tomorrow_night</option>
-                          <option>tomorrow_night_blue</option>
-                          <option>tomorrow_night_bright</option>
-                          <option>tomorrow_night_eighties</option>
-                          <option>twilight</option>
-                          <option>vibrant_ink</option>
-                          <option>xcode</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-sm-3 control-label">Editor Font Size</label>
-                      <div class="col-sm-9">
-                        <select id="select-font-size" ng-model="settings.editor.fontSize" integer class="form-control selectpicker">
-                          <option>12</option>
-                          <option>14</option>
-                          <option>16</option>
-                          <option>18</option>
-                        </select>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-                <div id="settings-shortcuts" class="tab-pane fade">C</div>
+        <div id="modal-settings" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" class="modal fade">
+          <div ng-controller="SettingsController" class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Settings</h4>
               </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" ng-click="save()" class="btn btn-success">&nbsp;&nbsp;Save&nbsp;&nbsp;</button>
-              <button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
+              <div class="modal-body">
+                <ul class="nav nav-tabs">
+                  <li class="active"><a href="#settings-general" data-toggle="tab">General</a></li>
+                  <li><a href="#settings-shortcuts" data-toggle="tab">Shortcuts</a></li>
+                </ul>
+                <div class="tab-content">
+                  <div id="settings-general" class="tab-pane fade in active"><br>
+                    <form role="form" class="form-horizontal">
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">Editor Theme</label>
+                        <div class="col-sm-9">
+                          <select id="select-editor-theme" ng-model="settings.editor.theme" class="form-control selectpicker">
+                            <option>ambiance</option>
+                            <option>chaos</option>
+                            <option>chrome</option>
+                            <option>clouds</option>
+                            <option>clouds_midnight</option>
+                            <option>cobalt</option>
+                            <option>crimson_editor</option>
+                            <option>dawn</option>
+                            <option>dreamweaver</option>
+                            <option>eclipse</option>
+                            <option>github</option>
+                            <option>idle_fingers</option>
+                            <option>kr_theme</option>
+                            <option>merbivore</option>
+                            <option>merbivore_soft</option>
+                            <option>monokai</option>
+                            <option>mono_industrial</option>
+                            <option>pastel_on_dark</option>
+                            <option>solarized_dark</option>
+                            <option>solarized_light</option>
+                            <option>terminal</option>
+                            <option>textmate</option>
+                            <option>tomorrow</option>
+                            <option>tomorrow_night</option>
+                            <option>tomorrow_night_blue</option>
+                            <option>tomorrow_night_bright</option>
+                            <option>tomorrow_night_eighties</option>
+                            <option>twilight</option>
+                            <option>vibrant_ink</option>
+                            <option>xcode</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">Editor Font Size</label>
+                        <div class="col-sm-9">
+                          <select id="select-font-size" ng-model="settings.editor.fontSize" integer class="form-control selectpicker">
+                            <option>12</option>
+                            <option>14</option>
+                            <option>16</option>
+                            <option>18</option>
+                          </select>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div id="settings-shortcuts" class="tab-pane fade">C</div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" ng-click="save()" class="btn btn-success">&nbsp;&nbsp;Save&nbsp;&nbsp;</button>
+                <button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
+              </div>
             </div>
           </div>
         </div>

@@ -3,7 +3,7 @@
     var gui = require('nw.gui'),
         win = gui.Window.get();
 
-    mde.View = mde.EventEmitter.extend(function(options) {
+    mde.View = mde.EventEmitter.extend(function() {
         var self = this;
 
         win.on('close', function() {
@@ -14,85 +14,15 @@
         });
 
         // Navbar commands
-        self.openDialog = $('#dialog-open'),
-        self.saveDialog = $('#dialog-save'),
-        self.newButton = $('#button-new'),
-        self.openButton = $('#button-open'),
-        self.saveButton = $('#button-save'),
-        self.saveAsButton = $('#button-saveas');
-        self.newButton.click(function() {
-            self.fire('newButtonClicked');
-        });
-        self.openButton.click(function() {
-            self.fire('openButtonClicked');
-        });
-        self.saveButton.click(function() {
-            self.fire('saveButtonClicked');
-        });
-        self.saveAsButton.click(function() {
-            self.fire('saveAsButtonClicked');
-        });
-/*
-        // Right panels operations
-        self.viewPane = $('#page-view');
-        self.codePane = $('#page-code');
-        self.helpPane = $('#pane-help');
-        self.arealeft = $('#area-left');
-        var currentPaneButton = $('#button-showview');
-
-        var highlightButton = function(button) {
-            currentPaneButton.parent().removeClass('active');
-            currentPaneButton = button;
-            currentPaneButton.parent().addClass('active');
-        };
-        var setLeftPanesWidth = function(width) {
-            self.arealeft.css('width', width);
-            self.fire('windowResized');
-        };
-        $('#button-showview').click(function() {
-            self.codePane.hide();
-            self.helpPane.hide();
-            self.viewPane.show();
-            setLeftPanesWidth('50%');
-            highlightButton($(this));
-        });
-        $('#button-showcode').click(function() {
-            self.viewPane.hide();
-            self.helpPane.hide();
-            self.codePane.show();
-            setLeftPanesWidth('50%');
-            highlightButton($(this));
-        });
-        $('#button-showhelp').click(function() {
-            self.viewPane.hide();
-            self.codePane.hide();
-            self.helpPane.show();
-            setLeftPanesWidth('50%');
-            highlightButton($(this));
-        });
-        $('#button-hide').click(function() {
-            self.viewPane.hide();
-            self.codePane.hide();
-            self.helpPane.hide();
-            setLeftPanesWidth('0');
-            highlightButton($(this));
-        });*/
-
+        self.openDialog = $('#dialog-open');
+        self.saveDialog = $('#dialog-save');
         // ACE init
-        self.options = {};
-        self.options.editor = $.extend({
-            fontSize: 16,
-            theme: "ace/theme/twilight",
-            wrap: true
-        }, options.editor);
         self.aceEditContainer = $('#ace-edit');
         self.aceEdit = ace.edit(self.aceEditContainer[0]);
-        //self.aceEdit.setFontSize(self.options.editor.fontSize);
         self.aceEdit.setShowPrintMargin(false);
         self.aceEdit.setHighlightGutterLine(false);
-        //self.aceEdit.setTheme(self.options.editor.theme);
         self.aceEdit.getSession().setMode("ace/mode/markdown");
-        self.aceEdit.getSession().setUseWrapMode(self.options.editor.wrap);
+        self.aceEdit.getSession().setUseWrapMode(true);
         self.aceEdit.on('change', function(evt) {
             self.fire('contentChanged');
         });
@@ -116,18 +46,6 @@
             self.syncScroll();
         });
 
-        var eventKeyMap = {
-            'mod+n': 'newButtonClicked',
-            'mod+o': 'openButtonClicked',
-            'mod+s': 'saveButtonClicked',
-            'mod+shift+s': 'saveAsButtonClicked'
-        };
-        $.each(eventKeyMap, function(key, value) {
-            Mousetrap.bindGlobal(key, function(e) {
-                self.fire(value);
-                return false;
-            });
-        });
         //http://stackoverflow.com/questions/13677898/how-to-disable-ace-editors-find-dialog
         self.aceEdit.commands.addCommands([{
             name: "findnext",
@@ -156,8 +74,8 @@
         init: function() {
             var self = this;
             //$('#button-showview').click();
-            self.newButton.click();
-        self.fire('windowResized');
+            //self.newButton.click();
+            self.fire('windowResized');
             //win.maximize();
             win.show();
         },

@@ -1,6 +1,7 @@
 (function() {
     "use strict";
-    window.mde ={};
+    window.mde = {};
+    window.mvc = angular.module('mvc', []);
 })();
 (function() {
     "use strict";

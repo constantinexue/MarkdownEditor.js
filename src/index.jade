@@ -42,10 +42,10 @@ block files-js
     script(src='./js/model.js')
     script(src='./js/view.js')
     script(src='./js/controller.js')
+    script(src='./js/controller-editor.js')
     script(src='./js/application.js')
 block content
-    div
-        //.navbar-inverse
+    div(ng-controller='editorController')
         div.navbar.navbar-default.navbar-static-top(role='navigation')
             div.navbar-header
                 a.navbar-brand(data-toggle='modal', data-target='#modal-about', href='javascript:;') MarkdownEditor.js
@@ -57,20 +57,20 @@ block content
                             b.caret
                         ul.dropdown-menu
                             li
-                                a#button-new(href='javascript:;') New
+                                a(href='javascript:;', ng-click='init()') New
                             li
-                                a#button-open(href='javascript:;') Open
+                                a(href='javascript:;', ng-click='open()') Open
                             li
-                                a#button-save(href='javascript:;') Save
+                                a(href='javascript:;', ng-click='save()') Save
                             li
-                                a#button-saveas(href='javascript:;') Save As
+                                a(href='javascript:;', ng-click='saveas()') Save As
                     li#list-histories.dropdown
                         a.dropdown-toggle(href='#', data-toggle='dropdown')
                             | Histories&nbsp;
                             b.caret
-                        ul.dropdown-menu(ng-controller='HistoriesCtrl')
+                        ul.dropdown-menu(ng-controller='historiesController')
                             li(ng-repeat='history in histories')
-                                a(href='javascript:;', ng-click='openFile(history)') {{history}}
+                                a(href='javascript:;', ng-click='open(history)') {{history}}
                     li.dropdown
                         a.dropdown-toggle(href='#', data-toggle='dropdown')
                             | Export&nbsp;
@@ -95,26 +95,26 @@ block content
                             b.caret
                         ul.dropdown-menu(ng-pane-tabs)
                             li(ng-class='{active:viewPane.selected}')
-                                a#button-showview(href='javascript:;', ng-click='select(viewPane)') Preivew
+                                a#button-showview(href='javascript:;', ng-click='selectPane(viewPane)') Preivew
                             li(ng-class='{active:codePane.selected}')
-                                a#button-showcode(href='javascript:;', ng-click='select(codePane)') HTML Code
+                                a#button-showcode(href='javascript:;', ng-click='selectPane(codePane)') HTML Code
                             li(ng-class='{active:helpPane.selected}')
-                                a#button-showhelp(href='javascript:;', ng-click='select(helpPane)') Guide
+                                a#button-showhelp(href='javascript:;', ng-click='selectPane(helpPane)') Guide
                             li
                                 a#button-hide(href='javascript:;') Turn Off
-    div#container-workarea(ng-pane-pages, ng-controller='editorController')
-        table(cellspacing='0', cellpadding='0', border='0', style='width:100%; height:100%')
-            tr
-                td#area-right(style='width:50%')
-                    div#ace-edit
-                td#area-left(style='width:50%')
-                    iframe#page-view(src='page-view.html', frameborder='no', border='0', ng-show="viewPane.selected", ng-page-view)
-                    iframe#page-code(src='page-code.html', frameborder='no', border='0', ng-show="codePane.selected", ng-page-code)
-                    iframe#page-help(src='              ', frameborder='no', border='0', ng-show="helpPane.selected")
-                        
-    div.hide
-        input#dialog-open(type='file')
-        input#dialog-save(type='file', nwsaveas)
-    div#container-modals
-        include partial-about
-        include partial-settings
+        div#container-workarea(ng-pane-pages)
+            table(cellspacing='0', cellpadding='0', border='0', style='width:100%; height:100%')
+                tr
+                    td#area-right(style='width:50%')
+                        div#ace-edit
+                    td#area-left(style='width:50%')
+                        iframe#page-view(src='page-view.html', frameborder='no', border='0', ng-show='viewPane.selected')
+                        iframe#page-code(src='page-code.html', frameborder='no', border='0', ng-show='codePane.selected')
+                        iframe#page-help(src='', frameborder='no', border='0', ng-show='false')
+                            
+        div.hide
+            input#dialog-open(type='file')
+            input#dialog-save(type='file', nwsaveas)
+        div#container-modals
+            include partial-about
+            include partial-settings
