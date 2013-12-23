@@ -12,7 +12,6 @@
         $(window).resize(function() {
             self.fire('windowResized');
         });
-        self.fire('windowResized');
 
         // Navbar commands
         self.openDialog = $('#dialog-open'),
@@ -33,7 +32,7 @@
         self.saveAsButton.click(function() {
             self.fire('saveAsButtonClicked');
         });
-
+/*
         // Right panels operations
         self.viewPane = $('#page-view');
         self.codePane = $('#page-code');
@@ -77,7 +76,7 @@
             self.helpPane.hide();
             setLeftPanesWidth('0');
             highlightButton($(this));
-        });
+        });*/
 
         // ACE init
         self.options = {};
@@ -156,8 +155,9 @@
     }).methods({
         init: function() {
             var self = this;
-            $('#button-showview').click();
+            //$('#button-showview').click();
             self.newButton.click();
+        self.fire('windowResized');
             //win.maximize();
             win.show();
         },
@@ -173,7 +173,7 @@
         showCode: function(html) {
             var self = this;
             // Send to view page
-            var pageBody = self.viewPane.contents().find('body');
+            var pageBody = $('#page-view').contents().find('body');
             pageBody.html(html);
 
             html = html_beautify(html, {
@@ -181,7 +181,7 @@
             });
             //self.aceCode.getSession().getDocument().setValue(html);
             var code = hljs.highlight('xml', html).value;
-            pageBody = self.codePane.contents().find('code');
+            pageBody = $('#page-code').contents().find('code');
             pageBody.html(code);
 
             self.syncScroll();
@@ -201,21 +201,21 @@
                 pageBody, ls, lh, rh, rs,
                 paneHeight = self.aceEditContainer.height();
             // Sync preview
-            pageBody = self.viewPane.contents().find('body');
+            pageBody = $('#page-view').contents().find('body');
             ls = self.aceEdit.renderer.getScrollTop() + (paneHeight / 2);
             lh = self.aceEdit.getSession().getScreenLength() * self.aceEdit.renderer.lineHeight;
             rh = pageBody.prop('scrollHeight'),
             rs = parseInt(ls * rh / lh) - (paneHeight / 2);
             if (ls < lh && rs > 0) {
-                //pageBody.scrollTop(rs);
+                pageBody.scrollTop(rs);
             }
             //console.log(_.str.sprintf('%d/%d = %d/%d ? %d', ls, lh, rs, rh, pageBody.scrollTop()));
             // Sync HTML code
-            pageBody = self.codePane.contents().find('body');
+            pageBody = $('#page-code').contents().find('body');
             rh = pageBody.prop('scrollHeight');
             rs = parseInt(ls * rh / lh) - (paneHeight / 2);
             if (ls < lh && rs > 0) {
-                //pageBody.scrollTop(rs);
+                pageBody.scrollTop(rs);
             }
             // console.log(pageBody.innerHeight());
             // console.log(pageBody.height());

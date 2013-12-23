@@ -70,10 +70,10 @@
           </ul>
           <ul style="margin-right:15px;" class="nav navbar-nav navbar-right">
             <li class="dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">MODE&nbsp;<b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a id="button-showview" href="javascript:;">Preivew</a></li>
-                <li><a id="button-showcode" href="javascript:;">HTML Code</a></li>
-                <li><a id="button-showhelp" href="javascript:;">Guide</a></li>
+              <ul ng-pane-tabs class="dropdown-menu">
+                <li ng-class="{active:viewPane.selected}"><a id="button-showview" href="javascript:;" ng-click="select(viewPane)">Preivew</a></li>
+                <li ng-class="{active:codePane.selected}"><a id="button-showcode" href="javascript:;" ng-click="select(codePane)">HTML Code</a></li>
+                <li ng-class="{active:helpPane.selected}"><a id="button-showhelp" href="javascript:;" ng-click="select(helpPane)">Guide</a></li>
                 <li><a id="button-hide" href="javascript:;">Turn Off</a></li>
               </ul>
             </li>
@@ -81,16 +81,16 @@
         </div>
       </div>
     </div>
-    <div id="container-workarea">
+    <div id="container-workarea" ng-pane-pages ng-controller="editorController">
       <table cellspacing="0" cellpadding="0" border="0" style="width:100%; height:100%">
         <tr>
           <td id="area-right" style="width:50%">
             <div id="ace-edit"></div>
           </td>
           <td id="area-left" style="width:50%">
-            <iframe id="page-view" src="page-view.html" frameborder="no" border="0"></iframe>
-            <iframe id="page-code" src="page-code.html" frameborder="no" border="0"></iframe>
-            <div id="pane-help"></div>
+            <iframe id="page-view" src="page-view.html" frameborder="no" border="0" ng-show="viewPane.selected" ng-page-view></iframe>
+            <iframe id="page-code" src="page-code.html" frameborder="no" border="0" ng-show="codePane.selected" ng-page-code></iframe>
+            <iframe id="page-help" src="              " frameborder="no" border="0" ng-show="helpPane.selected"></iframe>
           </td>
         </tr>
       </table>

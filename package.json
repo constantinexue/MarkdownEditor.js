@@ -17,6 +17,7 @@
         "wkhtmltopdf": "*"
     },
     "devDependencies": {
+        "command": "*",
         "request": "*",
         "rest": "*",
         "parse5": "*",

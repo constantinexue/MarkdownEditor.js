@@ -34,6 +34,33 @@
                         });
                     }
                 };
+            }).directive('ngPaneTabs', function($rootScope) {
+                return {
+                    restrict: 'A',
+                    //scope: {},
+                    controller: function($scope) {
+                        $scope.currentPane = $scope.viewPane = {
+                            selected: true
+                        };
+                        $scope.codePane = {
+                            selected: false
+                        };
+                        $scope.helpPane = {
+                            selected: false
+                        };
+                        $scope.select = function(pane) {
+                            $scope.currentPane.selected = false;
+                            $scope.currentPane = pane;
+                            $scope.currentPane.selected = true;
+                        };
+                        $('#area-left').css('width', '50%');
+                    }
+                };
+            }).directive('ngPanePages', function($rootScope) {
+                return {
+                    restrict: 'A',
+                    require: '^ngPaneTabs'
+                }
             }).controller('HistoriesCtrl', function($scope, $http, historiesService, model) {
                 historiesService.on('historiesChanged', function(histories) {
                     $scope.$apply(function() {
@@ -44,6 +71,19 @@
                 $scope.openFile = function(filename) {
                     self.controller.tryToOpenFile(filename);
                 };
+            }).controller('editorController', function($scope, $timeout, compileService) {
+                self.view.on('contentChanged', function() {
+                    $scope.$apply(function() {
+                        $timeout.cancel($scope.promise);
+                        $scope.promise = $timeout(function() {
+                            var md = self.view.getContent();
+                            compileService.compile(md)
+                                .then(function(html) {
+                                    self.view.showCode(html);
+                                });
+                        }, 1000);
+                    });
+                });
             }).controller('ExportController', function($scope, $http, exportService, compileService) {
                 $scope.export = function(mode, filetype) {
                     var md = self.view.getContent(),
@@ -82,7 +122,7 @@
                 $scope.apply();
                 $('#select-font-size').selectpicker('val', settings.editor.fontSize);
                 $('#select-editor-theme').selectpicker('val', settings.editor.theme);
-            }).run(function(){
+            }).run(function() {
                 console.log('Angular is started');
             });
             angular.bootstrap('body', ['mvc']);
