@@ -1,4 +1,4 @@
-window.mvc.controller('editorController', function($scope, $timeout, compileService, view, model) {
+window.mvc.controller('editorController', function($scope, $timeout, compileService, windowService, view, model) {
     $scope.currentFile = null;
     $scope.isDirty = false;
     $scope.init = function() {
@@ -113,7 +113,7 @@ window.mvc.controller('editorController', function($scope, $timeout, compileServ
     function updateTitle() {
         var fileTitle = ($scope.currentFile == null) ? 'New File' : $scope.currentFile,
             dirtyTitle = $scope.isDirty ? ' * ' : ' ';
-        view.setTitle(fileTitle + dirtyTitle);
+        windowService.setTitle(fileTitle + dirtyTitle);
     }
     $scope.$watch('isDirty', function(newVal, oldVal) {
         updateTitle();

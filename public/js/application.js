@@ -9,11 +9,7 @@
         return model;
     }).factory('view', function() {
         return new mde.View();
-    })
-    // .factory('controller', function(view, model) {
-    //     return new mde.Controller(view, model);
-    // })
-    .factory('compileService', function() {
+    }).factory('compileService', function() {
         return compileService;
     }).factory('exportService', function() {
         return exportService;
@@ -103,8 +99,9 @@
         $scope.apply();
         $('#select-font-size').selectpicker('val', settings.editor.fontSize);
         $('#select-editor-theme').selectpicker('val', settings.editor.theme);
-    }).run(function(view) {
+    }).run(function(view, windowService) {
         view.init();
+        windowService.show();
         console.log('Angular is started');
     });
 

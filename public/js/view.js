@@ -1,14 +1,8 @@
 (function() {
     "use strict";
-    var gui = require('nw.gui'),
-        win = gui.Window.get();
 
     mde.View = mde.EventEmitter.extend(function() {
         var self = this;
-
-        win.on('close', function() {
-            self.fire('windowClosing');
-        });
         $(window).resize(function() {
             self.fire('windowResized');
         });
@@ -60,12 +54,6 @@
             },
             readOnly: true
         }]);
-        // https://groups.google.com/forum/#!topic/node-webkit/LIcbwBrF_CI
-        $('a[target="_system"]').click(function(evt) {
-            evt.preventDefault();
-            var link = $(this).attr('href');
-            gui.Shell.openExternal(link);
-        });
         // http://stackoverflow.com/questions/15726411/how-to-use-bootstrap-select
         $('.selectpicker').selectpicker({
             //size: 4
@@ -76,17 +64,12 @@
             //$('#button-showview').click();
             //self.newButton.click();
             self.fire('windowResized');
-            //win.maximize();
-            win.show();
         },
         getOptions: function() {
             return this.options;
         },
         getEditor: function() {
             return this.aceEdit;
-        },
-        setTitle: function(title) {
-            win.title = title + '- MarkdownEditor.js';
         },
         showCode: function(html) {
             var self = this;
