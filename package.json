@@ -1,5 +1,5 @@
 {
-    "name": "packled-pepper.js",
+    "name": "MarkdownEditor.js",
     "version": "0.0.2",
     "main": "public/index.html",
     "repository": "http://github.com/constantinexue/packled-papper.js",
@@ -17,10 +17,7 @@
         "wkhtmltopdf": "*"
     },
     "devDependencies": {
-        "command": "*",
         "request": "*",
-        "rest": "*",
-        "parse5": "*",
         "async": "*",
         "grunt": "*",
         "grunt-contrib-less": "*",
@@ -28,10 +25,11 @@
         "grunt-contrib-jshint": "*",
         "grunt-contrib-jade": "*",
         "grunt-contrib-watch": "*",
-        "grunt-contrib-copy": "*"
+        "grunt-contrib-copy": "*",
+        "grunt-node-webkit-builder": "*"
     },
     "window": {
-        "title": "Packled Pepper Markdown Editor",
+        "title": "MarkdownEditor.js",
         "width": 1024,
         "height": 768,
         "position": "center",

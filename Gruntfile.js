@@ -1,5 +1,5 @@
 'use strict';
-
+var path = require('path');
 
 module.exports = function(grunt) {
 
@@ -10,7 +10,7 @@ module.exports = function(grunt) {
         //         jshintrc: '.jshintrc'
         //     }
         // },
-        clean: ['./public/'],
+        clean: ['./public/', './dist/public'],
         jade: {
             compile: {
                 options: {
@@ -55,6 +55,29 @@ module.exports = function(grunt) {
                     }
                 ]
             }
+            // ,
+            // dist: {
+            //     files: [
+            //         {
+            //             expand: true,
+            //             cwd: './',
+            //             src: 'package.json',
+            //             dest: './dist/'
+            //         },
+            //         {
+            //             expand: true,
+            //             cwd: './public/',
+            //             src: '**',
+            //             dest: './dist/public'
+            //         },
+            //         {
+            //             expand: true,
+            //             cwd: './bin/',
+            //             src: '**',
+            //             dest: './dist/bin'
+            //         }
+            //     ]
+            // }
         },
         watch: {
             compile: {
@@ -78,17 +101,32 @@ module.exports = function(grunt) {
                     interrupt: true,
                 }
             }
+        },
+        nodewebkit: {
+            win: {
+                options: {
+                    version: '0.8.3',
+                    build_dir: './build', // Where the build version of my node-webkit app is saved
+                    mac: false, // We want to build it for mac
+                    win: true, // We want to build it for win
+                    linux32: false, // We don't need linux32
+                    linux64: false, // We don't need linux64
+                },
+                src: ['package.json', './public/**/*', './node_modules/**/*', './bin/**/*']
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-contrib-jade');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-node-webkit-builder');
     // grunt.loadNpmTasks('grunt-contrib-jshint');
     // grunt.loadNpmTasks('grunt-mocha-cli');
-    grunt.loadNpmTasks('grunt-contrib-jade');
     grunt.registerTask('default', ['clean', 'jade', 'less', 'copy']);
+    grunt.registerTask('build', ['default', 'nodewebkit']);
     // grunt.registerTask('i18n', ['clean', 'makara', 'dustjs', 'clean:tmp']);
     // grunt.registerTask('build', ['jshint', 'less', 'requirejs', 'i18n']);
     // grunt.registerTask('test', ['jshint', 'mochacli', 'clean:tmp']);
