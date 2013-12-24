@@ -39,18 +39,22 @@ module.exports = function(grunt) {
             }
         },
         copy: {
-            js: [
-                {
-                    expand: true,
-                    src: './src/js/**',
-                    dest: './public/js'
-                },
-                {
-                    expand: true,
-                    src: './src/vendor/**',
-                    dest: './public/vendor'                    
-                }
-            ]
+            js: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: './src/js/',
+                        src: '**',
+                        dest: './public/js/'
+                    },
+                    {
+                        expand: true,
+                        cwd: './src/vendor/',
+                        src: '**',
+                        dest: './public/vendor/'
+                    }
+                ]
+            }
         },
         watch: {
             compile: {
@@ -72,7 +76,7 @@ module.exports = function(grunt) {
                 tasks: ['copy:js'],
                 options: {
                     interrupt: true,
-                }                
+                }
             }
         }
     });
