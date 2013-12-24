@@ -10,7 +10,7 @@ module.exports = function(grunt) {
         //         jshintrc: '.jshintrc'
         //     }
         // },
-        clean: ['./public/*.html', './public/css/*.css'],
+        clean: ['./public/'],
         jade: {
             compile: {
                 options: {
@@ -20,11 +20,11 @@ module.exports = function(grunt) {
                     }
                 },
                 files: {
-                    './public/test.html': './src/test.jade',
-                    './public/index.html': './src/index.jade',
-                    './public/page-view.html': './src/page-view.jade',
-                    './public/page-code.html': './src/page-code.jade',
-                    './public/page-temp.html': './src/page-temp.jade'
+                    './public/test.html': './src/jade/test.jade',
+                    './public/index.html': './src/jade/index.jade',
+                    './public/page-view.html': './src/jade/page-view.jade',
+                    './public/page-code.html': './src/jade/page-code.jade',
+                    './public/page-temp.html': './src/jade/page-temp.jade'
                 }
             }
         },
@@ -38,26 +38,53 @@ module.exports = function(grunt) {
                 }
             }
         },
+        copy: {
+            js: [
+                {
+                    expand: true,
+                    src: './src/js/**',
+                    dest: './public/js'
+                },
+                {
+                    expand: true,
+                    src: './src/vendor/**',
+                    dest: './public/vendor'                    
+                }
+            ]
+        },
         watch: {
             compile: {
-                files: ['./src/*.jade', './src/less/*.less'],
-                tasks: ['default'],
+                files: ['./src/jade/*.jade'],
+                tasks: ['jade'],
                 options: {
                     interrupt: true,
                 }
+            },
+            less: {
+                files: ['./src/less/*.less'],
+                tasks: ['less'],
+                options: {
+                    interrupt: true,
+                }
+            },
+            js: {
+                files: ['./src/js/*.js'],
+                tasks: ['copy:js'],
+                options: {
+                    interrupt: true,
+                }                
             }
         }
     });
 
+    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-clean');
     // grunt.loadNpmTasks('grunt-contrib-jshint');
     // grunt.loadNpmTasks('grunt-mocha-cli');
-    // grunt.loadNpmTasks('grunt-dustjs');
-    // grunt.loadTasks('./node_modules/makara/tasks/');
     grunt.loadNpmTasks('grunt-contrib-jade');
-    grunt.registerTask('default', ['clean', 'jade', 'less']);
+    grunt.registerTask('default', ['clean', 'jade', 'less', 'copy']);
     // grunt.registerTask('i18n', ['clean', 'makara', 'dustjs', 'clean:tmp']);
     // grunt.registerTask('build', ['jshint', 'less', 'requirejs', 'i18n']);
     // grunt.registerTask('test', ['jshint', 'mochacli', 'clean:tmp']);

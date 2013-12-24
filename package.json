@@ -27,7 +27,8 @@
         "grunt-contrib-clean": "*",
         "grunt-contrib-jshint": "*",
         "grunt-contrib-jade": "*",
-        "grunt-contrib-watch": "*"
+        "grunt-contrib-watch": "*",
+        "grunt-contrib-copy": "*"
     },
     "window": {
         "title": "Packled Pepper Markdown Editor",
