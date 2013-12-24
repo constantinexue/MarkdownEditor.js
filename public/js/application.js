@@ -61,12 +61,12 @@
             });
         });
         $scope.histories = historiesService.getHistories();
-    }).controller('ExportController', function($scope, $http, exportService, compileService, view) {
+    }).controller('ExportController', function($scope, $http, exportService, compileService, windowService, view) {
         $scope.export = function(mode, filetype) {
             var md = view.getContent(),
                 filename = '',
                 theme = (mode === 'plain') ? 'none' : 'default';
-            return view.selectFile('save', filetype)
+            view.selectFile('save', filetype)
                 .then(function(file) {
                     filename = file;
                     return compileService.compile(md, {
@@ -75,6 +75,9 @@
                 })
                 .then(function(html) {
                     return exportService.export(filename, html);
+                })
+                .then(function() {
+                    return windowService.openExternal(filename);
                 });
         };
         $scope.toHTML = function(mode) {

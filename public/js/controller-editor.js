@@ -91,7 +91,8 @@ window.mvc.controller('editorController', function($scope, $timeout, compileServ
                 $scope.currentFile = filename;
                 $scope.isDirty = false;
                 // http://stackoverflow.com/questions/15664933/basic-watch-not-working-in-angularjs?answertab=votes#tab-top
-                $scope.$apply();
+                //$scope.$apply();
+                $scope.$digest();
                 return when.resolve(true);
             });
     }
@@ -101,7 +102,8 @@ window.mvc.controller('editorController', function($scope, $timeout, compileServ
         return model.saveFile(filename, content)
             .then(function() {
                 $scope.isDirty = false;
-                $scope.$apply();
+                //$scope.$apply();
+                $scope.$digest();
                 return when.resolve();
             })
             .then(function() {
@@ -120,6 +122,16 @@ window.mvc.controller('editorController', function($scope, $timeout, compileServ
     });
     $scope.$watch('currentFile', function(newVal, oldVal) {
         updateTitle();
+    });
+    $scope.$on('windowClosing', function(e) {
+        var steps = getStepsOfSave();
+        steps.push(function(confirmed) {
+            if (confirmed) {
+                windowService.close();
+            }
+            return when.resolve(confirmed);
+        });
+        return when.pipeline(steps, true);
     });
     view.on('contentChanged', function() {
         $scope.$apply(function() {

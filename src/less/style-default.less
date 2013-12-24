@@ -1,5 +1,5 @@
 //@import "normalize.less";
-
+@body-max-width: 940px;
 @base-font-size: 14px;
 @base-line-height: 25px;
 @base-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, "Microsoft Yahei", "Simsun";
@@ -11,7 +11,7 @@
 @paragraph-indent: 2em;
 
 body {
-    max-width: 940px;
+    max-width: @body-max-width;
     margin: 0px auto 0px auto;
     padding: 20px 20px 50px 20px;
     font-family: @base-font-family;
@@ -31,6 +31,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
     margin: 20px 0px 5px 0px;
     padding: 0px 0px 5px 0px;
+    font-weight: normal;
     color: black;
 }
 
@@ -131,16 +132,11 @@ a, a code {
 }
 
 img {
-    max-width: 100%;
+    max-width: 80%;
     display: block;
     border-top: 1px solid red;
-}
-
-p {
-    img {
-        display: inline;
-        border: none;
-    }
+    display: inline;
+    border: none;
 }
 
 blockquote {

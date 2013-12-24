@@ -17,6 +17,7 @@ h5,
 h6 {
   margin: 20px 0px 5px 0px;
   padding: 0px 0px 5px 0px;
+  font-weight: normal;
   color: black;
 }
 h1 {
@@ -115,11 +116,9 @@ a code:hover {
   text-decoration: underline;
 }
 img {
-  max-width: 100%;
+  max-width: 80%;
   display: block;
   border-top: 1px solid red;
-}
-p img {
   display: inline;
   border: none;
 }
