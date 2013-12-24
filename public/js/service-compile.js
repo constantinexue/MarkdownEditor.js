@@ -128,6 +128,7 @@ var CompileService = klass(function() {}).methods({
             r.image = self.embeddedImage.compile;
         }
         return markdown(text, {
+            breaks: true,
             renderer: r
         }).then(function(html) {
             if (options.base64Image) {

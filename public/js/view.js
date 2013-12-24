@@ -205,7 +205,7 @@
             }
             $.bootstrapGrowl(message, {
                 ele: 'body', // which element to append to
-                type: 'info', // (null, 'info', 'error', 'success')
+                type: 'success', // (null, 'info', 'error', 'success')
                 offset: {
                     from: 'bottom',
                     amount: 20
