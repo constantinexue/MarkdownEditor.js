@@ -79,10 +79,3 @@ fs.readdirSync(__dirname).forEach(function(filename){
         pull(path.basename(filename, '.list'));        
     }
 });
-// pull('ace');
-// pull('angular');
-// pull('bootstrap');
-// pull('core');
-// pull('jquery');
-// pull('mousetrap');
-// pull('underscore');

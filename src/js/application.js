@@ -1,7 +1,7 @@
 (function() {
     "use strict";
     var compileService = require('./js/service-compile')();
-    var exportService = require('./js/service-export')();
+    var publishService = require('./js/service-publish')();
 
     window.mvc.factory('model', function(historiesService) {
         var model = new mde.Model();
@@ -11,8 +11,8 @@
         return new mde.View();
     }).factory('compileService', function() {
         return compileService;
-    }).factory('exportService', function() {
-        return exportService;
+    }).factory('publishService', function() {
+        return publishService;
     }).factory('settingsService', function() {
         return new mde.SettingsService();
     }).factory('historiesService', function() {
@@ -61,8 +61,8 @@
             });
         });
         $scope.histories = historiesService.getHistories();
-    }).controller('ExportController', function($scope, $http, exportService, compileService, windowService, view) {
-        $scope.export = function(mode, filetype) {
+    }).controller('publishController', function($scope, $http, publishService, compileService, windowService, view) {
+        $scope.publish = function(mode, filetype) {
             var md = view.getContent(),
                 filename = '',
                 theme = (mode === 'plain') ? 'none' : 'default';
@@ -74,17 +74,17 @@
                     }, theme);
                 })
                 .then(function(html) {
-                    return exportService.export(filename, html);
+                    return publishService.publish(filename, html);
                 })
                 .then(function() {
                     return windowService.openExternal(filename);
                 });
         };
         $scope.toHTML = function(mode) {
-            $scope.export(mode, '.html');
+            $scope.publish(mode, '.html');
         };
         $scope.toPDF = function(mode) {
-            $scope.export(mode, '.pdf');
+            $scope.publish(mode, '.pdf');
         };
     }).controller('SettingsController', function($scope, settingsService, view) {
         //https://groups.google.com/forum/#!topic/angular/WNeY0v9xn1k

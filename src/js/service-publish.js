@@ -6,8 +6,8 @@ var klass = require('klass'),
     _ = require('underscore');
 _.str = require('underscore.string');
 
-var ExportService = klass(function() {}).methods({
-    export: function(filename, html) {
+var PublishService = klass(function() {}).methods({
+    publish: function(filename, html) {
         var self = this;
         switch (path.extname(filename)) {
             case '.html':
@@ -75,5 +75,5 @@ var ExportService = klass(function() {}).methods({
 });
 
 module.exports = function() {
-    return new ExportService();
+    return new PublishService();
 };
