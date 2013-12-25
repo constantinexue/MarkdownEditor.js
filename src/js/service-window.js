@@ -14,7 +14,10 @@ window.mvc.factory('windowService', function($rootScope) {
     return {
         show: function() {
             win.maximize();
-            win.show();
+            setTimeout(function() {
+                win.show();
+                window.splash.close();
+            }, 1000);
         },
         setTitle: function(title) {
             win.title = title + '- MarkdownEditor.js';

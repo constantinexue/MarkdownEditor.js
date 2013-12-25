@@ -58,6 +58,7 @@ module.exports = function(grunt) {
                     }
                 },
                 files: {
+                    './public/splash.html': './src/jade/splash.jade',
                     './public/test.html': './src/jade/test.jade',
                     './public/index.html': './src/jade/index.jade',
                     './public/page-view.html': './src/jade/page-view.jade',

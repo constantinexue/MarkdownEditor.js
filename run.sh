@@ -1,2 +1,2 @@
-grunt
+grunt compile
 nw .
