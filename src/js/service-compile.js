@@ -5,7 +5,6 @@ var klass = require('klass'),
     fs = require('fs'),
     path = require('path'),
     marked = require('marked'),
-    hljs = require('highlight.js'),
     http = require('http-get'),
     _ = require('underscore');
 _.str = require('underscore.string');
@@ -118,7 +117,7 @@ var CompileService = klass(function() {}).methods({
         }, options);
         var r = new marked.Renderer();
         if (options.highlightCode) {
-            r.code = highlightCode;
+            //r.code = highlightCode;
         }
         if (options.headingNumber) {
             r.heading = new HeadingNumber().compile;

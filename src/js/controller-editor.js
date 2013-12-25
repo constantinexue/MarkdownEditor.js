@@ -1,4 +1,4 @@
-window.mvc.controller('editorController', function($scope, $timeout, compileService, windowService, view, model) {
+window.mvc.controller('editorController', function($scope, $timeout, compileService, windowService, view, dialogView, model) {
     $scope.currentFile = null;
     $scope.isDirty = false;
     $scope.init = function() {
@@ -71,7 +71,7 @@ window.mvc.controller('editorController', function($scope, $timeout, compileServ
         var steps = [];
         if ($scope.isDirty) {
             steps.push(function() {
-                return view.promptToSave();
+                return dialogView.promptToSave();
             });
             steps.push(function(willSave) {
                 if (willSave) {

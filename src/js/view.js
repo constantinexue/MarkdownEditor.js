@@ -73,17 +73,15 @@
         },
         showCode: function(html) {
             var self = this;
-            // Send to view page
-            var pageBody = $('#page-view').contents().find('body');
-            pageBody.html(html);
+            var container = $('#page-view').contents().find('body');
+            container.html(html);
 
             html = html_beautify(html, {
                 indent_size: 4
             });
-            //self.aceCode.getSession().getDocument().setValue(html);
-            var code = hljs.highlight('xml', html).value;
-            pageBody = $('#page-code').contents().find('code');
-            pageBody.html(code);
+            // var code = hljs.highlight('xml', html).value;
+            container = $('#page-code').contents().find('code');
+            container.text(html);
 
             self.syncScroll();
         },
@@ -157,38 +155,6 @@
             });
             dialog.trigger('click');
 
-            return deferred.promise;
-        },
-        promptToSave: function() {
-            var deferred = when.defer();
-            // Prompt to save change first
-            bootbox.dialog({
-                message: "You have changed the content, do you want to save it first?",
-                title: "Prompt to save",
-                closeButton: false,
-                buttons: {
-                    save: {
-                        label: "Save it now",
-                        className: "btn-success",
-                        callback: function() {
-                            deferred.resolve(true);
-                        }
-                    },
-                    notsave: {
-                        label: "Discard change",
-                        className: "btn-danger",
-                        callback: function() {
-                            deferred.resolve(false);
-                        }
-                    },
-                    cancel: {
-                        label: "Cancel",
-                        callback: function() {
-                            deferred.reject();
-                        }
-                    }
-                }
-            });
             return deferred.promise;
         },
         prompt: function(eventName) {
