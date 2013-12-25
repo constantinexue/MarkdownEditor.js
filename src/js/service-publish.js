@@ -45,6 +45,7 @@ var PublishService = klass(function() {}).methods({
                 default:
                     break;
             }
+            fs.chmodSync(wkhtmltopdf.command, '755');
             console.log(os.type());
             console.log(os.platform());
             wkhtmltopdf('file:///' + tempFile, {

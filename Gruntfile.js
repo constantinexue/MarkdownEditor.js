@@ -1,5 +1,39 @@
 'use strict';
-var path = require('path');
+var path = require('path'),
+    fs = require('fs'),
+    _ = require('underscore');
+
+function rewritePackageJson() {
+    var packageJson = _.clone(require('./package'));
+    if (!fs.existsSync('./dist')) {
+        fs.mkdirSync('./dist');
+    }
+    delete packageJson.devDependencies;
+    packageJson.window.toolbar = false;
+    fs.writeFileSync('./dist/package.json', JSON.stringify(packageJson, null, 4), 'utf8');
+}
+
+function listProductionNodeModules() {
+    var packageJson = _.clone(require('./package'));
+    var moduleNames = [];
+    _.chain(packageJson.dependencies).keys().each(function(element, index, list) {
+        moduleNames.push(element + '/**/*');
+    }).value();
+    console.log(moduleNames);
+
+    return moduleNames;
+}
+
+var nwOptions = {
+    app_name: 'MarkdownEditor',
+    version: '0.8.3',
+    build_dir: './build',
+    mac: false,
+    win: false,
+    linux32: false,
+    linux64: false
+};
+var nwSrc = ['./dist/**/*'];
 
 module.exports = function(grunt) {
 
@@ -10,7 +44,11 @@ module.exports = function(grunt) {
         //         jshintrc: '.jshintrc'
         //     }
         // },
-        clean: ['./public/', './dist/public'],
+        clean: {
+            compile: './public/',
+            build: './dist',
+            buildBin: './dist/bin'
+        },
         jade: {
             compile: {
                 options: {
@@ -39,45 +77,76 @@ module.exports = function(grunt) {
             }
         },
         copy: {
-            js: {
-                files: [
-                    {
-                        expand: true,
-                        cwd: './src/js/',
-                        src: '**',
-                        dest: './public/js/'
-                    },
-                    {
-                        expand: true,
-                        cwd: './src/vendor/',
-                        src: '**',
-                        dest: './public/vendor/'
-                    }
-                ]
+            compile: {
+                files: [{
+                    expand: true,
+                    cwd: './src/js/',
+                    src: '**',
+                    dest: './public/js/'
+                }, {
+                    expand: true,
+                    cwd: './src/vendor/',
+                    src: '**',
+                    dest: './public/vendor/'
+                }]
+            },
+            build: {
+                files: [{
+                    expand: true,
+                    cwd: './node_modules/',
+                    src: listProductionNodeModules(),
+                    dest: './dist/node_modules'
+                }, {
+                    expand: true,
+                    cwd: './public/',
+                    src: '**',
+                    dest: './dist/public/'
+                }]
+            },
+            buildWin: {
+                files: [{
+                    expand: true,
+                    cwd: './bin/win32/',
+                    src: '**',
+                    dest: './dist/bin/win32/'
+                }],
+                options: {
+                    mode: true
+                }
+            },
+            buildMac: {
+                files: [{
+                    expand: true,
+                    cwd: './bin/macos/',
+                    src: '**',
+                    dest: './dist/bin/macos/'
+                }],
+                options: {
+                    mode: true
+                }
+            },
+            buildL64: {
+                files: [{
+                    expand: true,
+                    cwd: './bin/linux64/',
+                    src: '**',
+                    dest: './dist/bin/linux64/'
+                }],
+                options: {
+                    mode: true
+                }
+            },
+            buildL32: {
+                files: [{
+                    expand: true,
+                    cwd: './bin/linux32/',
+                    src: '**',
+                    dest: './dist/bin/linux32/'
+                }],
+                options: {
+                    mode: true
+                }
             }
-            // ,
-            // dist: {
-            //     files: [
-            //         {
-            //             expand: true,
-            //             cwd: './',
-            //             src: 'package.json',
-            //             dest: './dist/'
-            //         },
-            //         {
-            //             expand: true,
-            //             cwd: './public/',
-            //             src: '**',
-            //             dest: './dist/public'
-            //         },
-            //         {
-            //             expand: true,
-            //             cwd: './bin/',
-            //             src: '**',
-            //             dest: './dist/bin'
-            //         }
-            //     ]
-            // }
         },
         watch: {
             compile: {
@@ -104,15 +173,28 @@ module.exports = function(grunt) {
         },
         nodewebkit: {
             win: {
-                options: {
-                    version: '0.8.3',
-                    build_dir: './build', // Where the build version of my node-webkit app is saved
-                    mac: true, // We want to build it for mac
-                    win: true, // We want to build it for win
-                    linux32: true, // We don't need linux32
-                    linux64: true, // We don't need linux64
-                },
-                src: ['package.json', './public/**/*', './node_modules/**/*', './bin/**/*']
+                options: _.extend(nwOptions, {
+                    win: true
+                }),
+                src: nwSrc
+            },
+            linux64: {
+                options: _.extend(nwOptions, {
+                    linux64: true
+                }),
+                src: nwSrc
+            },
+            linux32: {
+                options: _.extend(nwOptions, {
+                    linux32: true
+                }),
+                src: nwSrc
+            },
+            mac: {
+                options: _.extend(nwOptions, {
+                    mac: true
+                }),
+                src: nwSrc
             }
         }
     });
@@ -123,12 +205,14 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-node-webkit-builder');
-    // grunt.loadNpmTasks('grunt-contrib-jshint');
-    // grunt.loadNpmTasks('grunt-mocha-cli');
-    grunt.registerTask('default', ['clean', 'jade', 'less', 'copy']);
-    grunt.registerTask('build', ['default', 'nodewebkit']);
-    // grunt.registerTask('i18n', ['clean', 'makara', 'dustjs', 'clean:tmp']);
-    // grunt.registerTask('build', ['jshint', 'less', 'requirejs', 'i18n']);
-    // grunt.registerTask('test', ['jshint', 'mochacli', 'clean:tmp']);
 
+    grunt.registerTask('rewrite', '', rewritePackageJson);
+
+    grunt.registerTask('compile', ['clean:compile', 'jade', 'less', 'copy:compile']);
+    grunt.registerTask('build', ['compile', 'clean:build', 'copy:build', 'rewrite',
+        'clean:buildBin', 'copy:buildWin', 'nodewebkit:win',
+        'clean:buildBin', 'copy:buildMac', 'nodewebkit:mac',
+        'clean:buildBin', 'copy:buildL64', 'nodewebkit:linux64'
+        // 'clean:buildBin', 'copy:buildL32', 'nodewebkit:linux32'
+    ]);
 };
