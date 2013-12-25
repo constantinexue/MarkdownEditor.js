@@ -89,6 +89,11 @@ module.exports = function(grunt) {
                     cwd: './src/vendor/',
                     src: '**',
                     dest: './public/vendor/'
+                }, {
+                    expand: true,
+                    cwd: './src/img/',
+                    src: '**',
+                    dest: './public/img/'
                 }]
             },
             build: {

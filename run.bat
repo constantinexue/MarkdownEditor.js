@@ -1,1 +1,2 @@
-nodemon --ext ".js|.json" --watch lib lib/app.js
+call grunt compile
+call nw --enable-logging .

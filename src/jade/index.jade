@@ -5,9 +5,7 @@ block files-js
 block content
     div(ng-controller='editorController')
         div.navbar.navbar-default.navbar-static-top(role='navigation')
-            div.navbar-header
-                a.navbar-brand(data-toggle='modal', data-target='#modal-about', href='javascript:;') MarkdownEditor.js
-            div.collapse.navbar-collapse
+            div.collapse.navbar-collapse(style='margin-left:15px;')
                 ul.nav.navbar-nav
                     li.dropdown
                         a.dropdown-toggle(href='#', data-toggle='dropdown')
@@ -45,7 +43,9 @@ block content
                             li
                                 a(href='javascript:;') Image
                     li
-                        a#button-setting(data-toggle='modal', data-target='#modal-settings', href='javascript:;') Settings
+                        a(data-toggle='modal', data-target='#modal-settings', href='javascript:;') Settings
+                    li
+                        a(data-toggle='modal', data-target='#modal-about', href='javascript:;') About
                 ul.nav.navbar-nav.navbar-right(style='margin-right:15px;')
                     li.dropdown
                         a.dropdown-toggle(href='#', data-toggle='dropdown')
