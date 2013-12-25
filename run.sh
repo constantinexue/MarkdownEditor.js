@@ -1,1 +1,2 @@
-nodemon --ext ".js|.json" --watch lib lib/app.js
+grunt
+nw .
