@@ -30,14 +30,14 @@ var PublishService = klass(function() {}).methods({
         return self.save(tempFile, html).then(function() {
             var deferred = when.defer();
             // Converts to PDF with child process running wkhtmltopdf
-            var os = require('os'),
+            var os = process.platform,
                 wkhtmltopdf = require('wkhtmltopdf');
-            switch (os.platform()) {
+            switch (os) {
                 case 'win32':
                     wkhtmltopdf.command = './bin/win32/wkhtmltopdf.exe';
                     break;
                 case 'linux':
-                    wkhtmltopdf.command = (os.arch() === 'x64') ? './bin/linux64/wkhtmltopdf-amd64' : './bin/linux32/wkhtmltopdf';
+                    wkhtmltopdf.command = (process.arch === 'x64') ? './bin/linux64/wkhtmltopdf-amd64' : './bin/linux32/wkhtmltopdf';
                     break;
                 case 'darwin':
                     wkhtmltopdf.command = './bin/macos/wkhtmltopdf';
