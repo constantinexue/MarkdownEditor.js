@@ -5,22 +5,22 @@ div#modal-about.modal.fade(tabindex='-1', role='dialog', aria-hidden='true')
                 button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
                 h4.modal-title About MarkdownEditor.js
             div.modal-body
-                p Author
-                p
-                    a(href='https://github.com/constantinexue') ConstantineXue
-                div.panel.panel-default
-                    div.panel-heading
-                        | Dependencies
-                    div.panel-body
-                        - each val, key in about.dependencies
-                            p
-                                a(target='_system', href='#{val}') #{key}
-                div.panel.panel-default
-                    div.panel-heading
-                        | References
-                    div.panel-body
-                        - each val, key in about.references
-                            p
-                                a(target='_system', href='#{val}') #{key}
+                dl.dl-horizontal
+                    dt Version
+                    dd: p #{version}
+                    dt Author
+                    dd: p: a(href='https://github.com/constantinexue') ConstantineXue
+                    dt Project Home
+                    dd: p: a(href='#{repository}') #{repository}
+                    dt Dependencies
+                    dd
+                        ul.list-unstyled
+                            - each val, key in about.dependencies
+                                li: a(target='_system', href='#{val}') #{key}
+                    dt References
+                    dd
+                        ul.list-unstyled
+                            - each val, key in about.references
+                                li: a(target='_system', href='#{val}') #{key}
             div.modal-footer
-                button.btn.btn-primary(type='button', data-dismiss='modal') OK
+                button.btn.btn-default(type='button', data-dismiss='modal') OK

@@ -1,9 +1,11 @@
 {
     "about": {
         "dependencies": {
-            "nodejs": "",
-            "node-webkit": "",
-            "wkhtmltopdf": ""
+            "nodejs": "http://nodejs.org/",
+            "node-webkit": "https://github.com/rogerwang/node-webkit",
+            "Bootstrap":"http://getbootstrap.com/",
+            "Angularjs":"http://angularjs.org/",
+            "wkhtmltopdf": "https://code.google.com/p/wkhtmltopdf/"
         },
         "references": {
             "StackEdit": "https://stackedit.io/",

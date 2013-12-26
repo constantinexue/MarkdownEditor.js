@@ -35,7 +35,7 @@ window.mvc.factory('dialogView', function() {
         promptInvalidHistory: function(history) {
             var deferred = when.defer();
             bootbox.dialog({
-                message: "This file is no longer existed, it would be removed from histories list.  " + history,
+                message: "This file is no longer existed, it would be removed from histories list. \r\n" + history,
                 title: "History file does not exist",
                 closeButton: true,
                 buttons: {

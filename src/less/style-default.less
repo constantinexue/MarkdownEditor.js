@@ -31,7 +31,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
     margin: 20px 0px 5px 0px;
     padding: 0px 0px 5px 0px;
-    font-weight: normal;
+    font-weight: bold;
     color: black;
 }
 
@@ -79,7 +79,7 @@ ul, ol {
     li {
         font-size: @base-font-size;
         line-height: @base-line-height;
-        margin: @paragraph-margin 0px;
+        margin: @paragraph-margin / 2 0px;
     }
 }
 
@@ -134,15 +134,14 @@ a, a code {
 
 img {
     max-width: 80%;
+    margin: 20px auto;
     display: block;
-    border-top: 1px solid red;
-    display: inline;
     border: none;
 }
 
 blockquote {
     border-left: 4px solid #dddddd;
-    padding: 0 15px;
+    padding: 10px 2em;
     color: #777777;
     background-color: #f8f8f8;
 }
@@ -151,4 +150,10 @@ hr {
     height: 1px;
     border: none;
     border-top: 1px solid #555555;
+}
+
+iframe {
+    border: 1px solid black;
+    display: block;
+    margin: auto;
 }

@@ -54,7 +54,9 @@ module.exports = function(grunt) {
                 options: {
                     pretty: true,
                     data: function(dest, src) {
-                        return require('./config');
+                        var config = require('./config');
+                        var metadata = require('./package');
+                        return _.extend(config, metadata);
                     }
                 },
                 files: {
@@ -70,6 +72,7 @@ module.exports = function(grunt) {
         less: {
             compile: {
                 files: {
+                    './public/css/splash.css': './src/less/splash.less',
                     './public/css/main.css': './src/less/main.less',
                     './public/css/page-code.css': './src/less/page-code.less',
                     './public/css/style-default.css': './src/less/style-default.less',
