@@ -46,8 +46,6 @@ var PublishService = klass(function() {}).methods({
                     break;
             }
             fs.chmodSync(wkhtmltopdf.command, '755');
-            console.log(os.type());
-            console.log(os.platform());
             wkhtmltopdf('file:///' + tempFile, {
                 output: filename,
                 footerCenter: '[page]/[topage]'

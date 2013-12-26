@@ -150,6 +150,9 @@
             dialog.off('change');
             dialog.on('change', function(evt) {
                 var selectedFile = $(this).val();
+                if (!_.str.endsWith(selectedFile, type)) {
+                    selectedFile += type;
+                }
                 deferred.resolve(selectedFile);
                 $(this).val('');
             });

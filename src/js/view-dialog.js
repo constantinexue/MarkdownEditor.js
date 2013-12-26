@@ -49,6 +49,26 @@ window.mvc.factory('dialogView', function() {
                 }
             });
             return deferred.promise;
+        },
+        notifyPublishing: function() {
+            this.notifyGrowl('PDF is publishing ...', null, 3000);
+        },
+        notifyGrowl: function(message, type, delay) {
+            type = type || 'success';
+            delay = delay || 1000;
+            $.bootstrapGrowl(message, {
+                ele: 'body',
+                type: type,
+                offset: {
+                    from: 'bottom',
+                    amount: 20
+                },
+                align: 'center',
+                width: 300,
+                delay: delay,
+                allow_dismiss: true,
+                stackup_spacing: 10
+            });
         }
     };
 });

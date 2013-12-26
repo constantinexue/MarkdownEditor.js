@@ -13,7 +13,11 @@ window.mvc.factory('windowService', function($rootScope) {
 
     return {
         show: function() {
+            win.hide();
+            // This API will cause window showing on windows.
+            // https://github.com/rogerwang/node-webkit/issues/1350
             win.maximize();
+            win.hide();
             setTimeout(function() {
                 win.show();
                 window.splash.close();
@@ -27,6 +31,7 @@ window.mvc.factory('windowService', function($rootScope) {
             win.close(true);
         },
         openExternal: function(link) {
+            link = 'file://' + link;
             gui.Shell.openExternal(link);
         }
     };

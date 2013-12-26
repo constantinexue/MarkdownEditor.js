@@ -29,6 +29,7 @@
     },
     "window": {
         "title": "MarkdownEditor.js",
+        "icon": "./public/img/icon.png",
         "width": 1024,
         "height": 768,
         "position": "center",

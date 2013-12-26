@@ -1,2 +1,3 @@
+#!/bin/bash
 grunt compile
-nw .
+"nw ."

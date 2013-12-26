@@ -14,7 +14,7 @@ window.mvc.controller('historiesController', function($scope, $http, historiesSe
                     });
             });
     };
-}).controller('publishController', function($scope, $http, publishService, compileService, windowService, view) {
+}).controller('publishController', function($scope, $http, publishService, compileService, windowService, dialogView, view) {
     $scope.publish = function(mode, filetype) {
         var md = view.getContent(),
             filename = '',
@@ -22,6 +22,7 @@ window.mvc.controller('historiesController', function($scope, $http, historiesSe
         view.selectFile('save', filetype)
             .then(function(file) {
                 filename = file;
+                dialogView.notifyPublishing();
                 return compileService.compile(md, {
                     base64Image: (mode === 'styled2')
                 }, theme);
@@ -30,6 +31,7 @@ window.mvc.controller('historiesController', function($scope, $http, historiesSe
                 return publishService.publish(filename, html);
             })
             .then(function() {
+                console.log(filename);
                 return windowService.openExternal(filename);
             });
     };

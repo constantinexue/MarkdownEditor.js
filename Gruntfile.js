@@ -159,7 +159,7 @@ module.exports = function(grunt) {
             }
         },
         watch: {
-            compile: {
+            jade: {
                 files: ['./src/jade/*.jade'],
                 tasks: ['jade'],
                 options: {
@@ -175,7 +175,7 @@ module.exports = function(grunt) {
             },
             js: {
                 files: ['./src/js/*.js'],
-                tasks: ['copy:js'],
+                tasks: ['copy:compile'],
                 options: {
                     interrupt: true,
                 }
@@ -202,7 +202,8 @@ module.exports = function(grunt) {
             },
             mac: {
                 options: _.extend(nwOptions, {
-                    mac: true
+                    mac: true,
+                    mac_icns: './public/img/icon.icns'
                 }),
                 src: nwSrc
             }
