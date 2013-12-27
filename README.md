@@ -5,6 +5,10 @@ A free cross-platform desktop editor for writing, publishing and sharing markdow
 
 ![screenshot](doc/screenshot-mac.png)
 
+![screenshot](doc/screenshot-win.png)
+
+![screenshot](doc/screenshot-ubuntu.png)
+
 Features
 -----------------
 An editor for writing and previewing local markdown file. Supports embedding local images.
@@ -32,5 +36,7 @@ The shortcuts for "file" menu are:
 TO BE CONTINUED
 -----------------
 The themes
+
 The settings
+
 Author and License
