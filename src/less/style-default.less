@@ -11,28 +11,28 @@
 @paragraph-indent: 2em;
 
 body {
-    max-width: @body-max-width;
     margin: 0px auto 0px auto;
     padding: 20px 20px 50px 20px;
-    font-family: @base-font-family;
-    font-size: @base-font-size;
+    max-width: @body-max-width;
     background-color: white;
+    font-size: @base-font-size;
+    font-family: @base-font-family;
     & > *:first-child {
         margin-top: 0 !important;
     }
 }
 
 .heading(@font-size) {
+    margin-top: @font-size * 2;
     font-size: @font-size;
     line-height: @font-size;
-    margin-top: @font-size * 2;
 }
 
 h1, h2, h3, h4, h5, h6 {
     margin: 20px 0px 5px 0px;
     padding: 0px 0px 5px 0px;
-    font-weight: bold;
     color: black;
+    font-weight: bold;
 }
 
 h1 {
@@ -63,52 +63,52 @@ h6 {
 }
 
 p {
-    font-family: @base-font-family;
-    font-size: @base-font-size;
-    line-height: @base-line-height;
     margin: @paragraph-margin 0px;
     text-indent: @paragraph-indent;
+    font-size: @base-font-size;
+    font-family: @base-font-family;
+    line-height: @base-line-height;
 }
 
 ul, ol {
-    font-family: @base-font-family;
-    font-size: @base-font-size;
-    line-height: @base-line-height;
     margin: @paragraph-margin 0px;
     padding-left: @paragraph-indent + 2em;
+    font-size: @base-font-size;
+    font-family: @base-font-family;
+    line-height: @base-line-height;
     li {
+        margin: @paragraph-margin / 2 0px;
         font-size: @base-font-size;
         line-height: @base-line-height;
-        margin: @paragraph-margin / 2 0px;
     }
 }
 
 pre {
-    background-color: #F8F8F8;
-    padding: 5px;
+    overflow: auto;
     margin: 15px 0px;
     margin-left: @paragraph-indent;
+    padding: 5px;
     border: 1px solid #ddd;
-    overflow: auto;
     border-radius: 3px;
+    background-color: #F8F8F8;
     code {
+        padding: 0px;
         border: none;
         border-radius: 0px;
-        font-family: @code-font-family;
         font-size: @code-font-size;
+        font-family: @code-font-family;
         line-height: @base-line-height;
-        padding: 0px;
     }
 }
 
 code {
-    background-color: #F8F8F8;
+    padding: 2px 5px;
     border: 1px solid #ddd;
     border-radius: 3px;
-    font-family: @code-font-family;
+    background-color: #F8F8F8;
     font-size: @code-font-size;
+    font-family: @code-font-family;
     line-height: @base-line-height;
-    padding: 2px 5px;
 }
 
 blockquote {
@@ -116,8 +116,8 @@ blockquote {
 }
 
 table {
-    font-family: @base-font-family;
     font-size: @base-font-size;
+    font-family: @base-font-family;
     td {
         padding: 5px 10px;
     }
@@ -133,22 +133,22 @@ a, a code {
 }
 
 img {
-    max-width: 80%;
-    margin: 20px auto;
     display: block;
+    margin: 20px auto;
+    max-width: 80%;
     border: none;
 }
 
 em {
-    font-style: normal;
     text-decoration: underline;
+    font-style: normal;
 }
 
 blockquote {
-    border-left: 4px solid #dddddd;
     padding: 10px 2em;
-    color: #777777;
+    border-left: 4px solid #dddddd;
     background-color: #f8f8f8;
+    color: #777777;
 }
 
 hr {
@@ -158,7 +158,7 @@ hr {
 }
 
 iframe {
-    border: 1px solid black;
     display: block;
     margin: auto;
+    border: 1px solid black;
 }
