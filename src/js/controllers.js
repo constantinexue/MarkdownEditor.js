@@ -23,7 +23,7 @@ window.mvc.controller('historiesController', function($scope, $http, historiesSe
             .then(function(file) {
                 filename = file;
                 dialogView.notifyPublishing();
-                return compileService.compile(md, {
+                return compileService.compile(filename, md, {
                     base64Image: (mode === 'styled2')
                 }, theme);
             })

@@ -1,6 +1,7 @@
 // "use strict";
 var klass = require('klass'),
     when = require('when'),
+    pipeline = require('when/pipeline'),
     parallel = require('when/parallel'),
     fs = require('fs'),
     path = require('path'),
@@ -51,36 +52,76 @@ function HeadingNumber() {
     };
 }
 
-function EmbeddedImage(old) {
+function ImagePathStage() {
+    this.preDo = function(href, title, text, fileDir) {
+        var start = _.str.startsWith;
+        if (start(href, 'http://') || start(href, 'https://') || start(href, 'file://')) {
+            // Do nothing
+        } else if (fileDir) {
+            href = path.join(fileDir, href);
+            href = 'file://' + href;
+        }
+        return {
+            href: href,
+            title: title,
+            text: text
+        };
+    };
+    this.postDo = function(html) {
+        return when.resolve(html);
+    };
+}
+
+function ImageEmbedStage(old) {
     var self = {};
-    self.old = old;
+    //self.old = old;
     self.imageMappings = {};
-    this.compile = function(href, title, text) {
+    this.preDo = function(href, title, text) {
         var html, base64, id = _.uniqueId('image_');
         self.imageMappings[id] = href;
-        html = self.old('{{' + id + '}}', title, text);
-        return html;
+        href = '{{' + id + '}}';
+        //html = self.old('{{' + id + '}}', title, text);
+        //return html;
+        return {
+            href: href,
+            title: title,
+            text: text
+        };
     };
-    this.replace = function(html) {
+    this.postDo = function(html) {
         var tasks = [];
         _.pairs(self.imageMappings).forEach(function(mapping) {
             var id = mapping[0],
                 src = mapping[1];
             tasks.push(function() {
                 var imageDeferred = when.defer();
-                http.get({
-                    url: src,
-                    bufferType: "buffer"
-                }, function(err, result) {
-                    if (err) {
-                        console.log(err);
-                        imageDeferred.reject(err);
-                    } else {
-                        var base64 = new Buffer(result.buffer, 'binary').toString('base64');
-                        self.imageMappings[id] = base64;
-                        imageDeferred.resolve(base64);
-                    }
-                });
+                if (_.str.startsWith(src, 'file://')) {
+                    src = src.substring(7);
+                    fs.readFile(src, function(err, data) {
+                        if (err) {
+                            console.log(err);
+                            imageDeferred.reject(err);
+                        } else {
+                            var base64 = new Buffer(data).toString('base64');
+                            self.imageMappings[id] = base64;
+                            imageDeferred.resolve(base64);
+                        }
+                    });
+                } else {
+                    http.get({
+                        url: src,
+                        bufferType: "buffer"
+                    }, function(err, result) {
+                        if (err) {
+                            console.log(err);
+                            imageDeferred.reject(err);
+                        } else {
+                            var base64 = new Buffer(result.buffer, 'binary').toString('base64');
+                            self.imageMappings[id] = base64;
+                            imageDeferred.resolve(base64);
+                        }
+                    });
+                }
                 return imageDeferred.promise;
             });
         });
@@ -92,6 +133,31 @@ function EmbeddedImage(old) {
             });
             return when.resolve(html);
         });
+    };
+}
+
+function ImagePipeline(stages, fileDir, origin) {
+    var self = this;
+    self.stages = stages;
+    self.execute = function(href, title, text) {
+        var param = {
+            href: href,
+            title: title,
+            text: text
+        };
+        self.stages.forEach(function(stage) {
+            param = stage.preDo(param.href, param.title, param.text, fileDir);
+        });
+        return origin(param.href, param.title, param.text);
+    };
+    self.deal = function(html) {
+        var tasks = [];
+        self.stages.forEach(function(stage) {
+            tasks.push(function() {
+                return stage.postDo(html);
+            });
+        });
+        return pipeline(tasks);
     };
 }
 
@@ -108,7 +174,8 @@ function markdown(md, options) {
 }
 
 var CompileService = klass(function() {}).methods({
-    compile: function(text, options, theme) {
+    compile: function(currentFile, text, options, theme) {
+        var fileDir = path.dirname(currentFile);
         var self = {};
         options = _.extend({
             headingNumber: true,
@@ -122,19 +189,18 @@ var CompileService = klass(function() {}).methods({
         if (options.headingNumber) {
             r.heading = new HeadingNumber().compile;
         }
+        self.imagePipeline = null;
         if (options.base64Image) {
-            self.embeddedImage = new EmbeddedImage(r.image);
-            r.image = self.embeddedImage.compile;
+            self.imagePipeline = new ImagePipeline([new ImagePathStage(), new ImageEmbedStage()], fileDir, r.image);
+        } else {
+            self.imagePipeline = new ImagePipeline([new ImagePathStage()], fileDir, r.image);
         }
+        r.image = self.imagePipeline.execute;
         return markdown(text, {
             breaks: true,
             renderer: r
         }).then(function(html) {
-            if (options.base64Image) {
-                return self.embeddedImage.replace(html);
-            } else {
-                return when.resolve(html);
-            }
+            return self.imagePipeline.deal(html);
         }).then(function(html) {
             if (!_.isUndefined(theme)) {
                 var style = themes[theme],

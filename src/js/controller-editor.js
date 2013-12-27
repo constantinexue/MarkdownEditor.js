@@ -139,7 +139,7 @@ window.mvc.controller('editorController', function($scope, $timeout, compileServ
             $timeout.cancel($scope.promise);
             $scope.promise = $timeout(function() {
                 var md = view.getContent();
-                compileService.compile(md)
+                compileService.compile($scope.currentFile, md)
                     .then(function(html) {
                         view.showCode(html);
                     });
