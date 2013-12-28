@@ -65,22 +65,23 @@
             //self.newButton.click();
             self.fire('windowResized');
         },
-        getOptions: function() {
-            return this.options;
-        },
         getEditor: function() {
             return this.aceEdit;
         },
         showCode: function(html) {
             var self = this;
-            var container = $('#page-view').contents().find('body');
-            container.html(html);
+            // var container = $('#page-view').contents().find('body');
+            // container.html(html);
+
+            var viewPage = document.getElementById('page-view');
+            viewPage.contentDocument.write(html);
+            viewPage.contentDocument.close();
 
             html = html_beautify(html, {
                 indent_size: 4
             });
             // var code = hljs.highlight('xml', html).value;
-            container = $('#page-code').contents().find('code');
+            var container = $('#page-code').contents().find('code');
             container.text(html);
 
             self.syncScroll();

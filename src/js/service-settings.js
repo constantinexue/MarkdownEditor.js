@@ -9,7 +9,7 @@
             },
             markdown: {
                 headingNumber: true,
-                theme: 'default'
+                theme: 'article-cn'
             }
         };
     }).methods({

@@ -133,19 +133,29 @@ window.mvc.controller('editorController', function($scope, $timeout, compileServ
         });
         return when.pipeline(steps, true);
     });
+    $scope.$on('settingsChanged', function(e, settings) {
+        var optionsDefaults = compileService.getOptions(),
+            optionsOverride = _.extend(optionsDefaults, settings.markdown);
+        compileService.setOptions(optionsOverride);
+        updateCompiling();
+    });
     view.on('contentChanged', function() {
         $scope.$apply(function() {
             $scope.isDirty = true;
             $timeout.cancel($scope.promise);
             $scope.promise = $timeout(function() {
-                var md = view.getContent();
-                compileService.compile($scope.currentFile, md)
-                    .then(function(html) {
-                        view.showCode(html);
-                    });
+                updateCompiling();
             }, 1000);
         });
     });
+
+    function updateCompiling() {
+        var md = view.getContent();
+        return compileService.compile($scope.currentFile, md)
+            .then(function(html) {
+                view.showCode(html);
+            });
+    }
     var eventKeyMap = {
         'mod+n': $scope.init,
         'mod+o': $scope.open,

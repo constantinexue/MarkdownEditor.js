@@ -1,5 +1,5 @@
 div#modal-settings.modal.fade(tabindex='-1', role='dialog', aria-hidden='true', data-backdrop='static')
-    div.modal-dialog(ng-controller='SettingsController')
+    div.modal-dialog(ng-controller='settingsController')
         div.modal-content
             div.modal-header
                 //-button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
@@ -9,7 +9,7 @@ div#modal-settings.modal.fade(tabindex='-1', role='dialog', aria-hidden='true', 
                     li.active
                         a(href='#settings-general', data-toggle='tab') General
                     li
-                        a(href='#settings-shortcuts', data-toggle='tab') Shortcuts
+                        a(href='#settings-markdown', data-toggle='tab') Markdown
                 div.tab-content
                     div#settings-general.tab-pane.fade.in.active
                         br
@@ -28,7 +28,23 @@ div#modal-settings.modal.fade(tabindex='-1', role='dialog', aria-hidden='true', 
                                         option 14
                                         option 16
                                         option 18
-                    div#settings-shortcuts.tab-pane.fade C
+                    div#settings-markdown.tab-pane.fade
+                        br
+                        form.form-horizontal(role='form')
+                            //-div.form-group
+                                label.col-sm-3.control-label Markdown Themes
+                                div.col-sm-9
+                                    select#select-markdown-theme.form-control.selectpicker(ng-model='settings.markdown.theme')
+                                        option Email
+                                        option Article
+                                        option Article-cn
+                            div.form-group
+                                div.col-sm-9.col-sm-offset-3
+                                    div.checkbox
+                                        label
+                                            input(type='checkbox', ng-model='settings.markdown.headingNumber')
+                                            | Heading Number
+
             div.modal-footer
                 button.btn.btn-success(type='button', ng-click='save()') &nbsp;&nbsp;Save&nbsp;&nbsp;
                 button.btn.btn-default(type='button', data-dismiss='modal') Cancel

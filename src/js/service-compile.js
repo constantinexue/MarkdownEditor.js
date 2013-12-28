@@ -13,7 +13,7 @@ _.str = require('underscore.string');
 var template = fs.readFileSync('./public/page-temp.html', 'utf8'),
     themes = {
         'none': '',
-        'default': fs.readFileSync('./public/css/style-default.css', 'utf8')
+        'article-cn': fs.readFileSync('./public/css/style-default.css', 'utf8')
     };
 
 function highlightCode(code, lang) {
@@ -173,43 +173,47 @@ function markdown(md, options) {
     return deferred.promise;
 }
 
-var CompileService = klass(function() {}).methods({
-    compile: function(currentFile, text, options, theme) {
+var CompileService = klass(function() {
+    this.options = {
+        theme: 'article-cn',
+        headingNumber: true,
+        highlightCode: true,
+        embedImage: false
+    };
+}).methods({
+    getOptions: function() {
+        return this.options;
+    },
+    setOptions: function(value) {
+        this.options = value;
+        return this;
+    },
+    compile: function(currentFile, text) {
         var fileDir = path.dirname(currentFile);
-        var self = {};
-        options = _.extend({
-            headingNumber: true,
-            highlightCode: true,
-            base64Image: false
-        }, options);
+        var self = this;
         var r = new marked.Renderer();
-        if (options.highlightCode) {
+        if (self.options.highlightCode) {
             //r.code = highlightCode;
         }
-        if (options.headingNumber) {
+        if (self.options.headingNumber) {
             r.heading = new HeadingNumber().compile;
         }
-        self.imagePipeline = null;
-        if (options.base64Image) {
-            self.imagePipeline = new ImagePipeline([new ImagePathStage(), new ImageEmbedStage()], fileDir, r.image);
+        var imagePipeline = null;
+        if (self.options.embedImage) {
+            imagePipeline = new ImagePipeline([new ImagePathStage(), new ImageEmbedStage()], fileDir, r.image);
         } else {
-            self.imagePipeline = new ImagePipeline([new ImagePathStage()], fileDir, r.image);
+            imagePipeline = new ImagePipeline([new ImagePathStage()], fileDir, r.image);
         }
-        r.image = self.imagePipeline.execute;
+        r.image = imagePipeline.execute;
         return markdown(text, {
             breaks: true,
             renderer: r
-        }).then(function(html) {
-            return self.imagePipeline.deal(html);
-        }).then(function(html) {
-            if (!_.isUndefined(theme)) {
-                var style = themes[theme],
-                    output = template.replace('{{style}}', style);
-                output = output.replace('{{body}}', html);
-                return when.resolve(output);;
-            } else {
-                return when.resolve(html);;
-            }
+        }).then(function(body) {
+            return imagePipeline.deal(body);
+        }).then(function(body) {
+            var style = themes[self.options.theme],
+                html = template.replace('{{style}}', style).replace('{{body}}', body);
+            return when.resolve(html);;
         });
     }
 });

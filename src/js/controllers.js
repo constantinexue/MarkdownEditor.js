@@ -18,21 +18,26 @@ window.mvc.controller('historiesController', function($scope, $http, historiesSe
     $scope.publish = function(mode, filetype) {
         var md = view.getContent(),
             filename = '',
-            theme = (mode === 'plain') ? 'none' : 'default';
+            options = compileService.getOptions(),
+            optionsOverride = _.extend(options, {
+                theme: (mode === 'plain') ? 'none' : options.theme,
+                embedImage: mode === 'styled2'
+            });
         view.selectFile('save', filetype)
             .then(function(file) {
                 filename = file;
                 dialogView.notifyPublishing();
-                return compileService.compile(filename, md, {
-                    base64Image: (mode === 'styled2')
-                }, theme);
+                compileService.setOptions(optionsOverride);
+                return compileService.compile(filename, md);
             })
             .then(function(html) {
                 return publishService.publish(filename, html);
             })
             .then(function() {
-                console.log(filename);
                 return windowService.openExternal(filename);
+            })
+            .ensure(function() {
+                compileService.setOptions(options);
             });
     };
     $scope.toHTML = function(mode) {
@@ -41,7 +46,7 @@ window.mvc.controller('historiesController', function($scope, $http, historiesSe
     $scope.toPDF = function(mode) {
         $scope.publish(mode, '.pdf');
     };
-}).controller('SettingsController', function($scope, settingsService, view) {
+}).controller('settingsController', function($scope, $rootScope, settingsService, compileService, view) {
     //https://groups.google.com/forum/#!topic/angular/WNeY0v9xn1k
     var settings = settingsService.load();
     $scope.settings = settings;
@@ -49,6 +54,7 @@ window.mvc.controller('historiesController', function($scope, $http, historiesSe
         view.getEditor().setFontSize($scope.settings.editor.fontSize);
         view.getEditor().setTheme('ace/theme/' + $scope.settings.editor.theme);
         view.getEditor().resize();
+        $rootScope.$broadcast('settingsChanged', $scope.settings);
     };
     $scope.save = function() {
         $scope.apply();
