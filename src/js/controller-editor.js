@@ -134,6 +134,9 @@ window.mvc.controller('editorController', function($scope, $timeout, compileServ
         return when.pipeline(steps, true);
     });
     $scope.$on('settingsChanged', function(e, settings) {
+        view.getEditor().setFontSize(settings.editor.fontSize);
+        view.getEditor().setTheme('ace/theme/' + settings.editor.theme);
+        view.getEditor().resize();
         var optionsDefaults = compileService.getOptions(),
             optionsOverride = _.extend(optionsDefaults, settings.markdown);
         compileService.setOptions(optionsOverride);
