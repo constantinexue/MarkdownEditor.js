@@ -3,6 +3,15 @@ MarkdownEditor.js
 
 A free cross-platform desktop editor for writing, publishing and sharing markdown documents.
 
+Current Version: 0.2.0 Preview
+
+Downloads:
+
+- [Windows](https://sourceforge.net/projects/markdowneditor-js/files/0.2.0/MarkdownEditor-win.zip/download)
+- [MacOS](https://sourceforge.net/projects/markdowneditor-js/files/0.2.0/MarkdownEditor-mac.zip/download)
+- [Linux32](https://sourceforge.net/projects/markdowneditor-js/files/0.2.0/MarkdownEditor-linux32.zip/download)
+- [Linux64](https://sourceforge.net/projects/markdowneditor-js/files/0.2.0/MarkdownEditor-linux64.zip/download)
+
 ![screenshot](doc/screenshot-mac.png)
 
 ![screenshot](doc/screenshot-win.png)
@@ -39,4 +48,10 @@ The themes
 
 The settings
 
-Author and License
+Author
+-----------------
+ConstantineXue @weibo.com
+
+License
+-----------------
+MIT

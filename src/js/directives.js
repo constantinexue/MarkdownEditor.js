@@ -5,7 +5,6 @@ window.mvc.directive('selectpicker', function() {
         link: function(scope, element, attrs, ngModel) {
             if (!ngModel) return;
             scope.$watch(attrs.ngModel, function(newValue, oldValue) {
-                console.dir(ngModel.$viewValue);
                 var value = element.val();
                 if (value != ngModel.$viewValue) {
                     element.selectpicker('val', ngModel.$viewValue);

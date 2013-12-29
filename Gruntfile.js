@@ -223,7 +223,7 @@ module.exports = function(grunt) {
     grunt.registerTask('build', ['compile', 'clean:build', 'copy:build', 'rewrite',
         'clean:buildBin', 'copy:buildWin', 'nodewebkit:win',
         'clean:buildBin', 'copy:buildMac', 'nodewebkit:mac',
-        'clean:buildBin', 'copy:buildL64', 'nodewebkit:linux64'
-        // 'clean:buildBin', 'copy:buildL32', 'nodewebkit:linux32'
+        'clean:buildBin', 'copy:buildL64', 'nodewebkit:linux64',
+        'clean:buildBin', 'copy:buildL32', 'nodewebkit:linux32'
     ]);
 };
