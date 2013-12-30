@@ -21,8 +21,10 @@
             return new mde.HistoriesService();
         })
         .run(function(view, windowService) {
+            windowService.show().then(function(){
             view.init();
-            windowService.show();
+                
+            });
         });
 
     //require('./js/server')();

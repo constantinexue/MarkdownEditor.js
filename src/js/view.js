@@ -23,16 +23,16 @@
         });
         self.editor.focus();
 
+        // The padding has to be reset before every resize event.
+        //self.editor.renderer.setPadding(10);
+        self.editor.resize(true);
+
         self.on('windowResized', function(evt) {
             var height = $(window).innerHeight() - $('.navbar').outerHeight();
             $('#container-workarea').css({
                 height: height
             });
             self.editorContainer.height(height);
-
-            // The padding has to be reset before every resize event.
-            self.editor.renderer.setPadding(10);
-            self.editor.resize(true);
         });
 
         self.editor.getSelection().on('changeCursor', function() {
@@ -68,6 +68,14 @@
             //$('#button-showview').click();
             //self.newButton.click();
             self.fire('windowResized');
+
+            self._resetEditorPadding();
+        },
+        _resetEditorPadding: function() {
+            var self = this;
+            // The padding has to be reset before every resize event.
+            self.editor.renderer.setPadding(10);
+            self.editor.resize(true);
         },
         getEditor: function() {
             return this.editor;
@@ -131,6 +139,8 @@
             self.editor.getSession().setValue(value);
             self.editor.gotoLine(0);
             self.editor.focus();
+
+            //self._resetEditorPadding();
         },
         getContent: function() {
             var self = this,

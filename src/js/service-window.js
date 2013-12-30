@@ -13,6 +13,7 @@ window.mvc.factory('windowService', function($rootScope) {
 
     return {
         show: function() {
+            var deferred = when.defer();
             win.hide();
             // This API will cause window showing on windows.
             // https://github.com/rogerwang/node-webkit/issues/1350
@@ -21,7 +22,9 @@ window.mvc.factory('windowService', function($rootScope) {
             setTimeout(function() {
                 win.show();
                 window.splash.close();
+                deferred.resolve();
             }, 1000);
+            return deferred.promise;
         },
         setTitle: function(title) {
             win.title = title + '- MarkdownEditor.js';
