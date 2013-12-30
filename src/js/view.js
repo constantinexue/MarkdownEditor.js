@@ -81,19 +81,27 @@
             return this.editor;
         },
         showCode: function(html) {
-            var self = this;
-            // var container = $('#page-view').contents().find('body');
+            var self = this,
+                container;
+            // 
             // container.html(html);
 
             var viewPage = document.getElementById('page-view');
             viewPage.contentDocument.write(html);
             viewPage.contentDocument.close();
 
+            container = $('#page-view').contents().find('body');
+            container.find('a').click(function(evt) {
+                evt.preventDefault();
+                var href = $(this).attr('href');
+                self.fire('linkClicked', href);
+            });
+
             html = html_beautify(html, {
                 indent_size: 4
             });
             // var code = hljs.highlight('xml', html).value;
-            var container = $('#page-code').contents().find('code');
+            container = $('#page-code').contents().find('code');
             container.text(html);
 
             self.syncScroll();

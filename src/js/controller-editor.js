@@ -183,6 +183,9 @@ window.mvc.controller('editorController', function($scope, $timeout, compileServ
             }, 1000);
         });
     });
+    view.on('linkClicked', function(href) {
+        windowService.openExternal(href);
+    });
 
     function updateCompiling() {
         var md = view.getContent();

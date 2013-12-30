@@ -1,4 +1,4 @@
-div#modal-settings.modal.fade(tabindex='-1', role='dialog', aria-hidden='true', data-backdrop='static')
+div#modal-settings.modal(tabindex='-1', role='dialog', aria-hidden='true', data-backdrop='static')
     div.modal-dialog(ng-controller='settingsController')
         div.modal-content
             div.modal-header
@@ -11,7 +11,7 @@ div#modal-settings.modal.fade(tabindex='-1', role='dialog', aria-hidden='true', 
                     li
                         a(href='#settings-markdown', data-toggle='tab') Markdown
                 div.tab-content
-                    div#settings-general.tab-pane.fade.in.active
+                    div#settings-general.tab-pane.in.active
                         br
                         form.form-horizontal(role='form')
                             div.form-group
@@ -28,7 +28,7 @@ div#modal-settings.modal.fade(tabindex='-1', role='dialog', aria-hidden='true', 
                                         option 14
                                         option 16
                                         option 18
-                    div#settings-markdown.tab-pane.fade
+                    div#settings-markdown.tab-pane
                         br
                         form.form-horizontal(role='form')
                             //-div.form-group

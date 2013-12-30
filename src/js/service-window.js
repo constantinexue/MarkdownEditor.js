@@ -34,7 +34,12 @@ window.mvc.factory('windowService', function($rootScope) {
             win.close(true);
         },
         openExternal: function(link) {
-            link = 'file://' + link;
+            var start = _.str.startsWith;
+            if (start(link, 'http://') || start(link, 'https://') || start(link, 'file://')) {
+
+            } else {
+                link = 'file://' + link;
+            }
             gui.Shell.openExternal(link);
         }
     };
