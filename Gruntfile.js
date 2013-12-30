@@ -24,6 +24,17 @@ function listProductionNodeModules() {
     return moduleNames;
 }
 
+function buildCompressTask(platform) {
+    return {
+        options: {
+            archive: './build/releases/MarkdownEditor-' + platform + '.zip'
+        },
+        files: [{
+            src: ['./build/releases/MarkdownEditor/' + platform + '/**/*']
+        }]
+    };
+}
+
 var nwOptions = {
     app_name: 'MarkdownEditor',
     version: '0.8.3',
@@ -207,6 +218,12 @@ module.exports = function(grunt) {
                 }),
                 src: nwSrc
             }
+        },
+        compress: {
+            mac: buildCompressTask('mac'),
+            win: buildCompressTask('win'),
+            linux32: buildCompressTask('linux32'),
+            linux64: buildCompressTask('linux64')
         }
     });
 
@@ -215,6 +232,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jade');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.loadNpmTasks('grunt-node-webkit-builder');
 
     grunt.registerTask('rewrite', '', rewritePackageJson);
@@ -224,6 +242,7 @@ module.exports = function(grunt) {
         'clean:buildBin', 'copy:buildWin', 'nodewebkit:win',
         'clean:buildBin', 'copy:buildMac', 'nodewebkit:mac',
         'clean:buildBin', 'copy:buildL64', 'nodewebkit:linux64',
-        'clean:buildBin', 'copy:buildL32', 'nodewebkit:linux32'
+        'clean:buildBin', 'copy:buildL32', 'nodewebkit:linux32',
+        'compress'
     ]);
 };
