@@ -15,6 +15,8 @@ var template = fs.readFileSync('./public/page-temp.html', 'utf8'),
         'none': '',
         'article-cn': fs.readFileSync('./public/css/style-default.css', 'utf8')
     };
+// Makes a default theme for getting error name from localStrage.
+themes['default'] = themes['article-cn'];
 
 function highlightCode(code, lang) {
     var html = '';
@@ -211,7 +213,7 @@ var CompileService = klass(function() {
         }).then(function(body) {
             return imagePipeline.deal(body);
         }).then(function(body) {
-            var style = themes[self.options.theme],
+            var style = themes[self.options.theme] || themes['default'],
                 html = template.replace('{{style}}', style).replace('{{body}}', body);
             return when.resolve(html);;
         });
