@@ -1,4 +1,4 @@
-window.mvc.controller('editorController', function($scope, $timeout, compileService, windowService, view, dialogView, model) {
+window.mvc.controller('editorController', function($scope, $timeout, compileService, windowService, publishService, view, dialogView, model) {
     $scope.currentFile = null;
     $scope.isDirty = false;
     $scope.init = function() {
@@ -65,6 +65,38 @@ window.mvc.controller('editorController', function($scope, $timeout, compileServ
             return saveFile($scope.currentFile);
         });
         return when.pipeline(steps);
+    };
+    $scope.publish = function(mode, filetype) {
+        var md = view.getContent(),
+            filename = '',
+            defaultFilename = publishService.getDefaultFilename($scope.currentFile, filetype),
+            options = compileService.getOptions(),
+            optionsOverride = _.extend(options, {
+                theme: (mode === 'plain') ? 'none' : options.theme,
+                embedImage: mode === 'styled2'
+            });
+        view.selectFile('save', filetype, defaultFilename)
+            .then(function(file) {
+                filename = file;
+                dialogView.notifyPublishing();
+                compileService.setOptions(optionsOverride);
+                return compileService.compile(filename, md);
+            })
+            .then(function(html) {
+                return publishService.publish(filename, html);
+            })
+            .then(function() {
+                return windowService.openExternal(filename);
+            })
+            .ensure(function() {
+                compileService.setOptions(options);
+            });
+    };
+    $scope.toHTML = function(mode) {
+        $scope.publish(mode, '.html');
+    };
+    $scope.toPDF = function(mode) {
+        $scope.publish(mode, '.pdf');
     };
 
     function getStepsOfSave() {

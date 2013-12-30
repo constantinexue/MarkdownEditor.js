@@ -133,7 +133,7 @@
                 doc = self.aceEdit.getSession().getDocument();
             return doc.getValue();
         },
-        selectFile: function(mode, type) {
+        selectFile: function(mode, type, defaultFilename, workingDir) {
             var self = this,
                 dialog = null,
                 deferred = when.defer();
@@ -143,9 +143,19 @@
                     break;
                 case 'save':
                     dialog = self.saveDialog;
+                    if (defaultFilename) {
+                        dialog.attr('nwsaveas', defaultFilename);
+                    } else {
+                        dialog.attr('nwsaveas', '');
+                    }
                     break;
                 default:
                     return;
+            }
+            if (workingDir) {
+                dialog.attr('nwworkingdir', workingDir);
+            } else {
+                dialog.removeAttr('nwworkingdir');
             }
             dialog.attr('accept', type);
             dialog.off('change');
@@ -160,32 +170,6 @@
             dialog.trigger('click');
 
             return deferred.promise;
-        },
-        prompt: function(eventName) {
-            var message = '';
-            switch (eventName) {
-                case 'saved':
-                    message = 'File is saved';
-                    break;
-                case 'exported':
-                    message = 'File is exported';
-                    break;
-                default:
-                    break;
-            }
-            $.bootstrapGrowl(message, {
-                ele: 'body', // which element to append to
-                type: 'success', // (null, 'info', 'error', 'success')
-                offset: {
-                    from: 'bottom',
-                    amount: 20
-                }, // 'top', or 'bottom'
-                align: 'center', // ('left', 'right', or 'center')
-                width: 300, // (integer, or 'auto')
-                delay: 1000,
-                allow_dismiss: true,
-                stackup_spacing: 10 // spacing between consecutively stacked growls.
-            });
         }
     });
 })();
