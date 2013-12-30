@@ -165,14 +165,19 @@ window.mvc.controller('editorController', function($scope, $timeout, compileServ
         });
         return when.pipeline(steps, true);
     });
-    $scope.$on('settingsChanged', function(e, settings) {
-        view.getEditor().setFontSize(settings.editor.fontSize);
-        view.getEditor().setTheme('ace/theme/' + settings.editor.theme);
-        view.getEditor().resize();
-        var optionsDefaults = compileService.getOptions(),
-            optionsOverride = _.extend(optionsDefaults, settings.markdown);
-        compileService.setOptions(optionsOverride);
-        updateCompiling();
+    $scope.$on('settingsChanged', function(e, name, settings) {
+        if (name === null || name === 'editor.theme') {
+            view.getEditor().setTheme('ace/theme/' + settings.editor.theme);
+        }
+        if (name === null || name === 'editor.fontSize') {
+            view.getEditor().setFontSize(settings.editor.fontSize);
+        }
+        if (name === null || name === 'markdown') {
+            var optionsDefaults = compileService.getOptions(),
+                optionsOverride = _.extend(optionsDefaults, settings.markdown);
+            compileService.setOptions(optionsOverride);
+            updateCompiling();
+        }
     });
     view.on('contentChanged', function() {
         $scope.$apply(function() {

@@ -53,7 +53,7 @@ Roadmap
 ### 0.2.x
 - 0.2.1: Bug fixing version
     - Fix all the visible bugs;
-    - Changes setting dynamicly;
+    - Changes setting effects dynamicly;
     - Auto zip built files to zip;
 - 0.2.2: Provides markdown themes:
     - There are some predefined themes;

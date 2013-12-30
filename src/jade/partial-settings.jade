@@ -2,7 +2,7 @@ div#modal-settings.modal(tabindex='-1', role='dialog', aria-hidden='true', data-
     div.modal-dialog(ng-controller='settingsController')
         div.modal-content
             div.modal-header
-                //-button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+                button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
                 h4.modal-title Settings
             div.modal-body
                 ul.nav.nav-tabs
@@ -46,5 +46,4 @@ div#modal-settings.modal(tabindex='-1', role='dialog', aria-hidden='true', data-
                                             | Heading Number
 
             div.modal-footer
-                button.btn.btn-success(type='button', ng-click='save()') &nbsp;&nbsp;Save&nbsp;&nbsp;
-                button.btn.btn-default(type='button', data-dismiss='modal') Cancel
+                button.btn.btn-default(type='button', data-dismiss='modal') OK

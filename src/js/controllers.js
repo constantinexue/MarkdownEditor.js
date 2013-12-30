@@ -20,13 +20,17 @@ app.controller('settingsController', function($scope, $rootScope, settingsServic
     //https://groups.google.com/forum/#!topic/angular/WNeY0v9xn1k
     var settings = settingsService.load();
     $scope.settings = settings;
-    var notifySettingsChanged = function() {
-        $rootScope.$broadcast('settingsChanged', $scope.settings);
+    var onSettingsChanged = function(name) {
+        $rootScope.$broadcast('settingsChanged', name, $scope.settings);
     };
-    $scope.save = function() {
-        settingsService.save($scope.settings);
-        notifySettingsChanged();
-        $('#modal-settings').modal('hide');
-    };
-    notifySettingsChanged();
+    $scope.$watch('settings.editor.theme', function(newVal, oldVal) {
+        onSettingsChanged('editor.theme');
+    });
+    $scope.$watch('settings.editor.fontSize', function(newVal, oldVal) {
+        onSettingsChanged('editor.fontSize');
+    });
+    $scope.$watch('settings.markdown.headingNumber', function(newVal, oldVal) {
+        onSettingsChanged('markdown');
+    });
+    onSettingsChanged(null);
 });
