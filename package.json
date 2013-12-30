@@ -9,15 +9,13 @@
         "fs-extra": "*",
         "when": "*",
         "klass": "*",
-        "marked": "https://github.com/chjj/marked/tarball/master",
+        "marked": "*",
         "underscore": "*",
         "underscore.string": "*",
         "http-get": "*",
         "wkhtmltopdf": "*"
     },
     "devDependencies": {
-        "request": "*",
-        "async": "*",
         "grunt": "*",
         "grunt-contrib-less": "*",
         "grunt-contrib-clean": "*",
