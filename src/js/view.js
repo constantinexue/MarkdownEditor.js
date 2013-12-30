@@ -11,45 +11,49 @@
         self.openDialog = $('#dialog-open');
         self.saveDialog = $('#dialog-save');
         // ACE init
-        self.aceEditContainer = $('#ace-edit');
-        self.aceEdit = ace.edit(self.aceEditContainer[0]);
-        self.aceEdit.setShowPrintMargin(false);
-        self.aceEdit.setHighlightGutterLine(false);
-        self.aceEdit.getSession().setMode("ace/mode/markdown");
-        self.aceEdit.getSession().setUseWrapMode(true);
-        self.aceEdit.on('change', function(evt) {
+        self.editorContainer = $('#ace-edit');
+        self.editor = ace.edit(self.editorContainer[0]);
+        self.editor.setShowPrintMargin(false);
+        self.editor.setHighlightGutterLine(false);
+        self.editor.renderer.setShowGutter(false);
+        self.editor.getSession().setMode("ace/mode/markdown");
+        self.editor.getSession().setUseWrapMode(true);
+        self.editor.on('change', function(evt) {
             self.fire('contentChanged');
         });
-        self.aceEdit.focus();
+        self.editor.focus();
 
         self.on('windowResized', function(evt) {
             var height = $(window).innerHeight() - $('.navbar').outerHeight();
             $('#container-workarea').css({
                 height: height
             });
-            self.aceEditContainer.height(height);
-            self.aceEdit.resize();
+            self.editorContainer.height(height);
+
+            // The padding has to be reset before every resize event.
+            self.editor.renderer.setPadding(10);
+            self.editor.resize(true);
         });
 
-        self.aceEdit.getSelection().on('changeCursor', function() {
+        self.editor.getSelection().on('changeCursor', function() {
             //self.syncCursor();
         });
 
-        self.aceEdit.getSession().on('changeScrollTop', function(scroll) {
+        self.editor.getSession().on('changeScrollTop', function(scroll) {
             //scroll = parseInt(scroll) || 0;
             self.syncScroll();
         });
 
         //http://stackoverflow.com/questions/13677898/how-to-disable-ace-editors-find-dialog
-        self.aceEdit.commands.addCommands([{
+        self.editor.commands.addCommands([{
             name: "findnext",
             bindKey: {
                 win: "Ctrl-D",
                 mac: "Command-D"
             },
             exec: function(editor, line) {
-                console.log(self.aceEdit.getSelection());
-                console.log(self.aceEdit.getSelectionRange());
+                console.log(self.editor.getSelection());
+                console.log(self.editor.getSelectionRange());
                 return false;
             },
             readOnly: true
@@ -66,7 +70,7 @@
             self.fire('windowResized');
         },
         getEditor: function() {
-            return this.aceEdit;
+            return this.editor;
         },
         showCode: function(html) {
             var self = this;
@@ -88,10 +92,10 @@
         },
         syncCursor: function() {
             var self = this;
-            var editAll = self.aceEdit.getSession().getDocument().getLength(),
+            var editAll = self.editor.getSession().getDocument().getLength(),
                 //codeAll = self.aceCode.getSession().getDocument().getLength(),
                 codeAll = 0,
-                editRow = self.aceEdit.getCursorPosition().row,
+                editRow = self.editor.getCursorPosition().row,
                 codeRow = parseInt(editRow * codeAll / editAll);
             // self.aceCode.scrollToLine(codeRow, true, true);
             // self.aceCode.gotoLine(codeRow, 0, true);
@@ -99,11 +103,11 @@
         syncScroll: function() {
             var self = this,
                 pageBody, ls, lh, rh, rs,
-                paneHeight = self.aceEditContainer.height();
+                paneHeight = self.editorContainer.height();
             // Sync preview
             pageBody = $('#page-view').contents().find('body');
-            ls = self.aceEdit.renderer.getScrollTop() + (paneHeight / 2);
-            lh = self.aceEdit.getSession().getScreenLength() * self.aceEdit.renderer.lineHeight;
+            ls = self.editor.renderer.getScrollTop() + (paneHeight / 2);
+            lh = self.editor.getSession().getScreenLength() * self.editor.renderer.lineHeight;
             rh = pageBody.prop('scrollHeight'),
             rs = parseInt(ls * rh / lh) - (paneHeight / 2);
             if (ls < lh && rs > 0) {
@@ -124,13 +128,13 @@
         },
         setContent: function(value) {
             var self = this;
-            self.aceEdit.getSession().setValue(value);
-            self.aceEdit.gotoLine(0);
-            self.aceEdit.focus();
+            self.editor.getSession().setValue(value);
+            self.editor.gotoLine(0);
+            self.editor.focus();
         },
         getContent: function() {
             var self = this,
-                doc = self.aceEdit.getSession().getDocument();
+                doc = self.editor.getSession().getDocument();
             return doc.getValue();
         },
         selectFile: function(mode, type, defaultFilename, workingDir) {
