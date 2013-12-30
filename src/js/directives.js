@@ -6,8 +6,12 @@ window.mvc.directive('selectpicker', function() {
             if (!ngModel) return;
             scope.$watch(attrs.ngModel, function(newValue, oldValue) {
                 var value = element.val();
+                // Don't use !==, because the number type value would be converted to integer by "integer directive".
                 if (value != ngModel.$viewValue) {
                     element.selectpicker('val', ngModel.$viewValue);
+                } else {
+                    // Rerendering for keep UI sync with select dom element.
+                    element.selectpicker('render');
                 }
             });
         }

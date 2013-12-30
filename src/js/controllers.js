@@ -59,6 +59,4 @@ window.mvc.controller('historiesController', function($scope, historiesService, 
         $('#modal-settings').modal('hide');
     };
     notifySettingsChanged();
-    // $('#select-font-size').selectpicker('val', settings.editor.fontSize);
-    // $('#select-editor-theme').selectpicker('val', settings.editor.theme);
 });
