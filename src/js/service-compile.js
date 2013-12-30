@@ -191,29 +191,40 @@ var CompileService = klass(function() {
         return this;
     },
     compile: function(currentFile, text) {
-        var fileDir = path.dirname(currentFile);
-        var self = this;
-        var r = new marked.Renderer();
+        var self = this,
+            fileDir = path.dirname(currentFile),
+            renderer = new marked.Renderer(),
+            stages, imagePipeline;
         if (self.options.highlightCode) {
-            //r.code = highlightCode;
+            //renderer.code = highlightCode;
         }
         if (self.options.headingNumber) {
-            r.heading = new HeadingNumber().compile;
+            renderer.heading = new HeadingNumber().compile;
         }
-        var imagePipeline = null;
+        stages = [new ImagePathStage()];
         if (self.options.embedImage) {
-            imagePipeline = new ImagePipeline([new ImagePathStage(), new ImageEmbedStage()], fileDir, r.image);
-        } else {
-            imagePipeline = new ImagePipeline([new ImagePathStage()], fileDir, r.image);
+            stages.push(new ImageEmbedStage());
+        } else {}
+        imagePipeline = new ImagePipeline(stages, fileDir, renderer.image);
+        renderer.image = imagePipeline.execute;
+
+        // Adds a target="_system" to <a>, preventing open link in node-webkit.
+        // This feature needs adding a javascript file into template.
+        if (self.options.safeLink) {
+            renderer.link = function() {
+                // TODO
+            };
         }
-        r.image = imagePipeline.execute;
+
         return markdown(text, {
             breaks: true,
-            renderer: r
+            renderer: renderer
         }).then(function(body) {
+            // Embeds base64 image to HTML
             return imagePipeline.deal(body);
         }).then(function(body) {
             var style = themes[self.options.theme] || themes['default'],
+                // TODO: Considering use _.template to instead of string.replace
                 html = template.replace('{{style}}', style).replace('{{body}}', body);
             return when.resolve(html);;
         });
