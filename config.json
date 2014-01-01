@@ -3,8 +3,9 @@
         "dependencies": {
             "nodejs": "http://nodejs.org/",
             "node-webkit": "https://github.com/rogerwang/node-webkit",
-            "Bootstrap":"http://getbootstrap.com/",
-            "Angularjs":"http://angularjs.org/",
+            "marked": "https://github.com/chjj/marked",
+            "Bootstrap": "http://getbootstrap.com/",
+            "Angularjs": "http://angularjs.org/",
             "wkhtmltopdf": "https://code.google.com/p/wkhtmltopdf/"
         },
         "references": {
@@ -13,7 +14,6 @@
             "Markdown Here": "http://markdown-here.com/",
             "Prose": "http://prose.io/",
             "Cmd Markdown": "http://www.zybuluo.com/mdeditor/",
-            "马克飞象": "http://maxiang.info/",
             "Haroo Pad": "http://pad.haroopress.com/",
             "Dillinger": "http://dillinger.io/"
         }

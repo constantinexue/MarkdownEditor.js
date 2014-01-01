@@ -7,10 +7,10 @@ Current Version: 0.2.0 Preview
 
 Downloads:
 
-- [Windows](https://sourceforge.net/projects/markdowneditor-js/files/0.2.0/MarkdownEditor-win.zip/download)
-- [MacOS](https://sourceforge.net/projects/markdowneditor-js/files/0.2.0/MarkdownEditor-mac.zip/download)
-- [Linux32](https://sourceforge.net/projects/markdowneditor-js/files/0.2.0/MarkdownEditor-linux32.zip/download)
-- [Linux64](https://sourceforge.net/projects/markdowneditor-js/files/0.2.0/MarkdownEditor-linux64.zip/download)
+- [Windows](https://sourceforge.net/projects/markdowneditor-js/files/0.2.1/MarkdownEditor-win.zip/download)
+- [MacOS](https://sourceforge.net/projects/markdowneditor-js/files/0.2.1/MarkdownEditor-mac.zip/download)
+- [Linux32](https://sourceforge.net/projects/markdowneditor-js/files/0.2.1/MarkdownEditor-linux32.zip/download)
+- [Linux64](https://sourceforge.net/projects/markdowneditor-js/files/0.2.1/MarkdownEditor-linux64.zip/download)
 
 ![screenshot](doc/screenshot-mac.png)
 
