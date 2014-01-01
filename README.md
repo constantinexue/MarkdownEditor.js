@@ -42,6 +42,26 @@ The shortcuts for "file" menu are:
 - save: mod+s
 - save as: mod+shift+s
 
+The theme of markdown
+-----------------
+Converted markdown documents would always be used for several cases:
+1. The books, long story and long text;
+2. The article, the guide, just like README, release notes, etc;
+3. The email;
+
+Each case needs different theme, for example, the headings in an article should be bigger than in an email because an article usually contains many headings and many sub headings. A bigger heading is easy to be recognized that is important in a long “text”, just like the default style in Microsoft word. And users have to write heading numbers by manual in markdown, which is very inconvenient. MarkdownEditor.js is also support auto number for headings, however, it’s not included in a theme currently, but an option in “settings->markdown”.
+
+I don’t want to provide much colorful themes by default, for I endorsed “the less is more”. Actually, the Github Favorite Markdown style has become the standard theme. So I made some themes based on GFM style. That’s enough for emails, published PDFs and common use. If you want to customize, I will add an option to bind external CSS files.
+
+The naming rule of themes is: [type]-[locals]
+- type: book, article, email
+- locals: en, zh
+Examples: book-zh, email-en
+The requisite of `locals` identify is, the best styles of different languages are also different: the font family, the font size and the indent of paragraphs. So I decided separate locals to different themes.
+
+Here you may think about “the themes are nearly same”. That’s right. The differences are quite small so that I will make a template to generate these themes, just like what bootstrap did.
+
+
 TO BE CONTINUED
 -----------------
 The themes
