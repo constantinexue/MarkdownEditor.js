@@ -3,7 +3,7 @@ MarkdownEditor.js
 
 A free cross-platform desktop editor for writing, publishing and sharing markdown documents.
 
-Current Version: 0.2.0 Preview
+Current Version: 0.2.1 Preview
 
 Downloads:
 
