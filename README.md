@@ -3,14 +3,14 @@ MarkdownEditor.js
 
 A free cross-platform desktop editor for writing, publishing and sharing markdown documents.
 
-Current Version: 0.2.1 Preview
+Current Version: 0.2.2 Preview
 
 Downloads:
 
-- [Windows](https://sourceforge.net/projects/markdowneditor-js/files/0.2.1/MarkdownEditor-win.zip/download)
-- [MacOS](https://sourceforge.net/projects/markdowneditor-js/files/0.2.1/MarkdownEditor-mac.zip/download)
-- [Linux32](https://sourceforge.net/projects/markdowneditor-js/files/0.2.1/MarkdownEditor-linux32.zip/download)
-- [Linux64](https://sourceforge.net/projects/markdowneditor-js/files/0.2.1/MarkdownEditor-linux64.zip/download)
+- [Mac](https://sourceforge.net/projects/markdowneditor-js/files/0.2.2/MarkdownEditor-mac.zip/download)
+- [Windows](https://sourceforge.net/projects/markdowneditor-js/files/0.2.2/MarkdownEditor-win.zip/download)
+- [Linux32](https://sourceforge.net/projects/markdowneditor-js/files/0.2.2/MarkdownEditor-linux32.zip/download)
+- [Linux64](https://sourceforge.net/projects/markdowneditor-js/files/0.2.2/MarkdownEditor-linux64.zip/download)
 
 ![screenshot](doc/screenshot-mac.png)
 
@@ -45,6 +45,7 @@ The shortcuts for "file" menu are:
 The theme of markdown
 -----------------
 Converted markdown documents would always be used for several cases:
+
 1. The books, long story and long text;
 2. The article, the guide, just like README, release notes, etc;
 3. The email;
@@ -53,20 +54,15 @@ Each case needs different theme, for example, the headings in an article should 
 
 I don’t want to provide much colorful themes by default, for I endorsed “the less is more”. Actually, the Github Favorite Markdown style has become the standard theme. So I made some themes based on GFM style. That’s enough for emails, published PDFs and common use. If you want to customize, I will add an option to bind external CSS files.
 
-The naming rule of themes is: [type]-[locals]
+The naming rule of themes is: `[type]-[locals]`
+
 - type: book, article, email
 - locals: en, zh
+
 Examples: book-zh, email-en
 The requisite of `locals` identify is, the best styles of different languages are also different: the font family, the font size and the indent of paragraphs. So I decided separate locals to different themes.
 
 Here you may think about “the themes are nearly same”. That’s right. The differences are quite small so that I will make a template to generate these themes, just like what bootstrap did.
-
-
-TO BE CONTINUED
------------------
-The themes
-
-The settings
 
 Roadmap
 -----------------

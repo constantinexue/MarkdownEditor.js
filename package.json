@@ -1,8 +1,8 @@
 {
     "name": "MarkdownEditor.js",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "main": "public/index.html",
-    "repository": "http://github.com/constantinexue/packled-papper.js",
+    "repository": "http://github.com/constantinexue/MarkdownEditor.js",
     "dependencies": {
         "express": "*",
         "jade": "*",
