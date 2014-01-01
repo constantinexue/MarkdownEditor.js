@@ -4,10 +4,15 @@ var path = require('path'),
     fse = require('fs-extra'),
     _ = require('underscore');
 
+function withDistDir(dir) {
+    dir = dir || '';
+    return path.join('./build/dist', dir);
+}
+
 function rewritePackageJson() {
     var packageJson = _.clone(require('./package')),
-        distDir = './build/dist',
-        packageFile = path.join(distDir, 'package.json');
+        distDir = withDistDir(),
+        packageFile = withDistDir('package.json');
     if (!fs.existsSync(distDir)) {
         fs.mkdirsSync(distDir);
     }
@@ -33,7 +38,10 @@ function buildCompressTask(platform) {
             archive: './build/releases/MarkdownEditor-' + platform + '.zip'
         },
         files: [{
-            src: ['./build/releases/MarkdownEditor/' + platform + '/**/*']
+            expand: true,
+            flatten: true,
+            src: ['./build/releases/MarkdownEditor/' + platform + '/MarkdownEditor/**/*'],
+            dist: '/MarkdownEditor/'
         }]
     };
 }
@@ -54,8 +62,8 @@ module.exports = function(grunt) {
     grunt.initConfig({
         clean: {
             compile: './public/',
-            build: './build/dist',
-            buildBin: './build/dist/bin'
+            build: withDistDir(),
+            buildBin: withDistDir('bin')
         },
         jade: {
             compile: {
@@ -113,12 +121,12 @@ module.exports = function(grunt) {
                     expand: true,
                     cwd: './node_modules/',
                     src: listProductionNodeModules(),
-                    dest: './build/dist/node_modules'
+                    dest: withDistDir('node_modules/')
                 }, {
                     expand: true,
                     cwd: './public/',
                     src: '**',
-                    dest: './build/dist/public/'
+                    dest: withDistDir('public/')
                 }]
             },
             buildWin: {
@@ -126,7 +134,7 @@ module.exports = function(grunt) {
                     expand: true,
                     cwd: './bin/win32/',
                     src: '**',
-                    dest: './build/dist/bin/win32/'
+                    dest: withDistDir('bin/win32/')
                 }],
                 options: {
                     mode: true
@@ -137,7 +145,7 @@ module.exports = function(grunt) {
                     expand: true,
                     cwd: './bin/macos/',
                     src: '**',
-                    dest: './build/dist/bin/macos/'
+                    dest: withDistDir('bin/macos/')
                 }],
                 options: {
                     mode: true
@@ -148,7 +156,7 @@ module.exports = function(grunt) {
                     expand: true,
                     cwd: './bin/linux64/',
                     src: '**',
-                    dest: './build/dist/bin/linux64/'
+                    dest: withDistDir('bin/linux64/')
                 }],
                 options: {
                     mode: true
@@ -159,7 +167,7 @@ module.exports = function(grunt) {
                     expand: true,
                     cwd: './bin/linux32/',
                     src: '**',
-                    dest: './build/dist/bin/linux32/'
+                    dest: withDistDir('bin/linux32/')
                 }],
                 options: {
                     mode: true
