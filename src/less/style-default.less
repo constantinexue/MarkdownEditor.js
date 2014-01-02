@@ -118,8 +118,25 @@ blockquote {
 table {
     font-size: @base-font-size;
     font-family: @base-font-family;
-    td {
-        padding: 5px 10px;
+    padding: 0;
+    margin: 20px auto;
+    width: 90%;
+    border-collapse: collapse;
+    tr {
+        background-color: #fff;
+        border-top: 1px solid #ccc;
+        &:nth-child(2n) {
+            background-color: #f8f8f8;
+        }
+        th {
+            font-weight: bold;
+        }
+        th, td {
+            text-align: center;
+            border: 1px solid #ccc;
+            margin: 0;
+            padding: 6px 13px;        
+        }
     }
 }
 

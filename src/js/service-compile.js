@@ -217,7 +217,6 @@ var CompileService = klass(function() {
         }
 
         return markdown(text, {
-            breaks: true,
             renderer: renderer
         }).then(function(body) {
             // Embeds base64 image to HTML
