@@ -10,105 +10,124 @@
 @paragraph-margin: 14px;
 @paragraph-indent: 2em;
 
+@heading-number: true;
+
 body {
-    margin: 0px auto 0px auto;
-    padding: 20px 20px 50px 20px;
-    max-width: @body-max-width;
-    background-color: white;
-    font-size: @base-font-size;
-    font-family: @base-font-family;
-    & > *:first-child {
-        margin-top: 0 !important;
-    }
+	margin: 0px auto 0px auto;
+	padding: 20px 20px 50px 20px;
+	max-width: @body-max-width;
+	background-color: white;
+	counter-reset: level1;
+	font-size: @base-font-size;
+	font-family: @base-font-family;
+	& > *:first-child {
+		margin-top: 0 !important;
+	}
 }
 
 .heading(@font-size) {
-    margin-top: @font-size * 2;
-    font-size: @font-size;
-    line-height: @font-size;
+	margin-top: @font-size * 2;
+	font-size: @font-size;
+	line-height: @font-size;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    margin: 20px 0px 5px 0px;
-    padding: 0px 0px 5px 0px;
-    color: black;
-    font-weight: bold;
+	margin: 20px 0px 5px 0px;
+	padding: 0px 0px 5px 0px;
+	color: black;
+	font-weight: bold;
 }
 
 h1 {
-    .heading(36px);
-    padding: 0px 0px 10px 0px;
-    border-bottom: 2px solid #cccccc;
+	.heading(36px);
+	padding: 0px 0px 10px 0px;
+	border-bottom: 2px solid #cccccc;
+	counter-reset: level2;
+	&:before {
+		// http://css-tricks.com/snippets/html/glyphs/
+		content: counter(level1) "\2003";
+		counter-increment: level1;
+	}
 }
 
 h2 {
-    .heading(28px);
-    border-bottom: 1px solid #cccccc;
+	.heading(28px);
+	border-bottom: 1px solid #cccccc;
+	counter-reset: level3;
+	&:before {
+		content: counter(level1) "." counter(level2) "\2003";
+		counter-increment: level2;
+	}
 }
 
 h3 {
-    .heading(22px);
+	.heading(22px);
+	counter-reset: level4;
+	&:before {
+		content: counter(level1) "." counter(level2) "." counter(level3) "\2003";
+		counter-increment: level3;
+	}
 }
 
 h4 {
-    .heading(18px);
+	.heading(18px);
 }
 
 h5 {
-    .heading(16px);
+	.heading(16px);
 }
 
 h6 {
-    .heading(14px);
+	.heading(14px);
 }
 
 p {
-    margin: @paragraph-margin 0px;
-    text-indent: @paragraph-indent;
-    font-size: @base-font-size;
-    font-family: @base-font-family;
-    line-height: @base-line-height;
+	margin: @paragraph-margin 0px;
+	text-indent: @paragraph-indent;
+	font-size: @base-font-size;
+	font-family: @base-font-family;
+	line-height: @base-line-height;
 }
 
 ul, ol {
-    margin: @paragraph-margin 0px;
-    padding-left: @paragraph-indent + 2em;
-    font-size: @base-font-size;
-    font-family: @base-font-family;
-    line-height: @base-line-height;
-    li {
-        margin: @paragraph-margin / 2 0px;
-        font-size: @base-font-size;
-        line-height: @base-line-height;
-    }
+	margin: @paragraph-margin 0px;
+	padding-left: @paragraph-indent + 2em;
+	font-size: @base-font-size;
+	font-family: @base-font-family;
+	line-height: @base-line-height;
+	li {
+		margin: @paragraph-margin / 2 0px;
+		font-size: @base-font-size;
+		line-height: @base-line-height;
+	}
 }
 
 pre {
-    overflow: auto;
-    margin: 15px 0px;
-    margin-left: @paragraph-indent;
-    padding: 5px;
-    border: 1px solid #ddd;
-    border-radius: 3px;
-    background-color: #F8F8F8;
-    code {
-        padding: 0px;
-        border: none;
-        border-radius: 0px;
-        font-size: @code-font-size;
-        font-family: @code-font-family;
-        line-height: @base-line-height;
-    }
+	overflow: auto;
+	margin: 15px 0px;
+	margin-left: @paragraph-indent;
+	padding: 5px;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	background-color: #F8F8F8;
+	code {
+		padding: 0px;
+		border: none;
+		border-radius: 0px;
+		font-size: @code-font-size;
+		font-family: @code-font-family;
+		line-height: @base-line-height;
+	}
 }
 
 code {
-    padding: 2px 5px;
-    border: 1px solid #ddd;
-    border-radius: 3px;
-    background-color: #F8F8F8;
-    font-size: @code-font-size;
-    font-family: @code-font-family;
-    line-height: @base-line-height;
+	padding: 2px 5px;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	background-color: #F8F8F8;
+	font-size: @code-font-size;
+	font-family: @code-font-family;
+	line-height: @base-line-height;
 }
 
 blockquote {
@@ -116,66 +135,66 @@ blockquote {
 }
 
 table {
-    font-size: @base-font-size;
-    font-family: @base-font-family;
-    padding: 0;
-    margin: 20px auto;
-    width: 90%;
-    border-collapse: collapse;
-    tr {
-        background-color: #fff;
-        border-top: 1px solid #ccc;
-        &:nth-child(2n) {
-            background-color: #f8f8f8;
-        }
-        th {
-            font-weight: bold;
-        }
-        th, td {
-            text-align: center;
-            border: 1px solid #ccc;
-            margin: 0;
-            padding: 6px 13px;        
-        }
-    }
+	margin: 20px auto;
+	padding: 0;
+	width: 90%;
+	border-collapse: collapse;
+	font-size: @base-font-size;
+	font-family: @base-font-family;
+	tr {
+		border-top: 1px solid #ccc;
+		background-color: #fff;
+		&:nth-child(2n) {
+			background-color: #f8f8f8;
+		}
+		th {
+			font-weight: bold;
+		}
+		th, td {
+			margin: 0;
+			padding: 6px 13px;
+			border: 1px solid #ccc;
+			text-align: center;        
+		}
+	}
 }
 
 
 a, a code {
-    color: #4183C4;
-    text-decoration: none;
-    &:hover {
-        text-decoration: underline;
-    }
+	color: #4183C4;
+	text-decoration: none;
+	&:hover {
+		text-decoration: underline;
+	}
 }
 
 img {
-    display: block;
-    margin: 20px auto;
-    max-width: 80%;
-    border: none;
+	display: block;
+	margin: 20px auto;
+	max-width: 80%;
+	border: none;
 }
 
 em {
-    text-decoration: underline;
-    font-style: normal;
+	text-decoration: underline;
+	font-style: normal;
 }
 
 blockquote {
-    padding: 10px 2em;
-    border-left: 4px solid #dddddd;
-    background-color: #f8f8f8;
-    color: #777777;
+	padding: 10px 2em;
+	border-left: 4px solid #dddddd;
+	background-color: #f8f8f8;
+	color: #777777;
 }
 
 hr {
-    height: 1px;
-    border: none;
-    border-top: 1px solid #555555;
+	height: 1px;
+	border: none;
+	border-top: 1px solid #555555;
 }
 
 iframe {
-    display: block;
-    margin: auto;
-    border: 1px solid black;
+	display: block;
+	margin: auto;
+	border: 1px solid black;
 }
