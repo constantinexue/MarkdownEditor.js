@@ -91,9 +91,7 @@ module.exports = function(grunt) {
                     './public/css/splash.css': './src/less/splash.less',
                     './public/css/main.css': './src/less/main.less',
                     './public/css/page-code.css': './src/less/page-code.less',
-                    './public/css/style-default.css': './src/less/style-default.less',
-                    './public/css/style-gfm.css': './src/less/style-gfm.less',
-                    './public/css/theme-github.css': './src/less/theme-github.less'
+                    './public/css/theme-book-cn.css': './src/less/theme-book-cn.less'
                 }
             }
         },
