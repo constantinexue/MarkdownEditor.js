@@ -8,7 +8,6 @@
                 wrap: true
             },
             markdown: {
-                headingNumber: true,
                 theme: 'article-cn'
             }
         };

@@ -32,28 +32,6 @@ function highlightCode(code, lang) {
     return html;
 }
 
-function HeadingNumber() {
-    var self = {};
-    self.headingNumbers = [null, 0, 0, 0, 0, 0, 0];
-    this.compile = function(text, level) {
-        var i = 0,
-            number = '',
-            html = '';
-        for (i = level; i > 0; i--) {
-            if (number === '') {
-                self.headingNumbers[i]++;
-            }
-            number = self.headingNumbers[i] + '.' + number;
-        }
-        // Reset child numbers
-        for (i = level + 1; i < 7; i++) {
-            self.headingNumbers[i] = 0;
-        }
-        html = _.str.sprintf('<h%1$d>%3$s&emsp;%2$s</h%1$d>', level, text, number);
-        return html;
-    };
-}
-
 function ImagePathStage() {
     this.preDo = function(href, title, text, fileDir) {
         var start = _.str.startsWith;
@@ -178,7 +156,6 @@ function markdown(md, options) {
 var CompileService = klass(function() {
     this.options = {
         theme: 'article-cn',
-        headingNumber: true,
         highlightCode: true,
         embedImage: false
     };
@@ -197,9 +174,6 @@ var CompileService = klass(function() {
             stages, imagePipeline;
         if (self.options.highlightCode) {
             //renderer.code = highlightCode;
-        }
-        if (self.options.headingNumber) {
-            renderer.heading = new HeadingNumber().compile;
         }
         stages = [new ImagePathStage()];
         if (self.options.embedImage) {
