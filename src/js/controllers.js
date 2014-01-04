@@ -45,7 +45,7 @@ app.controller('themeController', function($scope, $rootScope) {
         onThemeChanged(theme);
     };
     $scope.themes = [];
-    ['book-en', 'book-zh'].forEach(function(themeName) {
+    ['book-en', 'book-zh', 'article-en', 'article-zh'].forEach(function(themeName) {
         $scope.themes.push({
             name: themeName,
             selected: false

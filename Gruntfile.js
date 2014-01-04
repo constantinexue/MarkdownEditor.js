@@ -94,9 +94,9 @@ module.exports = function(grunt) {
                     './public/css/page-code.css': './src/less/page-code.less',
                     // Themes
                     './public/css/theme-book-en.css': './src/less/theme-book-en.less',
-                    './public/css/theme-book-zh.css': './src/less/theme-book-zh.less'
-                    // './public/css/theme-article-en.css': './src/less/theme-article-en.less',
-                    // './public/css/theme-article-zh.css': './src/less/theme-article-zh.less'
+                    './public/css/theme-book-zh.css': './src/less/theme-book-zh.less',
+                    './public/css/theme-article-en.css': './src/less/theme-article-en.less',
+                    './public/css/theme-article-zh.css': './src/less/theme-article-zh.less'
                 }
             }
         },
