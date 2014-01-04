@@ -14,11 +14,11 @@ window.mvc.factory('windowService', function($rootScope) {
     return {
         show: function() {
             var deferred = when.defer();
-            win.hide();
-            // This API will cause window showing on windows.
-            // https://github.com/rogerwang/node-webkit/issues/1350
+            // win.hide();
+            // // This API will cause window showing on windows.
+            // // https://github.com/rogerwang/node-webkit/issues/1350
             win.maximize();
-            win.hide();
+            // win.hide();
             setTimeout(function() {
                 win.show();
                 window.splash.close();

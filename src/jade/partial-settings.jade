@@ -9,7 +9,7 @@ div#modal-settings.modal(tabindex='-1', role='dialog', aria-hidden='true', data-
                     li.active
                         a(href='#settings-general', data-toggle='tab') General
                     li
-                        a(href='#settings-markdown', data-toggle='tab') Markdown
+                        a(href='#settings-markdown', data-toggle='tab') Shortcuts
                 div.tab-content
                     div#settings-general.tab-pane.in.active
                         br
@@ -31,19 +31,6 @@ div#modal-settings.modal(tabindex='-1', role='dialog', aria-hidden='true', data-
                     div#settings-markdown.tab-pane
                         br
                         form.form-horizontal(role='form')
-                            //-div.form-group
-                                label.col-sm-3.control-label Markdown Themes
-                                div.col-sm-9
-                                    select#select-markdown-theme.form-control.selectpicker(ng-model='settings.markdown.theme')
-                                        option Email
-                                        option Article
-                                        option Article-cn
-                            div.form-group
-                                div.col-sm-9.col-sm-offset-3
-                                    div.checkbox
-                                        label
-                                            input(type='checkbox', ng-model='settings.markdown.headingNumber')
-                                            | Heading Number
 
             div.modal-footer
                 button.btn.btn-default(type='button', data-dismiss='modal') OK

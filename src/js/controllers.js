@@ -29,8 +29,27 @@ app.controller('settingsController', function($scope, $rootScope, settingsServic
     $scope.$watch('settings.editor.fontSize', function(newVal, oldVal) {
         onSettingsChanged('editor.fontSize');
     });
-    $scope.$watch('settings.markdown.headingNumber', function(newVal, oldVal) {
-        onSettingsChanged('markdown');
-    });
     onSettingsChanged(null);
+});
+app.controller('themeController', function($scope, $rootScope) {
+    var currentTheme = null;
+    var onThemeChanged = function(theme) {
+        if (currentTheme) {
+            currentTheme.selected = false;
+        }
+        currentTheme = theme;
+        currentTheme.selected = true;
+        $rootScope.$broadcast('themeChanged', currentTheme.name);
+    };
+    $scope.selectTheme = function(theme) {
+        onThemeChanged(theme);
+    };
+    $scope.themes = [];
+    ['book-en', 'book-zh'].forEach(function(themeName) {
+        $scope.themes.push({
+            name: themeName,
+            selected: false
+        });
+    });
+    onThemeChanged($scope.themes[0]);
 });

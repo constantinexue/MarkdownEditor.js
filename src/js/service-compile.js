@@ -13,11 +13,13 @@ _.str = require('underscore.string');
 var template = fs.readFileSync('./public/page-temp.html', 'utf8'),
     themes = {
         'none': '',
-        'book-cn': fs.readFileSync('./public/css/theme-book-cn.css', 'utf8'),
-        'article-cn': fs.readFileSync('./public/css/theme-book-cn.css', 'utf8')
+        'book-en': fs.readFileSync('./public/css/theme-book-en.css', 'utf8'),
+        'book-zh': fs.readFileSync('./public/css/theme-book-zh.css', 'utf8')
+        // 'article-en': fs.readFileSync('./public/css/theme-article-en.css', 'utf8'),
+        // 'article-zh': fs.readFileSync('./public/css/theme-article-zh.css', 'utf8')
     };
 // Makes a default theme for getting error name from localStrage.
-themes['default'] = themes['book-cn'];
+themes['default'] = themes['book-en'];
 
 function highlightCode(code, lang) {
     var html = '';

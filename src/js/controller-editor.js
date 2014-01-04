@@ -172,12 +172,14 @@ window.mvc.controller('editorController', function($scope, $timeout, compileServ
         if (name === null || name === 'editor.fontSize') {
             view.getEditor().setFontSize(settings.editor.fontSize);
         }
-        if (name === null || name === 'markdown') {
-            var optionsDefaults = compileService.getOptions(),
-                optionsOverride = _.extend(optionsDefaults, settings.markdown);
-            compileService.setOptions(optionsOverride);
-            updateCompiling();
-        }
+    });
+    $scope.$on('themeChanged', function(e, theme) {
+        var optionsDefaults = compileService.getOptions(),
+            optionsOverride = _.extend(optionsDefaults, {
+                theme: theme
+            });
+        compileService.setOptions(optionsOverride);
+        updateCompiling();
     });
     view.on('contentChanged', function() {
         $scope.$apply(function() {

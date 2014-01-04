@@ -88,10 +88,15 @@ module.exports = function(grunt) {
         less: {
             compile: {
                 files: {
+                    './public/css/test.css': './src/less/test.less',
                     './public/css/splash.css': './src/less/splash.less',
                     './public/css/main.css': './src/less/main.less',
                     './public/css/page-code.css': './src/less/page-code.less',
-                    './public/css/theme-book-cn.css': './src/less/theme-book-cn.less'
+                    // Themes
+                    './public/css/theme-book-en.css': './src/less/theme-book-en.less',
+                    './public/css/theme-book-zh.css': './src/less/theme-book-zh.less'
+                    // './public/css/theme-article-en.css': './src/less/theme-article-en.less',
+                    // './public/css/theme-article-zh.css': './src/less/theme-article-zh.less'
                 }
             }
         },
