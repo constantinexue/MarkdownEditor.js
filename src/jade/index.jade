@@ -55,7 +55,7 @@ block content
                             li(ng-repeat='theme in themes' ng-class='{active:theme.selected}')
                                 a(href='javascript:;', ng-click='selectTheme(theme)') {{theme.name}}
                             
-                    li.dropdown
+                    li.dropdown.hide
                         a.dropdown-toggle(href='#', data-toggle='dropdown', data-hover='dropdown')
                             | MODE&nbsp;
                             b.caret

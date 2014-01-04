@@ -15,6 +15,8 @@
 @font-family-base:  "Helvetica Neue", Helvetica, Arial, sans-serif, "Microsoft Yahei", "Simsun";
 @font-family-code:  Menlo, Monaco, Consolas, "Courier New", monospace;
 
+@margin-heading:    2em 0em 1em 0em;
+
 @text-indent-base:  0em;
 
 @color-border:      #eaeaea;
@@ -31,7 +33,7 @@
     @level-next:        @level + 1;
     @content:           e("content-h@{level}");
     padding:            0px;
-    margin:             2em 0em 1em 0em;
+    margin:             @margin-heading;
     line-height:        @line-height-base;
     counter-reset:      e("h@{level-next}");
     counter-increment:  e("h@{level}");

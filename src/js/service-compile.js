@@ -10,16 +10,7 @@ var klass = require('klass'),
     _ = require('underscore');
 _.str = require('underscore.string');
 
-var template = fs.readFileSync('./public/page-temp.html', 'utf8'),
-    themes = {
-        'none': '',
-        'book-en': fs.readFileSync('./public/css/theme-book-en.css', 'utf8'),
-        'book-zh': fs.readFileSync('./public/css/theme-book-zh.css', 'utf8'),
-        'article-en': fs.readFileSync('./public/css/theme-article-en.css', 'utf8'),
-        'article-zh': fs.readFileSync('./public/css/theme-article-zh.css', 'utf8')
-    };
-// Makes a default theme for getting error name from localStrage.
-themes['default'] = themes['book-en'];
+var template = fs.readFileSync('./public/page-temp.html', 'utf8');
 
 function highlightCode(code, lang) {
     var html = '';
@@ -156,12 +147,13 @@ function markdown(md, options) {
     return deferred.promise;
 }
 
-var CompileService = klass(function() {
+var CompileService = klass(function(themeService) {
     this.options = {
         theme: 'article-cn',
         highlightCode: true,
         embedImage: false
     };
+    this.themeService = themeService;
 }).methods({
     getOptions: function() {
         return this.options;
@@ -199,7 +191,7 @@ var CompileService = klass(function() {
             // Embeds base64 image to HTML
             return imagePipeline.deal(body);
         }).then(function(body) {
-            var style = themes[self.options.theme] || themes['default'],
+            var style = self.themeService.retrieve(self.options.theme),
                 // TODO: Considering use _.template to instead of string.replace
                 html = template.replace('{{style}}', style).replace('{{body}}', body);
             return when.resolve(html);;
@@ -207,6 +199,6 @@ var CompileService = klass(function() {
     }
 });
 
-module.exports = function() {
-    return new CompileService();
+module.exports = function(themeService) {
+    return new CompileService(themeService);
 };

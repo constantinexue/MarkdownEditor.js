@@ -8,11 +8,14 @@
         .factory('view', function() {
             return new mde.View();
         })
-        .factory('compileService', function() {
-            return require('./js/service-compile')();
+        .factory('compileService', function(themeService) {
+            return require('./js/service-compile')(themeService);
         })
         .factory('publishService', function() {
             return require('./js/service-publish')();
+        })
+        .factory('themeService', function() {
+            return require('./js/service-theme')();
         })
         .factory('settingsService', function() {
             return new mde.SettingsService();

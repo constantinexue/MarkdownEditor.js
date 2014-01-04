@@ -31,8 +31,9 @@ app.controller('settingsController', function($scope, $rootScope, settingsServic
     });
     onSettingsChanged(null);
 });
-app.controller('themeController', function($scope, $rootScope) {
-    var currentTheme = null;
+app.controller('themeController', function($scope, $rootScope, themeService) {
+    var themeNames = themeService.retrieveNames(),
+        currentTheme = null;
     var onThemeChanged = function(theme) {
         if (currentTheme) {
             currentTheme.selected = false;
@@ -45,7 +46,7 @@ app.controller('themeController', function($scope, $rootScope) {
         onThemeChanged(theme);
     };
     $scope.themes = [];
-    ['book-en', 'book-zh', 'article-en', 'article-zh'].forEach(function(themeName) {
+    themeNames.forEach(function(themeName) {
         $scope.themes.push({
             name: themeName,
             selected: false
