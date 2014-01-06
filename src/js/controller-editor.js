@@ -1,4 +1,7 @@
-window.mvc.controller('editorController', function($scope, $timeout, compileService, windowService, publishService, view, dialogView, model) {
+window.mvc.controller('editorController', function($scope, $rootScope, $timeout,
+    compileService, windowService, publishService, sessionService,
+    view, dialogView, model) {
+
     $scope.currentFile = null;
     $scope.isDirty = false;
     $scope.init = function() {
@@ -125,6 +128,7 @@ window.mvc.controller('editorController', function($scope, $timeout, compileServ
                 // http://stackoverflow.com/questions/15664933/basic-watch-not-working-in-angularjs?answertab=votes#tab-top
                 //$scope.$apply();
                 $scope.$digest();
+                $rootScope.$broadcast('fileOpened', filename);
                 return when.resolve(true);
             });
     }
@@ -139,6 +143,7 @@ window.mvc.controller('editorController', function($scope, $timeout, compileServ
                 return when.resolve();
             })
             .then(function() {
+                $rootScope.$broadcast('fileSaved', filename);
                 view.prompt('saved');
                 return when.resolve(true);
             });

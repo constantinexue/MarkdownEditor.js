@@ -32,19 +32,8 @@ app.controller('settingsController', function($scope, $rootScope, settingsServic
     onSettingsChanged(null);
 });
 app.controller('themeController', function($scope, $rootScope, themeService) {
-    var themeNames = themeService.retrieveNames(),
-        currentTheme = null;
-    var onThemeChanged = function(theme) {
-        if (currentTheme) {
-            currentTheme.selected = false;
-        }
-        currentTheme = theme;
-        currentTheme.selected = true;
-        $rootScope.$broadcast('themeChanged', currentTheme.name);
-    };
-    $scope.selectTheme = function(theme) {
-        onThemeChanged(theme);
-    };
+    var themeNames = themeService.retrieveNames();
+    $scope.currentTheme = null;
     $scope.themes = [];
     themeNames.forEach(function(themeName) {
         $scope.themes.push({
@@ -52,5 +41,47 @@ app.controller('themeController', function($scope, $rootScope, themeService) {
             selected: false
         });
     });
+    var onThemeChanged = function(theme) {
+        if ($scope.currentTheme) {
+            $scope.currentTheme.selected = false;
+        }
+        $scope.currentTheme = theme;
+        $scope.currentTheme.selected = true;
+        $rootScope.$broadcast('themeChanged', $scope.currentTheme.name);
+    };
+    $scope.selectTheme = function(theme) {
+        onThemeChanged(theme);
+    };
+    $scope.getTheme = function(name) {
+        var target = null;
+        $scope.themes.forEach(function(theme) {
+            if (theme.name == name) {
+                target = theme;
+                return;
+            }
+        });
+        return target;
+    };
     onThemeChanged($scope.themes[0]);
+});
+app.controller('sessionController', function($scope, $rootScope, sessionService, compileService, view) {
+    $scope.$on('fileSaved', function(evt, filename) {
+        var pos = view.getEditor().getCursorPosition();
+        var param = {
+            theme: compileService.getOptions().theme,
+            cursor: [pos.row, pos.column]
+        };
+        sessionService.updateSession(filename, param);
+    });
+    $scope.$on('fileOpened', function(evt, filename) {
+        var param = sessionService.retrieveSession(filename);
+        if (param.theme) {
+            var theme = $scope.getTheme(param.theme);
+            $scope.selectTheme(theme);
+        }
+        if (param.cursor) {
+            view.getEditor().gotoLine(param.cursor[0], param.cursor[1], true);
+            view.getEditor().scrollToLine(param.cursor[0], true, true);
+        }
+    });
 });
