@@ -2,6 +2,7 @@
     "use strict";
     window.mde = {};
     window.mvc = angular.module('mvc', []);
+    window.app = window.mvc;
 })();
 (function() {
     "use strict";

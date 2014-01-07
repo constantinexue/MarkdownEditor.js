@@ -71,10 +71,10 @@ app.controller('sessionController', function($scope, $rootScope, sessionService,
             theme: compileService.getOptions().theme,
             cursor: [pos.row, pos.column]
         };
-        sessionService.updateSession(filename, param);
+        sessionService.update(filename, param);
     });
     $scope.$on('fileOpened', function(evt, filename) {
-        var param = sessionService.retrieveSession(filename);
+        var param = sessionService.retrieve(filename);
         if (param.theme) {
             var theme = $scope.getTheme(param.theme);
             $scope.selectTheme(theme);

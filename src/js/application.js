@@ -30,12 +30,6 @@
 
             });
         });
-    app.factory('sessionService', function(localStorageService) {
-        return new mde.SessionService(localStorageService);
-    });
-    app.factory('localStorageService', function() {
-        return new mde.LocalStorageService();
-    });
     //require('./js/server')();
 })();
 $(function() {
