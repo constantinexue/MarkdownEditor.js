@@ -1,16 +1,47 @@
 var app = window.mvc;
 app.factory('sessionService', function(localStorageService) {
+    var LS_NAME = 'sessions';
     var SessionService = klass(function() {
-
+        this.sessions = localStorageService.get(LS_NAME) || [];
+        this.maxCount = 100;
     }).methods({
         retrieveSession: function(filename) {
-            return _.extend({
-                theme: 'article-en',
-                cursor: [0, 0]
-            }, localStorageService.get(filename));
+            var session = this.find(filename),
+                defaults = {
+                    theme: 'article-en',
+                    cursor: [0, 0]
+                };
+            if (_.isNull(session)) {
+                return defaults;
+            } else {
+                return _.defaults(session.param, defaults);
+            }
         },
         updateSession: function(filename, param) {
-            localStorageService.set(filename, param);
+            var session = this.find(filename);
+            if (!_.isNull(session)) {
+                // Removes from array
+                this.sessions = _.without(this.sessions, session);
+            }
+            // Adds to head
+            this.sessions.unshift({
+                filename: filename,
+                param: param
+            });
+            // Keeps the top [maxCount]
+            this.sessions = this.sessions.slice(0, this.maxCount);
+            // Writes to localStorage
+            localStorageService.set(LS_NAME, this.sessions);
+        },
+        find: function(filename) {
+            var target = null;
+            _.each(this.sessions, function(session) {
+                if (_.isString(session.filename) && session.filename === filename) {
+                    target = session;
+                    return;
+                }
+            });
+            return target;
         }
     });
 
@@ -23,7 +54,7 @@ app.factory('localStorageService', function() {
             if (!value || value === 'null') {
                 return null;
             }
-            if (value.charAt(0) === "{" || item.charAt(0) === "[") {
+            if (value.charAt(0) === "{" || value.charAt(0) === "[") {
                 try {
                     value = angular.fromJson(value);
                     return value;
