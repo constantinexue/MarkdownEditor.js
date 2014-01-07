@@ -1,9 +1,9 @@
-var app = window.mvc;
-app.factory('sessionService', function(localStorageService) {
+(function(exports) {
     var LS_NAME = 'sessions';
-    var SessionService = klass(function() {
+    var SessionService = klass(function(localStorageService) {
         this.sessions = localStorageService.get(LS_NAME) || [];
         this.maxCount = 100;
+        this.localStorageService = localStorageService;
     }).methods({
         retrieveSession: function(filename) {
             var session = this.find(filename),
@@ -31,7 +31,7 @@ app.factory('sessionService', function(localStorageService) {
             // Keeps the top [maxCount]
             this.sessions = this.sessions.slice(0, this.maxCount);
             // Writes to localStorage
-            localStorageService.set(LS_NAME, this.sessions);
+            this.localStorageService.set(LS_NAME, this.sessions);
         },
         find: function(filename) {
             var target = null;
@@ -44,10 +44,10 @@ app.factory('sessionService', function(localStorageService) {
             return target;
         }
     });
+    exports = SessionService;
+})(window.mde || {});
 
-    return new SessionService();
-});
-app.factory('localStorageService', function() {
+(function(exports) {
     var LocalStorageService = klass(function() {}).methods({
         get: function(name) {
             var value = localStorage.getItem(name);
@@ -74,5 +74,5 @@ app.factory('localStorageService', function() {
             return this;
         }
     });
-    return new LocalStorageService();
-});
+    exports = LocalStorageService;
+})(window.mde || {});

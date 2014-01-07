@@ -18,11 +18,12 @@
     "devDependencies": {
         "grunt": "*",
         "grunt-contrib-less": "*",
-        "grunt-contrib-clean": "*",
-        "grunt-contrib-jshint": "*",
         "grunt-contrib-jade": "*",
-        "grunt-contrib-watch": "*",
         "grunt-contrib-copy": "*",
+        "grunt-contrib-clean": "*",
+        "grunt-contrib-watch": "*",
+        "grunt-contrib-jshint": "*",
+        "grunt-contrib-jasmine": "*",
         "grunt-contrib-compress": "*",
         "grunt-node-webkit-builder": "*"
     },

@@ -232,6 +232,15 @@ module.exports = function(grunt) {
             win: buildCompressTask('win'),
             linux32: buildCompressTask('linux32'),
             linux64: buildCompressTask('linux64')
+        },
+        jasmine: {
+            services: {
+                src: './src/js/services.js',
+                options: {
+                    specs: './spec/*Spec.js',
+                    helpers: './spec/*Helper.js'
+                }
+            }
         }
     });
 
@@ -240,6 +249,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jade');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-jasmine');
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.loadNpmTasks('grunt-node-webkit-builder');
 
@@ -253,4 +263,6 @@ module.exports = function(grunt) {
         'clean:buildBin', 'copy:buildL32', 'nodewebkit:linux32',
         'compress'
     ]);
+
+    grunt.registerTask('test', ['jasmine']);
 };

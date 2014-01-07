@@ -1,6 +1,7 @@
 (function() {
     "use strict";
-    window.mvc.factory('model', function(historiesService) {
+    var app = window.mvc;
+    app.factory('model', function(historiesService) {
         var model = new mde.Model();
         model.historiesService = historiesService;
         return model;
@@ -24,12 +25,17 @@
             return new mde.HistoriesService();
         })
         .run(function(view, windowService) {
-            windowService.show().then(function(){
-            view.init();
-                
+            windowService.show().then(function() {
+                view.init();
+
             });
         });
-
+    app.factory('sessionService', function(localStorageService) {
+        return new mde.SessionService(localStorageService);
+    });
+    app.factory('localStorageService', function() {
+        return new mde.LocalStorageService();
+    });
     //require('./js/server')();
 })();
 $(function() {
