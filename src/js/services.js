@@ -1,4 +1,4 @@
-(function(exports) {
+(function() {
     app.factory('sessionService', function(localStorageService) {
         var LS_NAME = 'sessions';
         var SessionService = klass(function(localStorageService) {
@@ -47,6 +47,39 @@
         });
         return new SessionService(localStorageService);
     });
+    app.factory('historiesService', function(localStorageService) {
+        var LS_NAME = 'histories';
+        var HistoriesService = mde.EventEmitter.extend(function() {
+            this.localStorageService = localStorageService;
+        }).methods({
+            retrieveAll: function() {
+                var histories = this.localStorageService.get(LS_NAME);
+                return histories || [];
+            },
+            update: function(file) {
+                var histories = this.localStorageService.get(LS_NAME);
+                histories = _.without(histories, file);
+                // Add to the head
+                histories.unshift(file);
+                // Keep top 10
+                histories = histories.slice(0, 10);
+                this.localStorageService.set(LS_NAME, histories);
+                this.fire('historiesChanged', histories);
+
+                return when.resolve(histories);
+            },
+            delete: function(file) {
+                var histories = this.localStorageService.get(LS_NAME);
+
+                histories = _.without(histories, file);
+                this.localStorageService.set(LS_NAME, histories);
+                this.fire('historiesChanged', histories);
+
+                return when.resolve(histories);
+            }
+        });
+        return new HistoriesService(localStorageService);
+    });
     app.factory('localStorageService', function() {
         var LocalStorageService = klass(function() {}).methods({
             get: function(name) {
@@ -75,5 +108,9 @@
             }
         });
         return new LocalStorageService();
+    });
+    app.factory('fileAccessService', function() {
+        
+        return new FileAccessService();
     });
 })();

@@ -1,6 +1,6 @@
-window.mvc.controller('editorController', function($scope, $rootScope, $timeout,
+app.controller('editorController', function($scope, $rootScope, $timeout,
     compileService, windowService, publishService, sessionService,
-    view, dialogView, model) {
+    view, dialogView, fileAccessService, historiesService) {
 
     $scope.currentFile = null;
     $scope.isDirty = false;
@@ -120,8 +120,9 @@ window.mvc.controller('editorController', function($scope, $rootScope, $timeout,
     }
 
     function openFile(filename) {
-        return model.loadFile(filename)
+        return fileAccessService.loadFile(filename)
             .then(function(content) {
+                historiesService.update(filename);
                 view.setContent(content);
                 $scope.currentFile = filename;
                 $scope.isDirty = false;
@@ -135,8 +136,9 @@ window.mvc.controller('editorController', function($scope, $rootScope, $timeout,
 
     function saveFile(filename) {
         var content = view.getContent();
-        return model.saveFile(filename, content)
+        return fileAccessService.saveFile(filename, content)
             .then(function() {
+                historiesService.update(filename);
                 $scope.isDirty = false;
                 //$scope.$apply();
                 $scope.$digest();
@@ -154,6 +156,7 @@ window.mvc.controller('editorController', function($scope, $rootScope, $timeout,
             dirtyTitle = $scope.isDirty ? ' * ' : ' ';
         windowService.setTitle(fileTitle + dirtyTitle);
     }
+
     $scope.$watch('isDirty', function(newVal, oldVal) {
         updateTitle();
     });

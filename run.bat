@@ -1,2 +1,1 @@
-call grunt compile
-call nw --enable-logging .
+grunt compile && nw --enable-logging .

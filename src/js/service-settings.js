@@ -1,6 +1,5 @@
-// Browser module only
-(function() {
-    mde.SettingsService = klass(function() {
+app.factory('settingsService', function() {
+    var SettingsService = klass(function() {
         this.defaults = {
             editor: {
                 fontSize: 14,
@@ -37,4 +36,5 @@
             return this;
         }
     });
-})();
+    return new SettingsService();
+});

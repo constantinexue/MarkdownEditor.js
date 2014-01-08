@@ -1,17 +1,16 @@
-var app = window.mvc;
 app.controller('historiesController', function($scope, historiesService, dialogView) {
     historiesService.on('historiesChanged', function(histories) {
         $scope.$apply(function() {
             $scope.histories = histories;
         });
     });
-    $scope.histories = historiesService.getHistories();
+    $scope.histories = historiesService.retrieveAll();
     $scope.openHistory = function(file) {
         $scope.open(file)
             .done(null, function(err) {
                 return dialogView.promptInvalidHistory(file)
                     .then(function() {
-                        return historiesService.deleteHistory(file);
+                        return historiesService.delete(file);
                     });
             });
     };
