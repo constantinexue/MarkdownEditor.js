@@ -15,9 +15,10 @@
         var FileAccessService = require('./js/services-node').FileAccessService;
         return new FileAccessService();
     });
-    app.run(function(view, windowService) {
+    app.run(function(view, windowService, $rootScope) {
         windowService.show().then(function() {
             view.init();
+            $rootScope.init();
         });
     });
     //require('./js/server')();

@@ -5,12 +5,15 @@ app.factory('sessionService', function(localStorageService) {
         this.maxCount = 100;
         this.localStorageService = localStorageService;
     }).methods({
+        getDefaults: function() {
+            return {
+                theme: 'article-en',
+                cursor: [0, 0]
+            };
+        },
         retrieve: function(filename) {
             var session = this.find(filename),
-                defaults = {
-                    theme: 'article-en',
-                    cursor: [0, 0]
-                };
+                defaults = this.getDefaults();
             if (_.isNull(session)) {
                 return defaults;
             } else {

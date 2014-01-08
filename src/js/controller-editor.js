@@ -8,10 +8,13 @@ app.controller('editorController', function($scope, $rootScope, $timeout,
         var steps = getStepsOfSave();
         steps.push(function(confirmed) {
             if (confirmed) {
-                view.setContent('Markdown.js\n===========');
+                $rootScope.$broadcast('fileClosed', $scope.currentFile);
                 $scope.currentFile = null;
                 $scope.isDirty = false;
                 $scope.$apply();
+                view.setContent('Markdown.js\n===========');
+                updateCompiling();
+                $rootScope.$broadcast('fileInited');
             }
             return when.resolve(confirmed);
         });
@@ -122,6 +125,7 @@ app.controller('editorController', function($scope, $rootScope, $timeout,
     function openFile(filename) {
         return fileAccessService.loadFile(filename)
             .then(function(content) {
+                $rootScope.$broadcast('fileClosed', $scope.currentFile);
                 historiesService.update(filename);
                 view.setContent(content);
                 $scope.currentFile = filename;
@@ -167,6 +171,7 @@ app.controller('editorController', function($scope, $rootScope, $timeout,
         var steps = getStepsOfSave();
         steps.push(function(confirmed) {
             if (confirmed) {
+                $rootScope.$broadcast('fileClosed', $scope.currentFile);
                 windowService.close();
             }
             return when.resolve(confirmed);

@@ -61,7 +61,6 @@ app.controller('themeController', function($scope, $rootScope, themeService) {
         });
         return target;
     };
-    onThemeChanged($scope.themes[0]);
 });
 app.controller('sessionController', function($scope, $rootScope, sessionService, compileService, view) {
     var buildParam = function() {
@@ -72,10 +71,10 @@ app.controller('sessionController', function($scope, $rootScope, sessionService,
         };
         return param;
     };
+    var currentParam = null;
     var update = function() {
         if ($scope.currentFile) {
-            var param = buildParam();
-            sessionService.update($scope.currentFile, param);
+            currentParam = buildParam();
         }
     };
     $scope.$on('themeChanged', function(evt) {
@@ -84,16 +83,20 @@ app.controller('sessionController', function($scope, $rootScope, sessionService,
     $scope.$on('cursorChanged', function(evt) {
         update();
     });
+    $scope.$on('fileClosed', function(evt) {
+        sessionService.update($scope.currentFile, currentParam);
+    });
     $scope.$on('fileOpened', function(evt, filename) {
         var param = sessionService.retrieve(filename);
-        if (param.theme) {
-            var theme = $scope.getTheme(param.theme);
-            $scope.selectTheme(theme);
-        }
-        if (param.cursor) {
-            // row + 1 is hacking bug, the cursor will not be placed to right position.
-            view.getEditor().gotoLine(param.cursor[0] + 1, param.cursor[1], true);
-            view.getEditor().scrollToLine(param.cursor[0], true, true);
-        }
+        var theme = $scope.getTheme(param.theme);
+        $scope.selectTheme(theme);
+        // row + 1 is hacking bug, the cursor will not be placed to right position.
+        view.getEditor().gotoLine(param.cursor[0] + 1, param.cursor[1], true);
+        view.getEditor().scrollToLine(param.cursor[0], true, true);
+    });
+    $scope.$on('fileInited', function(evt) {
+        var param = sessionService.getDefaults();
+        var theme = $scope.getTheme(param.theme);
+        $scope.selectTheme(theme);
     });
 });
