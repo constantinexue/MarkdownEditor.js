@@ -64,13 +64,25 @@ app.controller('themeController', function($scope, $rootScope, themeService) {
     onThemeChanged($scope.themes[0]);
 });
 app.controller('sessionController', function($scope, $rootScope, sessionService, compileService, view) {
-    $scope.$on('fileSaved', function(evt, filename) {
+    var buildParam = function() {
         var pos = view.getEditor().getCursorPosition();
         var param = {
             theme: compileService.getOptions().theme,
             cursor: [pos.row, pos.column]
         };
-        sessionService.update(filename, param);
+        return param;
+    };
+    var update = function() {
+        if ($scope.currentFile) {
+            var param = buildParam();
+            sessionService.update($scope.currentFile, param);
+        }
+    };
+    $scope.$on('themeChanged', function(evt) {
+        update();
+    });
+    $scope.$on('cursorChanged', function(evt) {
+        update();
     });
     $scope.$on('fileOpened', function(evt, filename) {
         var param = sessionService.retrieve(filename);
@@ -79,7 +91,8 @@ app.controller('sessionController', function($scope, $rootScope, sessionService,
             $scope.selectTheme(theme);
         }
         if (param.cursor) {
-            view.getEditor().gotoLine(param.cursor[0], param.cursor[1], true);
+            // row + 1 is hacking bug, the cursor will not be placed to right position.
+            view.getEditor().gotoLine(param.cursor[0] + 1, param.cursor[1], true);
             view.getEditor().scrollToLine(param.cursor[0], true, true);
         }
     });

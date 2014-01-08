@@ -1,7 +1,5 @@
-(function() {
-    "use strict";
-
-    mde.View = mde.EventEmitter.extend(function() {
+app.factory('view', function($rootScope) {
+    var View = mde.EventEmitter.extend(function() {
         var self = this;
         $(window).resize(function() {
             self.fire('windowResized');
@@ -19,7 +17,19 @@
         self.editor.getSession().setMode("ace/mode/markdown");
         self.editor.getSession().setUseWrapMode(true);
         self.editor.on('change', function(evt) {
-            self.fire('contentChanged');
+            if (!self.isEditorFreezed) {
+                self.fire('contentChanged');
+            }
+        });
+        self.editor.getSelection().on('changeCursor', function() {
+            if (!self.isEditorFreezed) {
+                //self.syncCursor();
+                $rootScope.$broadcast('cursorChanged');
+            }
+        });
+        self.editor.getSession().on('changeScrollTop', function(scroll) {
+            //scroll = parseInt(scroll) || 0;
+            self.syncScroll();
         });
         self.editor.focus();
 
@@ -35,14 +45,6 @@
             self.editorContainer.height(height);
         });
 
-        self.editor.getSelection().on('changeCursor', function() {
-            //self.syncCursor();
-        });
-
-        self.editor.getSession().on('changeScrollTop', function(scroll) {
-            //scroll = parseInt(scroll) || 0;
-            self.syncScroll();
-        });
 
         //http://stackoverflow.com/questions/13677898/how-to-disable-ace-editors-find-dialog
         self.editor.commands.addCommands([{
@@ -144,10 +146,11 @@
         },
         setContent: function(value) {
             var self = this;
+            self.isEditorFreezed = true;
             self.editor.getSession().setValue(value);
             self.editor.gotoLine(0);
             self.editor.focus();
-
+            self.isEditorFreezed = false;
             //self._resetEditorPadding();
         },
         getContent: function() {
@@ -194,4 +197,5 @@
             return deferred.promise;
         }
     });
-})();
+    return new View();
+});

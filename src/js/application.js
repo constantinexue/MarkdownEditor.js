@@ -1,9 +1,6 @@
 (function() {
     "use strict";
     var app = window.mvc;
-    app.factory('view', function() {
-        return new mde.View();
-    });
     app.factory('compileService', function(themeService) {
         return require('./js/service-compile')(themeService);
     });
