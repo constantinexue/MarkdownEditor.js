@@ -73,7 +73,7 @@ Roadmap
     - Auto zip built files to zip;
 - 0.2.2: Provides markdown themes:
     - There are some predefined themes;
-    - Every new file should use the default theme (github style);
+    - Every new file should use the default theme (github style - article-en);
     - Each file could be assigned a theme which will be saved in localStorage (max 100 files);
 - 0.2.3: Better scrolling sync support
 - 0.2.4: Adds tooltips for menu commands

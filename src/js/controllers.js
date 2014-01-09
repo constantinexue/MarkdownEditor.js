@@ -50,8 +50,11 @@ app.controller('themeController', function($scope, $rootScope, themeService) {
         $scope.currentTheme.selected = true;
         $rootScope.$broadcast('themeChanged', $scope.currentTheme.name);
     };
-    $scope.selectTheme = function(theme) {
+    $scope.selectTheme = function(theme, forceRefresh) {
         onThemeChanged(theme);
+        if (forceRefresh) {
+            $scope.$apply();
+        }
     };
     $scope.getTheme = function(name) {
         var target = null;
@@ -91,7 +94,7 @@ app.controller('sessionController', function($scope, $rootScope, sessionService,
     $scope.$on('fileOpened', function(evt, filename) {
         var param = sessionService.retrieve(filename);
         var theme = $scope.getTheme(param.theme);
-        $scope.selectTheme(theme);
+        $scope.selectTheme(theme, true);
         // row + 1 is hacking bug, the cursor will not be placed to right position.
         view.getEditor().gotoLine(param.cursor[0] + 1, param.cursor[1], true);
         view.getEditor().scrollToLine(param.cursor[0], true, true);
@@ -99,7 +102,7 @@ app.controller('sessionController', function($scope, $rootScope, sessionService,
     $scope.$on('fileInited', function(evt) {
         var param = sessionService.getDefaults();
         var theme = $scope.getTheme(param.theme);
-        $scope.selectTheme(theme);
+        $scope.selectTheme(theme, true);
     });
 });
 app.controller('aceController', function($scope, $rootScope) {

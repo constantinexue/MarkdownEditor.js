@@ -4,7 +4,7 @@ app.controller('editorController', function($scope, $rootScope, $timeout,
 
     $scope.currentFile = null;
     $scope.isDirty = false;
-    $scope.init = function() {
+    $rootScope.init = function() {
         var steps = getStepsOfSave();
         steps.push(function(confirmed) {
             if (confirmed) {
