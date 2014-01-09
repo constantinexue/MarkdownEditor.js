@@ -1,3 +1,5 @@
+app.controller('rootController', function($scope, $rootScope) {});
+
 app.controller('historiesController', function($scope, historiesService, dialogView) {
     historiesService.on('historiesChanged', function(histories) {
         $scope.$apply(function() {
@@ -99,4 +101,9 @@ app.controller('sessionController', function($scope, $rootScope, sessionService,
         var theme = $scope.getTheme(param.theme);
         $scope.selectTheme(theme);
     });
+});
+app.controller('aceController', function($scope, $rootScope) {
+    $scope.content = {
+        text: 'text'
+    };
 });

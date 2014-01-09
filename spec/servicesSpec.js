@@ -28,5 +28,37 @@ describe("A suite", function() {
             expect(param2).toEqual(param1);
         }
     }));
+    describe("Editor", function() {
+        xit('test', function() {
+            var ele = angular.element('<div></div>');
+            var editor = ace.edit(ele[0]);
+            editor.setShowPrintMargin(false);
+            editor.setHighlightGutterLine(false);
+            editor.renderer.setShowGutter(false);
+            editor.getSession().setMode("ace/mode/markdown");
+            editor.getSession().setUseWrapMode(true);
+            console.log(ele.html());
+        });
+        xit('properties', function(editor) {
+            var filename = 'text.md',
+                text = '# Header1';
+            editor.setFile(filename, text);
+            expect(editor.getText()).toEqual(text);
+            expect(editor.isDirty()).toBe(false);
+        });
+        xit('methods', function(editor) {
+
+        });
+        xit('events', function(editor, $rootScope) {
+            var onFileChanging = function() {},
+                onFileChanged = function() {};
+            spyOn(onFileChanging);
+            spyOn(onFileChanged);
+            $rootScope.$on('fileChanging', onFileChanging);
+            $rootScope.$on('fileChanged', onFileChanged);
+            expect(onFileChanging).toHaveBeenCalled();
+            expect(fileChanged).toHaveBeenCalled();
+        });
+    });
     afterEach(function() {});
 });

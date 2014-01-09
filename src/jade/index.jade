@@ -3,86 +3,90 @@ block files-css
 block files-js
     include index-head
 block content
-    div(ng-controller='editorController')
-        div.navbar.navbar-default.navbar-static-top(role='navigation')
-            div.collapse.navbar-collapse(style='margin-left:15px;')
-                ul.nav.navbar-nav
-                    li.dropdown
-                        a.dropdown-toggle(href='#', data-toggle='dropdown', data-hover='dropdown')
-                            | File&nbsp;
-                            b.caret
-                        ul.dropdown-menu
-                            li
-                                a(href='javascript:;', ng-click='init()') New
-                            li
-                                a(href='javascript:;', ng-click='open()') Open
-                            li
-                                a(href='javascript:;', ng-click='save()') Save
-                            li
-                                a(href='javascript:;', ng-click='saveas()') Save As
-                    li#list-histories.dropdown
-                        a.dropdown-toggle(href='#', data-toggle='dropdown', data-hover='dropdown')
-                            | Histories&nbsp;
-                            b.caret
-                        ul.dropdown-menu(ng-controller='historiesController')
-                            li(ng-repeat='history in histories')
-                                a(href='javascript:;', ng-click='openHistory(history)') {{history}}
-                    li.dropdown
-                        a.dropdown-toggle(href='#', data-toggle='dropdown', data-hover='dropdown')
-                            | Publish&nbsp;
-                            b.caret
-                        ul.dropdown-menu
-                            li
-                                a(href='javascript:;', ng-click='toHTML("plain")') HTML Plain
-                            li
-                                a(href='javascript:;', ng-click='toHTML("styled")') HTML Styled
-                            li
-                                a(href='javascript:;', ng-click='toHTML("styled2")') HTML Styled+Image
-                            li
-                                a(href='javascript:;', ng-click='toPDF("styled2")') PDF
-                            //-li
-                                a(href='javascript:;') Image
-                    li
-                        a(data-toggle='modal', data-target='#modal-settings', href='javascript:;') Settings
-                    li
-                        a(data-toggle='modal', data-target='#modal-about', href='javascript:;') About
-                ul.nav.navbar-nav.navbar-right(style='margin-right:15px;')
-                    li.dropdown(ng-controller='themeController')
-                        a.dropdown-toggle(href='#', data-toggle='dropdown', data-hover='dropdown')
-                            | Theme:&nbsp;
-                            strong {{currentTheme.name}}
-                            b.caret
-                        ul.dropdown-menu
-                            li(ng-repeat='theme in themes' ng-class='{active:theme.selected}')
-                                a(href='javascript:;', ng-click='selectTheme(theme)') {{theme.name}}
-                        div(ng-controller='sessionController')
-                            
-                    li.dropdown.hide
-                        a.dropdown-toggle(href='#', data-toggle='dropdown', data-hover='dropdown')
-                            | MODE&nbsp;
-                            b.caret
-                        ul.dropdown-menu(ng-pane-tabs)
-                            li(ng-class='{active:viewPane.selected}')
-                                a(href='javascript:;', ng-click='selectPane(viewPane)') Preivew
-                            li(ng-class='{active:codePane.selected}')
-                                a(href='javascript:;', ng-click='selectPane(codePane)') HTML Code
-                            li(ng-class='{active:helpPane.selected}')
-                                a(href='javascript:;', ng-click='selectPane(helpPane)') Guide
-                            li
-                                a(href='javascript:;') Turn Off
-        div#container-workarea(ng-pane-pages)
-            table(cellspacing='0', cellpadding='0', border='0', style='width:100%; height:100%')
-                tr
-                    td#area-right(style='width:50%')
-                        div#ace-edit
-                    td#area-left(style='width:50%')
-                        iframe#page-view(src='page-view.html', frameborder='no', border='0', ng-show='viewPane.selected')
-                        iframe#page-code(src='page-code.html', frameborder='no', border='0', ng-show='codePane.selected')
-                        iframe#page-help(src='', frameborder='no', border='0', ng-show='false')
-                            
-        div.hide
-            input#dialog-open(type='file')
-            input#dialog-save(type='file', nwsaveas)
-        div
-            include partial-about
-            include partial-settings
+    div(ng-controller='rootController')
+        div(ng-controller='editorController')
+            div.navbar.navbar-default.navbar-static-top(role='navigation')
+                div.collapse.navbar-collapse(style='margin-left:15px;')
+                    ul.nav.navbar-nav
+                        li.dropdown
+                            a.dropdown-toggle(href='#', data-toggle='dropdown', data-hover='dropdown')
+                                | File&nbsp;
+                                b.caret
+                            ul.dropdown-menu
+                                li
+                                    a(href='javascript:;', ng-click='init()') New
+                                li
+                                    a(href='javascript:;', ng-click='open()') Open
+                                li
+                                    a(href='javascript:;', ng-click='save()') Save
+                                li
+                                    a(href='javascript:;', ng-click='saveas()') Save As
+                        li#list-histories.dropdown
+                            a.dropdown-toggle(href='#', data-toggle='dropdown', data-hover='dropdown')
+                                | Histories&nbsp;
+                                b.caret
+                            ul.dropdown-menu(ng-controller='historiesController')
+                                li(ng-repeat='history in histories')
+                                    a(href='javascript:;', ng-click='openHistory(history)') {{history}}
+                        li.dropdown
+                            a.dropdown-toggle(href='#', data-toggle='dropdown', data-hover='dropdown')
+                                | Publish&nbsp;
+                                b.caret
+                            ul.dropdown-menu
+                                li
+                                    a(href='javascript:;', ng-click='toHTML("plain")') HTML Plain
+                                li
+                                    a(href='javascript:;', ng-click='toHTML("styled")') HTML Styled
+                                li
+                                    a(href='javascript:;', ng-click='toHTML("styled2")') HTML Styled+Image
+                                li
+                                    a(href='javascript:;', ng-click='toPDF("styled2")') PDF
+                                //-li
+                                    a(href='javascript:;') Image
+                        li
+                            a(data-toggle='modal', data-target='#modal-settings', href='javascript:;') Settings
+                        li
+                            a(data-toggle='modal', data-target='#modal-about', href='javascript:;') About
+                    ul.nav.navbar-nav.navbar-right(style='margin-right:15px;')
+                        li.dropdown(ng-controller='themeController')
+                            a.dropdown-toggle(href='#', data-toggle='dropdown', data-hover='dropdown')
+                                | Theme:&nbsp;
+                                strong {{currentTheme.name}}
+                                b.caret
+                            ul.dropdown-menu
+                                li(ng-repeat='theme in themes' ng-class='{active:theme.selected}')
+                                    a(href='javascript:;', ng-click='selectTheme(theme)') {{theme.name}}
+                            div(ng-controller='sessionController')
+                                
+                        li.dropdown.hide
+                            a.dropdown-toggle(href='#', data-toggle='dropdown', data-hover='dropdown')
+                                | MODE&nbsp;
+                                b.caret
+                            ul.dropdown-menu(ng-pane-tabs)
+                                li(ng-class='{active:viewPane.selected}')
+                                    a(href='javascript:;', ng-click='selectPane(viewPane)') Preivew
+                                li(ng-class='{active:codePane.selected}')
+                                    a(href='javascript:;', ng-click='selectPane(codePane)') HTML Code
+                                li(ng-class='{active:helpPane.selected}')
+                                    a(href='javascript:;', ng-click='selectPane(helpPane)') Guide
+                                li
+                                    a(href='javascript:;') Turn Off
+            div#container-workarea(ng-pane-pages)
+                table(cellspacing='0', cellpadding='0', border='0', style='width:100%; height:100%')
+                    tr
+                        td#area-right(style='width:50%')
+                            div#ace-edit
+                        td#area-left(style='width:50%')
+                            div(ng-show='viewPane.selected')
+                                div(ng-controller='aceController')
+                                    div(data-ace, ng-model='content')
+                            iframe#page-view(src='page-view.html', frameborder='no', border='0')
+                            iframe#page-code(src='page-code.html', frameborder='no', border='0', ng-show='codePane.selected')
+                            iframe#page-help(src='', frameborder='no', border='0', ng-show='false')
+                                
+            div.hide
+                input#dialog-open(type='file')
+                input#dialog-save(type='file', nwsaveas)
+            div
+                include partial-about
+                include partial-settings

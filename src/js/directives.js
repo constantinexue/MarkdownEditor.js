@@ -54,3 +54,53 @@ window.mvc.directive('selectpicker', function() {
         require: '^ngPaneTabs'
     }
 });
+app.directive('ace', function($rootScope, $timeout) {
+    var resizeEditor = function(editor, elem) {
+        var lineHeight = editor.renderer.lineHeight;
+        var rows = editor.getSession().getLength();
+
+        $(elem).height(rows * lineHeight);
+        editor.resize();
+    };
+    return {
+        restrict: 'A',
+        require: '?ngModel',
+        scope: true,
+        link: function(scope, elem, attrs, ngModel) {
+            var node = elem[0];
+
+            var editor = ace.edit(node);
+            editor.setShowPrintMargin(false);
+            editor.setHighlightGutterLine(false);
+            editor.renderer.setShowGutter(false);
+            editor.getSession().setMode("ace/mode/markdown");
+            editor.getSession().setUseWrapMode(true);
+            // set editor options
+            editor.setShowPrintMargin(false);
+
+            // data binding to ngModel
+            ngModel.$render = function() {
+                console.log('render');
+                console.log(ngModel.$viewValue);
+                var text = ngModel.$viewValue.text;
+                editor.setValue(text);
+                resizeEditor(editor, elem);
+            };
+
+            editor.on('change', function() {
+                $timeout(function() {
+                    scope.$apply(function() {
+                        console.log('change');
+                        console.log(ngModel.$viewValue);
+                        var text = editor.getValue();
+                        var value = ngModel.$viewValue;
+                        value.text = text;
+                        ngModel.$setViewValue(value);
+                    });
+                });
+
+                resizeEditor(editor, elem);
+            });
+        }
+    };
+});
