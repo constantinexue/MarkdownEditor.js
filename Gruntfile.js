@@ -27,7 +27,6 @@ function listProductionNodeModules() {
     _.chain(packageJson.dependencies).keys().each(function(element, index, list) {
         moduleNames.push(element + '/**/*');
     }).value();
-    console.log(moduleNames);
 
     return moduleNames;
 }
@@ -63,7 +62,7 @@ module.exports = function(grunt) {
         clean: {
             compile: './public/',
             build: withDistDir(),
-            buildBin: withDistDir('bin')
+            buildBin: withDistDir('bin') + '/**/*'
         },
         jade: {
             compile: {
@@ -259,8 +258,8 @@ module.exports = function(grunt) {
     grunt.registerTask('build', ['compile', 'clean:build', 'copy:build', 'rewrite',
         'clean:buildBin', 'copy:buildWin', 'nodewebkit:win',
         'clean:buildBin', 'copy:buildMac', 'nodewebkit:mac',
-        'clean:buildBin', 'copy:buildL64', 'nodewebkit:linux64',
         'clean:buildBin', 'copy:buildL32', 'nodewebkit:linux32',
+        'clean:buildBin', 'copy:buildL64', 'nodewebkit:linux64',
         'compress'
     ]);
 

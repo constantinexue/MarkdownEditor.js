@@ -1,2 +1,1 @@
-grunt compile
-nw .
+grunt compile && nw .
