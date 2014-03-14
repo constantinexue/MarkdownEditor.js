@@ -47,7 +47,7 @@ function buildCompressTask(platform) {
 
 var nwOptions = {
     app_name: 'MarkdownEditor',
-    version: '0.8.4',
+    version: '0.9.2',
     build_dir: './build',
     mac: false,
     win: false,
